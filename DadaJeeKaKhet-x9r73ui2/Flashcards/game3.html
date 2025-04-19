@@ -641,6 +641,23 @@
         cardFlipSound.currentTime = 0;
         cardFlipSound.play();
         flashcard.classList.toggle("flipped");
+
+        const frontHints = flashcardFront.querySelectorAll(
+          ".hint-image, .filler-image, #hint-btn"
+        );
+        const backHints = flashcardBack.querySelectorAll(
+          ".hint-image, .filler-image, #hint-btn"
+        );
+
+        if (flashcard.classList.contains("flipped")) {
+          // Hide front hints, show back hints
+          frontHints.forEach((el) => (el.style.display = "none"));
+          backHints.forEach((el) => (el.style.display = "block"));
+        } else {
+          // Show front hints, hide back hints
+          frontHints.forEach((el) => (el.style.display = "block"));
+          backHints.forEach((el) => (el.style.display = "none"));
+        }
       });
 
       // Next and Previous buttons
