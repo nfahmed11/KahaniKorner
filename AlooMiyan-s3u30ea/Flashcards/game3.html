@@ -15,6 +15,10 @@
         overflow-x: hidden;
       }
 
+      .text-lightpurple {
+        color: #6e6ce0;
+      }
+
       .kid-title {
         font-family: "Bubblegum Sans", cursive;
       }
@@ -78,6 +82,14 @@
         pointer-events: none;
       }
 
+      .top-2 {
+        top: -2rem !important;
+      }
+
+      .right-2 {
+        right: -2rem !important;
+      }
+
       .progress-bar {
         height: 12px;
         border-radius: 6px;
@@ -106,14 +118,6 @@
 
       .btn:active {
         transform: translateY(1px);
-      }
-
-      .top-2 {
-        top: -2rem !important;
-      }
-
-      .right-2 {
-        right: -2rem !important;
       }
 
       .sparkle {
@@ -148,6 +152,10 @@
         }
       }
 
+      .shake {
+        animation: shake 0.4s ease-in-out;
+      }
+
       @keyframes shake {
         0% {
           transform: translateX(0);
@@ -169,10 +177,6 @@
         }
       }
 
-      .shake {
-        animation: shake 0.4s ease-in-out;
-      }
-
       .quiz-complete-card {
         background: linear-gradient(135deg, #d0f0c0, #a3e4b8);
         border: 8px solid #fff;
@@ -185,6 +189,7 @@
       }
     </style>
   </head>
+
   <body class="p-4 md:p-8">
     <div class="max-w-4xl mx-auto">
       <div
@@ -197,8 +202,9 @@
             <h1
               class="text-3xl md:text-5xl font-bold text-fuchsia-600 kid-title"
             >
-              Dada Jee Ka Khet
+              Aloo Miyan
             </h1>
+
             <p class="text-purple-500 text-sm md:text-base">Flashcards</p>
           </div>
           <div
@@ -216,21 +222,6 @@
               >0/0</span
             >
           </div>
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
-          <button
-            id="shuffle-btn"
-            class="btn bg-white border-4 border-yellow-400 text-yellow-600 px-4 md:px-6 py-2 rounded-full text-base md:text-lg shadow-sm"
-          >
-            🔀 Shuffle
-          </button>
-          <button
-            id="quiz-btn"
-            class="btn bg-white border-4 border-blue-400 text-blue-600 px-4 md:px-6 py-2 rounded-full text-base md:text-lg shadow-sm"
-          >
-            🎯 Quiz Mode
-          </button>
         </div>
 
         <div class="flex justify-center mb-8">
@@ -262,13 +253,47 @@
       </div>
     </div>
 
+    <div
+      class="fixed bottom-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-lg border-t border-gray-200 flex justify-around items-center py-2 shadow-lg z-50"
+    >
+      <button
+        id="toggle-lang"
+        class="btn border-4 border-green-400 text-green-600 bg-white px-3 py-1 rounded-full text-sm"
+      >
+        🔄 English → Urdu
+      </button>
+
+      <button
+        id="toggle-image"
+        class="btn border-4 border-pink-400 text-pink-600 bg-white px-3 py-1 rounded-full text-sm"
+      >
+        🖼 Hide Image
+      </button>
+
+      <button
+        id="quiz-btn"
+        class="btn border-4 border-blue-400 text-blue-600 bg-white px-3 py-1 rounded-full text-sm"
+      >
+        🎯 Quiz Mode
+      </button>
+
+      <button
+        id="shuffle-btn"
+        class="btn border-4 border-yellow-400 text-yellow-600 bg-white px-3 py-1 rounded-full text-sm"
+      >
+        🔀 Shuffle
+      </button>
+    </div>
+
     <script type="module">
       import { riddles as originalRiddles } from "../vocab.js";
 
       let currentIndex = 0;
       let riddles = [...originalRiddles];
       let isQuizMode = false;
+      let isEnglishToUrdu = false;
       let correctAnswers = 0;
+      let showImage = true; // default is showing the actual image
 
       const flashcard = document.getElementById("flashcard");
       const flashcardFront = document.getElementById("flashcard-front");
@@ -279,12 +304,32 @@
       const nextBtn = document.getElementById("next-btn");
       const shuffleBtn = document.getElementById("shuffle-btn");
       const quizBtn = document.getElementById("quiz-btn");
+      const toggleLangBtn = document.getElementById("toggle-lang");
       const navButtons = document.getElementById("nav-buttons");
+      const toggleImageBtn = document.getElementById("toggle-image");
+      const shuffleButton = document.getElementById("shuffle-btn");
 
       const sparkleSound = new Audio("../sounds/sparkle.mp3");
       const correctSound = new Audio("../sounds/success.wav");
       const incorrectSound = new Audio("../sounds/incorrect.wav");
       const cardFlipSound = new Audio("../sounds/cardflip.mp3");
+
+      toggleImageBtn.addEventListener("click", () => {
+        showImage = !showImage;
+        toggleImageBtn.textContent = showImage
+          ? "🖼 Hide Image"
+          : "🖼 Show Image";
+        updateFlashcard(currentIndex);
+      });
+
+      toggleLangBtn.addEventListener("click", () => {
+        isEnglishToUrdu = !isEnglishToUrdu;
+        toggleLangBtn.textContent = isEnglishToUrdu
+          ? "🔄 Urdu → English"
+          : "🔄 English → Urdu";
+        flashcard.classList.remove("flipped");
+        updateFlashcard(currentIndex);
+      });
 
       function createSparkle(x, y) {
         const sparkle = document.createElement("div");
@@ -334,16 +379,17 @@
       }
 
       function showQuizCompleteCard() {
+        toggleLangBtn.style.display = "inline-block";
+
         flashcardFront.innerHTML = `
-          <div class="quiz-complete-card">
-            <h2 class="text-3xl font-bold text-green-700 kid-title mb-4">🎉 Quiz Complete!</h2>
-            <p class="text-lg text-green-800 mb-6">You got ${correctAnswers} out of ${riddles.length} correct!</p>
-            <div class="flex justify-center gap-4">
-              <button id="try-again" class="btn bg-white border-4 border-green-400 text-green-600 px-6 py-2 rounded-full text-lg shadow-sm">Try Again</button>
-              <button id="exit-quiz" class="btn bg-green-600 text-white px-6 py-2 rounded-full text-lg shadow-sm">Exit Quiz Mode</button>
-            </div>
-          </div>
-        `;
+                        <div class="quiz-complete-card">
+                          <h2 class="text-3xl font-bold text-green-700 kid-title mb-4">🎉 Quiz Complete!</h2>
+                          <p class="text-lg text-green-800 mb-6">You got ${correctAnswers} out of ${riddles.length} correct!</p>
+                          <div class="flex justify-center gap-4">
+                            <button id="try-again" class="btn bg-white border-4 border-green-400 text-green-600 px-6 py-2 rounded-full text-lg shadow-sm">Try Again</button>
+                            <button id="exit-quiz" class="btn bg-green-600 text-white px-6 py-2 rounded-full text-lg shadow-sm">Exit Quiz Mode</button>
+                          </div>
+                        </div>`;
         flashcardBack.innerHTML = "";
 
         document.getElementById("try-again").addEventListener("click", () => {
@@ -356,11 +402,36 @@
         document.getElementById("exit-quiz").addEventListener("click", () => {
           isQuizMode = false;
           quizBtn.textContent = "🎯 Quiz Mode";
+          toggleLangBtn.style.display = "inline-block"; // ✅ show again
           currentIndex = 0;
           correctAnswers = 0;
           riddles = [...originalRiddles];
           updateFlashcard(currentIndex);
         });
+      }
+
+      function renderHintBlock(card) {
+        if (showImage) {
+          // Always visible image mode
+          return `
+  <div class="absolute top-2 right-2 flex flex-col items-center space-y-1 scale-75 z-10">
+
+    <img 
+      src="${card.image}" 
+      alt="Word Image" 
+      class="w-24 h-24 md:w-28 md:h-28 object-contain" 
+    />
+  </div>`;
+        } else {
+          // Hint button mode
+          return `
+      <div class="absolute top-2 right-2 flex flex-col items-center space-y-1 scale-75 z-10">
+       
+        <img class="filler-image" src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Hint Icon" />
+        <img class="hint-image" style="opacity: 0; position: absolute;" src="${card.image}" alt="Word Image" />
+        <button id="hint-btn" class="btn text-xs bg-white px-2 py-1 border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-100">Hint</button>
+      </div>`;
+        }
       }
 
       function attachHintListeners() {
@@ -388,15 +459,6 @@
         });
       }
 
-      function renderHintBlock(card) {
-        return `
-                <div class="absolute top-2 right-2 flex flex-col items-center space-y-1 scale-75">
-                  <img class="filler-image" src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Filler Image">
-                  <img class="hint-image" style="opacity: 0; position: absolute;" src="${card.image}" alt="Hint Image">
-                  <button id="hint-btn" class="btn text-xs bg-white px-2 py-1 border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-100">Hint</button>
-                </div>`;
-      }
-
       function updateFlashcard(index) {
         const card = riddles[index];
         progressFill.style.width = `${((index + 1) / riddles.length) * 100}%`;
@@ -409,35 +471,61 @@
           return;
         }
 
+        const urduLabelClass = "text-fuchsia-500";
+        const urduFontClass = "text-fuchsia-600";
+        const englishLabelClass = "text-teal-600";
+        const englishFontClass = "text-teal-600";
+        const urduGradient = "linear-gradient(135deg, #fbc2eb, #a6c1ee)";
+        const englishGradient = "linear-gradient(135deg, #90f7ec, #32ccbc)";
+
         if (isQuizMode) {
           navButtons.style.display = "none";
           flashcard.classList.remove("flipped");
+
+          flashcardFront.style.background = isEnglishToUrdu
+            ? englishGradient
+            : urduGradient;
+          flashcardBack.style.background = "";
+
+          const options = [...riddles]
+            .filter((r) => r.word.english !== card.word.english)
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 2)
+            .concat(card)
+            .sort(() => Math.random() - 0.5);
+
           flashcardFront.innerHTML = `
-                  <div class="relative w-full h-full flex flex-col justify-between">
-                    <div class="text-sm text-fuchsia-500 text-center mt-2">Urdu</div>
-                    <div class="flex-grow flex flex-col justify-center items-center text-center gap-2">
-                      <div class="text-2xl">${card.word.romanUrdu}</div>
-                      <div class="text-6xl font-bold text-fuchsia-600">${
-                        card.word.urdu
-                      }</div>
-                    </div>
-                    <div class="text-purple-600 text-center mb-4">What does this mean?</div>
-                    <div class="flex flex-col items-center mb-4">
-                      ${[...riddles]
-                        .filter((r) => r.word.english !== card.word.english)
-                        .sort(() => Math.random() - 0.5)
-                        .slice(0, 2)
-                        .concat(card)
-                        .sort(() => Math.random() - 0.5)
-                        .map((item) => {
-                          const isCorrect =
-                            item.word.english === card.word.english;
-                          return `<button class="quiz-option btn w-3/4 max-w-xs my-1 border border-purple-300 text-purple-700 bg-white py-1 rounded-full" data-correct="${isCorrect}">${item.word.english}</button>`;
-                        })
-                        .join("")}
-                    </div>
-                    ${renderHintBlock(card)}
-                  </div>`;
+                          <div class="relative w-full h-full flex flex-col justify-between">
+                            <div class="text-sm ${
+                              isEnglishToUrdu
+                                ? englishLabelClass
+                                : urduLabelClass
+                            } text-center mt-2">
+                              ${isEnglishToUrdu ? "English" : "Urdu"}
+                            </div>
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-2">
+                              ${
+                                isEnglishToUrdu
+                                  ? `<div class="text-6xl font-bold ${englishFontClass}">${card.word.english}</div>`
+                                  : `<div class="text-2xl text-lightpurple">${card.word.romanUrdu}</div><div class="text-6xl font-bold ${urduFontClass}">${card.word.urdu}</div>`
+                              }
+                            </div>
+                            <div class="text-purple-600 text-center mb-4">What does this mean?</div>
+                            <div class="flex flex-col items-center mb-4">
+                              ${options
+                                .map((item) => {
+                                  const isCorrect =
+                                    item.word.english === card.word.english;
+                                  const label = isEnglishToUrdu
+                                    ? `${item.word.urdu} (${item.word.romanUrdu})`
+                                    : item.word.english;
+                                  return `<button class="quiz-option btn w-3/4 max-w-xs my-1 border border-purple-300 text-purple-700 bg-white py-1 rounded-full" data-correct="${isCorrect}">${label}</button>`;
+                                })
+                                .join("")}
+                            </div>
+                            ${renderHintBlock(card)}
+                          </div>`;
+
           flashcardBack.innerHTML = "";
 
           document.querySelectorAll(".quiz-option").forEach((btn) => {
@@ -445,7 +533,6 @@
               const isCorrect =
                 e.target.getAttribute("data-correct") === "true";
 
-              // Prevent double-clicks during transition
               document.querySelectorAll(".quiz-option").forEach((opt) => {
                 opt.disabled = true;
                 opt.classList.add("opacity-50", "cursor-not-allowed");
@@ -478,31 +565,71 @@
               }, 1500);
             });
           });
-        } else {
-          navButtons.style.display = "flex";
-          flashcardFront.innerHTML = `
-                  <div class="relative w-full h-full flex flex-col justify-between">
-                    <div class="text-sm text-fuchsia-500 text-center mt-2">Urdu</div>
-                    <div class="flex-grow flex flex-col justify-center items-center text-center gap-2">
-                      <div class="text-2xl">${card.word.romanUrdu}</div>
-                      <div class="text-6xl font-bold text-fuchsia-600">${
-                        card.word.urdu
-                      }</div>
-                    </div>
-                    <div class="text-sm text-fuchsia-500 text-center mb-4">Click card for English</div>
-                    ${renderHintBlock(card)}
-                  </div>`;
 
+          attachHintListeners();
+          return;
+        }
+
+        // Non-quiz mode
+        navButtons.style.display = "flex";
+        flashcard.classList.remove("flipped");
+        flashcardFront.style.background = isEnglishToUrdu
+          ? englishGradient
+          : urduGradient;
+        flashcardBack.style.background = isEnglishToUrdu
+          ? urduGradient
+          : englishGradient;
+
+        if (isEnglishToUrdu) {
+          flashcardFront.innerHTML = `
+                          <div class="relative w-full h-full flex flex-col justify-between">
+                            ${renderHintBlock(card)}
+                            <div class="text-sm ${englishLabelClass} text-center mt-2">English</div>
+                            <div class="flex-grow flex justify-center items-center">
+                              <div class="text-6xl font-bold ${englishFontClass} text-center">${
+            card.word.english
+          }</div>
+                            </div>
+                            <div class="text-sm ${englishLabelClass} text-center mb-4">Click card for Urdu</div>
+                          </div>`;
           flashcardBack.innerHTML = `
-                  <div class="relative w-full h-full flex flex-col justify-between">
-                    <div class="text-sm text-teal-600 text-center mt-2">English</div>
-                    <div class="flex-grow flex justify-center items-center">
-                      <div class="text-6xl font-bold text-teal-600 text-center">${
-                        card.word.english
-                      }</div>
-                    </div>
-                    ${renderHintBlock(card)}
-                  </div>`;
+                          <div class="relative w-full h-full flex flex-col justify-between">
+                            ${renderHintBlock(card)}
+                            <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-2">
+                              <div class="text-2xl text-lightpurple">${
+                                card.word.romanUrdu
+                              }</div>
+                              <div class="text-6xl font-bold ${urduFontClass}">${
+            card.word.urdu
+          }</div>
+                            </div>
+                          </div>`;
+        } else {
+          flashcardFront.innerHTML = `
+                          <div class="relative w-full h-full flex flex-col justify-between">
+                            ${renderHintBlock(card)}
+                            <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-2">
+                              <div class="text-2xl text-lightpurple">${
+                                card.word.romanUrdu
+                              }</div>
+                              <div class="text-6xl font-bold ${urduFontClass}">${
+            card.word.urdu
+          }</div>
+                            </div>
+                            <div class="text-sm ${urduLabelClass} text-center mb-4">Click card for English</div>
+                          </div>`;
+          flashcardBack.innerHTML = `
+                          <div class="relative w-full h-full flex flex-col justify-between">
+                            ${renderHintBlock(card)}
+                            <div class="text-sm ${englishLabelClass} text-center mt-2">English</div>
+                            <div class="flex-grow flex justify-center items-center">
+                              <div class="text-6xl font-bold ${englishFontClass} text-center">${
+            card.word.english
+          }</div>
+                            </div>
+                          </div>`;
         }
 
         attachHintListeners();
@@ -510,13 +637,12 @@
 
       flashcard.addEventListener("click", (e) => {
         if (isQuizMode || e.target.closest("#hint-btn")) return;
-
-        // Play card flip sound
         cardFlipSound.currentTime = 0;
         cardFlipSound.play();
         flashcard.classList.toggle("flipped");
       });
 
+      // Next and Previous buttons
       prevBtn.addEventListener("click", () => {
         if (currentIndex > 0) {
           currentIndex--;
@@ -531,6 +657,16 @@
         }
       });
 
+      document.addEventListener("keydown", (e) => {
+        if (isQuizMode) return; // Optional: disable arrow keys during quiz mode
+
+        if (e.key === "ArrowRight") {
+          nextBtn.click();
+        } else if (e.key === "ArrowLeft") {
+          prevBtn.click();
+        }
+      });
+
       shuffleBtn.addEventListener("click", () => {
         riddles = [...originalRiddles].sort(() => Math.random() - 0.5);
         currentIndex = 0;
@@ -541,9 +677,13 @@
         isQuizMode = !isQuizMode;
         quizBtn.textContent = isQuizMode ? "🚪 Exit Quiz Mode" : "🎯 Quiz Mode";
 
+        toggleLangBtn.style.display = isQuizMode ? "none" : "inline-block";
+        shuffleButton.style.display = isQuizMode ? "none" : "inline-block";
+
         if (isQuizMode) {
           riddles = [...originalRiddles].sort(() => Math.random() - 0.5);
           currentIndex = 0;
+          correctAnswers = 0;
         }
 
         updateFlashcard(currentIndex);
