@@ -421,29 +421,34 @@
         });
       }
 
-      function renderHintBlock(card) {
-        if (showImage) {
-          // Always visible image mode
-          return `
-  <div class="absolute top-2 right-2 flex flex-col items-center space-y-1 scale-75 z-10">
+      function renderHintBlock(card, side = "front") {
+        if (side !== "front") return ""; // 🧼 Clean: No image/hint on back
 
-    <img 
-      src="${card.image}" 
-      alt="Word Image" 
-      class="w-24 h-24 md:w-28 md:h-28 object-contain" 
-    />
-  </div>`;
-        } else {
-          // Hint button mode
+        if (showImage) {
           return `
-  <div class="absolute top-2 right-2 flex flex-col items-center space-y-1 scale-90 z-10 w-32 h-32">
-    <div class="relative w-full h-full">
-      <img class="filler-image w-full h-full object-contain absolute top-0 left-0" src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Hint Icon" />
-      <img class="hint-image w-full h-full object-contain absolute top-0 left-0" style="opacity: 0;" src="${card.image}" alt="Word Image" />
-    </div>
-    <button id="hint-btn" class="btn text-xs bg-white px-2 py-1 border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-100">Hint</button>
-  </div>`;
+      <div class="absolute top-2 right-2 flex flex-col items-center space-y-1 scale-75 z-10">
+        <img 
+          src="${card.image}" 
+          alt="Word Image" 
+          class="w-24 h-24 md:w-28 md:h-28 object-contain" 
+        />
+      </div>`;
+        } else {
+          return `
+      <div class="absolute top-2 right-2 flex flex-col items-center space-y-1 scale-90 z-10 w-32 h-32">
+        <div class="relative w-full h-full">
+          <img class="filler-image w-full h-full object-contain absolute top-0 left-0" src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Hint Icon" />
+          <img class="hint-image w-full h-full object-contain absolute top-0 left-0" style="opacity: 0;" src="${card.image}" alt="Word Image" />
+        </div>
+        <button id="hint-btn" class="btn text-xs bg-white px-2 py-1 border border-yellow-400 rounded-full text-yellow-600 hover:bg-yellow-100">Hint</button>
+      </div>`;
         }
+      }
+
+      function removeHintBlock() {
+        document.querySelectorAll(".top-2.right-2").forEach((el) => {
+          el.remove();
+        });
       }
 
       function attachHintListeners() {
@@ -595,7 +600,7 @@
         if (isEnglishToUrdu) {
           flashcardFront.innerHTML = `
                           <div class="relative w-full h-full flex flex-col justify-between">
-                            ${renderHintBlock(card)}
+                            ${renderHintBlock(card, "front")}
                             <div class="text-sm ${englishLabelClass} text-center mt-2">English</div>
                             <div class="flex-grow flex justify-center items-center">
                               <div class="text-6xl font-bold ${englishFontClass} text-center">${
@@ -604,8 +609,11 @@
                             </div>
                             <div class="text-sm ${englishLabelClass} text-center mb-4">Click card for Urdu</div>
                           </div>`;
+
           flashcardBack.innerHTML = `
+          
                           <div class="relative w-full h-full flex flex-col justify-between">
+                            ${renderHintBlock(card, "back")}
                             <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
                              <div class="flex-grow flex flex-col justify-center items-center text-center gap-6">
 
@@ -614,7 +622,9 @@
                               
                               
                               
-                              <div class="text-5xl text-lightpurple">${card.word.romanUrdu}</div>
+                              <div class="text-5xl text-lightpurple">${
+                                card.word.romanUrdu
+                              }</div>
                               <div >
 
     <img 
@@ -623,13 +633,15 @@
       class="w-28 h-28 md:w-28 md:h-28 object-contain" 
     />
   </div>
-                              <div class="text-6xl font-bold noto-nastaliq-urdu ${urduFontClass}">${card.word.urdu}</div>
+                              <div class="text-6xl font-bold noto-nastaliq-urdu ${urduFontClass}">${
+            card.word.urdu
+          }</div>
                             </div>
                           </div>`;
         } else {
           flashcardFront.innerHTML = `
                           <div class="relative w-full h-full flex flex-col justify-between">
-                            ${renderHintBlock(card)}
+                            ${renderHintBlock(card, "front")}
                             <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
                             <div class="flex-grow flex flex-col justify-center items-center text-center gap-6">
                               <div class="text-5xl text-lightpurple">${
@@ -644,7 +656,7 @@
                           </div>`;
           flashcardBack.innerHTML = `
                           <div class="relative w-full h-full flex flex-col justify-between">
-                         
+                         ${renderHintBlock(card, "back")}
                             <div class="text-sm ${englishLabelClass} text-center mt-2">English</div>
                             <div class="flex-grow flex flex-col justify-center items-center text-center gap-6">
                                <div>
@@ -655,7 +667,9 @@
       class="w-28 h-28 md:w-28 md:h-28 object-contain" 
     />
   </div>
-                              <div class="text-6xl font-bold ${englishFontClass} text-center">${card.word.english}</div>
+                              <div class="text-6xl font-bold ${englishFontClass} text-center">${
+            card.word.english
+          }</div>
                             </div>
                           </div>`;
         }
@@ -665,9 +679,19 @@
 
       flashcard.addEventListener("click", (e) => {
         if (isQuizMode || e.target.closest("#hint-btn")) return;
+
+        removeHintBlock(); // Remove image/hint from front before flipping
+
         cardFlipSound.currentTime = 0;
         cardFlipSound.play();
-        flashcard.classList.toggle("flipped");
+
+        // 🔁 Flip the card and get the current flipped state
+        const isNowFlipped = flashcard.classList.toggle("flipped");
+
+        // ✅ If we're now seeing the front again, re-render it
+        if (!isNowFlipped) {
+          updateFlashcard(currentIndex);
+        }
       });
 
       // Next and Previous buttons
