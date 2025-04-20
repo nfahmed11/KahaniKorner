@@ -207,23 +207,19 @@
   <body class="p-4 md:p-8">
     <div class="max-w-4xl mx-auto">
       <div
-        class="bg-white bg-opacity-90 rounded-3xl p-6 md:p-8 shadow-xl border-8 border-white"
-      >
+        class="bg-white bg-opacity-90 rounded-3xl p-6 md:p-8 shadow-xl border-8 border-white">
         <div
-          class="flex flex-col md:flex-row justify-between items-center mb-8 text-center md:text-left"
-        >
+          class="flex flex-col md:flex-row justify-between items-center mb-8 text-center md:text-left">
           <div>
             <h1
-              class="text-3xl md:text-5xl font-bold text-fuchsia-600 kid-title"
-            >
+              class="text-3xl md:text-5xl font-bold text-fuchsia-600 kid-title">
               Aloo Miyan
             </h1>
 
             <p class="text-purple-500 text-sm md:text-base">Flashcards</p>
           </div>
           <div
-            class="mt-4 md:mt-0 flex flex-col sm:flex-row items-center gap-2 sm:gap-3"
-          >
+            class="mt-4 md:mt-0 flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
             <span class="text-fuchsia-600 font-medium kid-title"
               >Progress:</span
             >
@@ -249,18 +245,15 @@
 
         <div
           class="flex flex-row flex-nowrap justify-center items-center gap-3 mb-6"
-          id="nav-buttons"
-        >
+          id="nav-buttons">
           <button
             id="prev-btn"
-            class="btn bg-white border-4 border-purple-400 text-purple-500 px-4 md:px-6 py-2 rounded-full text-base md:text-lg shadow-sm"
-          >
+            class="btn bg-white border-4 border-purple-400 text-purple-500 px-4 md:px-6 py-2 rounded-full text-base md:text-lg shadow-sm">
             Previous
           </button>
           <button
             id="next-btn"
-            class="btn bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white px-4 md:px-6 py-2 rounded-full text-base md:text-lg shadow-sm hover:from-fuchsia-600 hover:to-purple-700"
-          >
+            class="btn bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white px-4 md:px-6 py-2 rounded-full text-base md:text-lg shadow-sm hover:from-fuchsia-600 hover:to-purple-700">
             Next
           </button>
         </div>
@@ -268,33 +261,28 @@
     </div>
 
     <div
-      class="fixed bottom-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-lg border-t border-gray-200 flex justify-around items-center py-2 shadow-lg z-50"
-    >
+      class="fixed bottom-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-lg border-t border-gray-200 flex justify-around items-center py-2 shadow-lg z-50">
       <button
         id="toggle-lang"
-        class="btn border-4 border-green-400 text-green-600 bg-white px-3 py-1 rounded-full text-sm"
-      >
+        class="btn border-4 border-green-400 text-green-600 bg-white px-3 py-1 rounded-full text-sm">
         🔄 English → Urdu
       </button>
 
       <button
         id="toggle-image"
-        class="btn border-4 border-pink-400 text-pink-600 bg-white px-3 py-1 rounded-full text-sm"
-      >
+        class="btn border-4 border-pink-400 text-pink-600 bg-white px-3 py-1 rounded-full text-sm">
         🖼 Hide Image
       </button>
 
       <button
         id="quiz-btn"
-        class="btn border-4 border-blue-400 text-blue-600 bg-white px-3 py-1 rounded-full text-sm"
-      >
+        class="btn border-4 border-blue-400 text-blue-600 bg-white px-3 py-1 rounded-full text-sm">
         🎯 Quiz Mode
       </button>
 
       <button
         id="shuffle-btn"
-        class="btn border-4 border-yellow-400 text-yellow-600 bg-white px-3 py-1 rounded-full text-sm"
-      >
+        class="btn border-4 border-yellow-400 text-yellow-600 bg-white px-3 py-1 rounded-full text-sm">
         🔀 Shuffle
       </button>
     </div>
@@ -618,15 +606,24 @@
                           </div>`;
           flashcardBack.innerHTML = `
                           <div class="relative w-full h-full flex flex-col justify-between">
-                            ${renderHintBlock(card)}
                             <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
                              <div class="flex-grow flex flex-col justify-center items-center text-center gap-6">
-                              <div class="text-2xl text-lightpurple">${
-                                card.word.romanUrdu
-                              }</div>
-                              <div class="text-6xl font-bold noto-nastaliq-urdu ${urduFontClass}">${
-            card.word.urdu
-          }</div>
+
+
+
+                              
+                              
+                              
+                              <div class="text-5xl text-lightpurple">${card.word.romanUrdu}</div>
+                              <div >
+
+    <img 
+      src="${card.image}" 
+      alt="Word Image" 
+      class="w-28 h-28 md:w-28 md:h-28 object-contain" 
+    />
+  </div>
+                              <div class="text-6xl font-bold noto-nastaliq-urdu ${urduFontClass}">${card.word.urdu}</div>
                             </div>
                           </div>`;
         } else {
@@ -635,9 +632,10 @@
                             ${renderHintBlock(card)}
                             <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
                             <div class="flex-grow flex flex-col justify-center items-center text-center gap-6">
-                              <div class="text-2xl text-lightpurple">${
+                              <div class="text-5xl text-lightpurple">${
                                 card.word.romanUrdu
                               }</div>
+                              
                               <div class="text-6xl font-bold noto-nastaliq-urdu ${urduFontClass}">${
             card.word.urdu
           }</div>
@@ -646,12 +644,18 @@
                           </div>`;
           flashcardBack.innerHTML = `
                           <div class="relative w-full h-full flex flex-col justify-between">
-                            ${renderHintBlock(card)}
+                         
                             <div class="text-sm ${englishLabelClass} text-center mt-2">English</div>
-                            <div class="flex-grow flex justify-center items-center">
-                              <div class="text-6xl font-bold ${englishFontClass} text-center">${
-            card.word.english
-          }</div>
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-6">
+                               <div>
+
+    <img 
+      src="${card.image}" 
+      alt="Word Image" 
+      class="w-28 h-28 md:w-28 md:h-28 object-contain" 
+    />
+  </div>
+                              <div class="text-6xl font-bold ${englishFontClass} text-center">${card.word.english}</div>
                             </div>
                           </div>`;
         }
