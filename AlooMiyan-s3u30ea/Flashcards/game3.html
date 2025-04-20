@@ -393,7 +393,7 @@
       }
 
       function showQuizCompleteCard() {
-        toggleLangBtn.style.display = "inline-block";
+        // toggleLangBtn.style.display = "inline-block";
 
         flashcardFront.innerHTML = `
                         <div class="quiz-complete-card">
@@ -415,11 +415,20 @@
 
         document.getElementById("exit-quiz").addEventListener("click", () => {
           isQuizMode = false;
-          quizBtn.textContent = "🎯 Quiz Mode";
-          toggleLangBtn.style.display = "inline-block"; // ✅ show again
-          currentIndex = 0;
           correctAnswers = 0;
+          currentIndex = 0;
           riddles = [...originalRiddles];
+
+          // Reset UI elements
+          quizBtn.textContent = "🎯 Quiz Mode";
+          toggleLangBtn.style.display = "inline-block";
+          toggleImageBtn.style.display = "inline-block";
+          shuffleButton.style.display = "inline-block";
+          navButtons.style.display = "flex";
+
+          // Reset flip state just in case
+          flashcard.classList.remove("flipped");
+
           updateFlashcard(currentIndex);
         });
       }
@@ -518,14 +527,14 @@
                             } text-center mt-2">
                               ${isEnglishToUrdu ? "English" : "Urdu"}
                             </div>
-                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-2">
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-4">
                               ${
                                 isEnglishToUrdu
                                   ? `<div class="text-6xl font-bold ${englishFontClass}">${card.word.english}</div>`
                                   : `<div class="text-2xl text-lightpurple">${card.word.romanUrdu}</div><div class="text-6xl font-bold noto-nastaliq-urdu ${urduFontClass}">${card.word.urdu}</div>`
                               }
                             </div>
-                            <div class="text-purple-600 text-center mb-4">What does this mean?</div>
+                            <div class="text-purple-600 text-center mt-10 mb-4">What does this mean?</div>
                             <div class="flex flex-col items-center mb-4">
                               ${options
                                 .map((item) => {
@@ -625,7 +634,7 @@
                           <div class="relative w-full h-full flex flex-col justify-between">
                             ${renderHintBlock(card)}
                             <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
-                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-2">
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-6">
                               <div class="text-2xl text-lightpurple">${
                                 card.word.romanUrdu
                               }</div>
@@ -694,6 +703,7 @@
 
         toggleLangBtn.style.display = isQuizMode ? "none" : "inline-block";
         shuffleButton.style.display = isQuizMode ? "none" : "inline-block";
+        toggleImageBtn.style.display = isQuizMode ? "none" : "inline-block";
 
         if (isQuizMode) {
           riddles = [...originalRiddles].sort(() => Math.random() - 0.5);
