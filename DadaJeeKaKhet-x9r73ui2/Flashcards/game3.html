@@ -690,7 +690,9 @@
 
         // ✅ If we're now seeing the front again, re-render it
         if (!isNowFlipped) {
-          updateFlashcard(currentIndex);
+          setTimeout(() => {
+            updateFlashcard(currentIndex);
+          }, 500); // 1000ms = 1 second
         }
       });
 
