@@ -562,7 +562,8 @@
             .sort(() => Math.random() - 0.5);
 
           flashcardFront.innerHTML = `
-                          <div class="relative w-full h-full flex flex-col justify-between">
+                          <div class="relative w-full h-full flex flex-col justify-center text-center gap-4 px-4">
+
                             <div class="text-sm ${
                               isEnglishToUrdu
                                 ? englishLabelClass
@@ -570,18 +571,18 @@
                             } text-center mt-2">
                               ${isEnglishToUrdu ? "English" : "Urdu"}
                             </div>
-                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-4">
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-3">
                               ${
                                 isEnglishToUrdu
                                   ? `<div class="text-4xl md:text-6xl font-bold ${englishFontClass} text-center break-words">
 ${card.word.english}</div>`
-                                  : `<div class="text-4xl md:text-6xl font-bold text-lightpurple break-words">
+                                  : `<div class="text-3xl md:text-5xl font-bold text-lightpurple break-words">
 ${card.word.romanUrdu}</div>
 <div class="text-4xl md:text-6xl font-bold noto-nastaliq-urdu ${urduFontClass} break-words">
 ${card.word.urdu}</div>`
                               }
                             </div>
-                            <div class="text-purple-600 text-center mt-10 mb-4">What does this mean?</div>
+                            <div class="text-purple-600 text-center mt-3 mb-3">What does this mean?</div>
                             <div class="flex flex-col items-center mb-4">
                               ${options
                                 .map((item) => {
@@ -669,7 +670,7 @@ ${card.word.urdu}</div>`
                           <div class="relative w-full h-full flex flex-col justify-between">
                             ${renderHintBlock(card, "back")}
                             <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
-                             <div class="flex-grow flex flex-col justify-center items-center text-center gap-7">
+                             <div class="flex-grow flex flex-col justify-center items-center text-center gap-8">
 
 
 
@@ -695,7 +696,7 @@ ${card.word.urdu}</div>
                           <div class="relative w-full h-full flex flex-col justify-between">
                             ${renderHintBlock(card, "front")}
                             <div class="text-sm ${urduLabelClass} text-center mt-2">Urdu</div>
-                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-7">
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-8">
                               <div class="text-4xl md:text-6xl font-bold text-lightpurple break-words">
 ${card.word.romanUrdu}</div>
                               
@@ -708,7 +709,7 @@ ${card.word.urdu}</div>
                           <div class="relative w-full h-full flex flex-col justify-between">
                          ${renderHintBlock(card, "back")}
                             <div class="text-sm ${englishLabelClass} text-center mt-2">English</div>
-                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-7">
+                            <div class="flex-grow flex flex-col justify-center items-center text-center gap-8">
                                <div>
 
     <img 
