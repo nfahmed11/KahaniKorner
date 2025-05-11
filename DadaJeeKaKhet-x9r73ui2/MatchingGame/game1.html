@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lafz Ko Tasveer se Milayein</title>
+    <title>TASVEER SE PEHCHAAN</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
@@ -781,7 +781,7 @@
 
       <div class="timer-container">
         <div class="timer-toggle-wrapper">
-          <span id="timer-status-label">Timer</span>
+          <span id="timer-status-label">Timer OFF</span>
           <label class="switch">
             <input type="checkbox" id="timer-toggle" />
             <span class="slider"></span>
@@ -980,13 +980,18 @@
 
         timerToggle.addEventListener("change", () => {
           clearInterval(gameInterval);
+
           if (timerToggle.checked) {
+            timerStatusLabel.textContent = "Timer ON";
             gameStatus.classList.remove("hidden");
             startGame();
           } else {
+            timerStatusLabel.textContent = "Timer OFF";
             gameStatus.classList.add("hidden");
           }
         });
+
+        //
       });
 
       document
@@ -996,19 +1001,6 @@
         });
 
       const timerStatusLabel = document.getElementById("timer-status-label");
-
-      timerToggle.addEventListener("change", () => {
-        clearInterval(gameInterval);
-
-        if (timerToggle.checked) {
-          timerStatusLabel.textContent = "Timer ON";
-          gameStatus.classList.remove("hidden");
-          startGame();
-        } else {
-          timerStatusLabel.textContent = "Timer OFF";
-          gameStatus.classList.add("hidden");
-        }
-      });
     </script>
 
     <!-- Custom Game Over Modal -->
