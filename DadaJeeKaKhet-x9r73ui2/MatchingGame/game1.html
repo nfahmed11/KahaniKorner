@@ -909,6 +909,9 @@
           dropZone.innerHTML = "Choose the correct word!";
           dropZone.classList.remove("correct", "incorrect", "answered");
 
+          // 🔁 Fully clear the word options DOM and remove any leftover styles
+          wordOptions.innerHTML = "";
+
           // ✅ Reset styles from previous round
           document.querySelectorAll(".word").forEach((btn) => {
             btn.style.pointerEvents = "auto";
@@ -981,8 +984,12 @@
                 }
               }
 
-              // Move to next word after delay (regardless of right/wrong)
               setTimeout(() => {
+                // Remove any lingering styles from previous round
+                document.querySelectorAll(".word").forEach((btn) => {
+                  btn.removeAttribute("style");
+                });
+
                 loadNewWord();
               }, 1500);
             });
