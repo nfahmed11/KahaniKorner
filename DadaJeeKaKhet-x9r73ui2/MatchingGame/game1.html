@@ -997,6 +997,12 @@
               }
 
               setTimeout(() => {
+                document
+                  .querySelectorAll(".word.correct-highlight")
+                  .forEach((btn) => {
+                    btn.classList.remove("correct-highlight");
+                  });
+
                 loadNewWord();
               }, 1500);
             });
