@@ -909,6 +909,15 @@
           dropZone.innerHTML = "Choose the correct word!";
           dropZone.classList.remove("correct", "incorrect", "answered");
 
+          // ✅ Reset styles from previous round
+          document.querySelectorAll(".word").forEach((btn) => {
+            btn.style.pointerEvents = "auto";
+            btn.style.opacity = "1";
+            btn.style.border = "";
+            btn.style.background = "";
+            btn.style.boxShadow = "";
+          });
+
           const word = riddles[Math.floor(Math.random() * riddles.length)];
           targetImage.src = word.image;
           targetImage.setAttribute("data-correct", word.word.urdu);
