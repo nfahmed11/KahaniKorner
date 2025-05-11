@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tasveer Se Pehchaan</title>
+    <title>Lafz Ko Tasveer se Milayein</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
@@ -27,7 +27,9 @@
       .noto-nastaliq-urdu {
         font-family: "Noto Nastaliq Urdu", serif;
         font-optical-sizing: auto;
+
         font-weight: 500;
+
         font-style: normal;
       }
 
@@ -906,6 +908,15 @@
         function loadNewWord() {
           dropZone.innerHTML = "Choose the correct word!";
           dropZone.classList.remove("correct", "incorrect", "answered");
+
+          // ✅ Reset styles from previous round
+          document.querySelectorAll(".word").forEach((btn) => {
+            btn.style.pointerEvents = "auto";
+            btn.style.opacity = "1";
+            btn.style.border = "";
+            btn.style.background = "";
+            btn.style.boxShadow = "";
+          });
 
           const word = riddles[Math.floor(Math.random() * riddles.length)];
           targetImage.src = word.image;
