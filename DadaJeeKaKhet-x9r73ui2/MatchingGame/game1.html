@@ -1,5 +1,5 @@
 <html lang="en">
-  <head> 
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lafz Ko Tasveer se Milayein</title>
@@ -620,6 +620,16 @@
         color: white;
       }
 
+      .word.correct-highlight {
+        border: 2px solid var(--correct);
+        background: linear-gradient(
+          135deg,
+          rgba(16, 185, 129, 0.1),
+          rgba(16, 185, 129, 0.2)
+        );
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+      }
+
       .hidden {
         display: none;
       }
@@ -909,6 +919,12 @@
           dropZone.innerHTML = "Choose the correct word!";
           dropZone.classList.remove("correct", "incorrect", "answered");
 
+          document
+            .querySelectorAll(".word.correct-highlight")
+            .forEach((btn) => {
+              btn.classList.remove("correct-highlight");
+            });
+
           // 🔁 Fully clear the word options DOM and remove any leftover styles
           wordOptions.innerHTML = "";
 
@@ -976,20 +992,11 @@
                 ].find((btn) => btn.getAttribute("data-urdu") === correctUrdu);
 
                 if (correctOption) {
-                  correctOption.style.border = "2px solid var(--correct)";
-                  correctOption.style.background =
-                    "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.2))";
-                  correctOption.style.boxShadow =
-                    "0 0 10px rgba(16, 185, 129, 0.5)";
+                  correctOption.classList.add("correct-highlight");
                 }
               }
 
               setTimeout(() => {
-                // Remove any lingering styles from previous round
-                document.querySelectorAll(".word").forEach((btn) => {
-                  btn.removeAttribute("style");
-                });
-
                 loadNewWord();
               }, 1500);
             });
