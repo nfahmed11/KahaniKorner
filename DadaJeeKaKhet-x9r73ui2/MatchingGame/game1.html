@@ -630,6 +630,29 @@
         box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
       }
 
+      .word.selected-option {
+        transform: translateY(-3px);
+        background: linear-gradient(
+          135deg,
+          var(--secondary),
+          var(--secondary-light)
+        );
+        box-shadow: 0 0 0 3px var(--secondary-light);
+      }
+
+      .word.selected-option .roman,
+      .word.selected-option .urdu {
+        color: white;
+      }
+
+      @media (hover: none) {
+        .word:hover,
+        .word:hover .roman,
+        .word:hover .urdu {
+          all: unset;
+        }
+      }
+
       .hidden {
         display: none;
       }
@@ -957,6 +980,15 @@
             wordDiv.innerHTML = `<div class="roman">${w.word.romanUrdu}</div><div class="urdu">${w.word.urdu}</div>`;
 
             wordDiv.addEventListener("click", () => {
+              document
+                .querySelectorAll(".word.selected-option")
+                .forEach((btn) => {
+                  btn.classList.remove("selected-option");
+                });
+
+              // Highlight the selected word explicitly
+              wordDiv.classList.add("selected-option");
+
               // Prevent multiple selections
               if (dropZone.classList.contains("answered")) return;
 
