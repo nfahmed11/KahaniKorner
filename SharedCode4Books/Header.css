@@ -1,0 +1,39 @@
+ :root {
+        --rosy-brown: #d49797;
+        --ash-gray: #B0C3B7;
+        --lavender-blush: #EBE1E3;
+        --hookers-green: #687D70;
+        --misty-rose: #E6CFD0;
+        --charcoal: #4A594A;
+        --white-smoke: #F3F1F0;
+      }
+
+
+
+      header {
+        padding: 10px;
+        background: linear-gradient(135deg, var(--rosy-brown), var(--lavender-blush));
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .logo {
+        width: 120px;
+        height: auto;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      h1 {
+        font-size: clamp(28px, 6vw, 42px);
+        color: var(--rosy-brown);
+        margin: 0;
+        font-weight: 700;
+      }
