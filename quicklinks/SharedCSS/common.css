@@ -1,0 +1,99 @@
+/* pop up for email signups */
+
+.email-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .modal-content {
+    background-color: #fbe7e7;
+    border: 2px solid #b0c3b7;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeInScale 0.4s ease-out;
+  }
+
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #4a594a;
+  }
+
+  .signup-heading {
+    font-family: "Grandstander", cursive;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #b89794;
+  }
+
+  .signup-subheading {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #4a594a;
+  }
+
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .signup-form input[type="email"] {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #b0c3b7;
+    outline: none;
+    width: 100%;
+  }
+
+  .signup-form button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #b0c3b7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  .signup-form button:hover {
+    background-color: #a0b5a8;
+    transform: translateY(-2px);
+  }
+
+
+
+  /* end of pop up email sign ups */

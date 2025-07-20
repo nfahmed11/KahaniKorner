@@ -10,7 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <style>
+   <link rel="stylesheet" href="quicklinks/SharedCSS/common.css">
+   
+   <style>
       :root {
         --pink: #fbe7e7;
         --green: #b0c3b7;
@@ -230,6 +232,33 @@
     </style>
   </head>
   <body>
+
+    <!-- Email Signup Modal -->
+<div class="email-modal" id="emailModal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <h2 class="signup-heading">Stay in the Loop</h2>
+    <p class="signup-subheading">
+      Be the first to hear about new kahani drops, freebies, and more!
+    </p>
+    <form
+      action="https://script.google.com/macros/s/AKfycbxq-_jV_SHdHAFSFUL6H45HVxLWJAy8RprFYqmqS_-BHXuCTeBG95_zrrgND2BuZk8v9w/exec"
+      method="POST"
+      class="signup-form"
+    >
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter your email"
+        required
+      />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+
+
  <header>
       <a href="https://kahanikorner.com/">
         <img src="../quicklinks/images/logo.png" alt="Kahani Korner Logo" class="logo" />
@@ -304,6 +333,48 @@
     </div>
 
     <script>
+     // Show modal after delay or trigger manually
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("emailModal").style.display = "flex";
+    }, 3000); // Show after 3 seconds
+  });
+
+  function closeModal() {
+    document.getElementById("emailModal").style.display = "none";
+  }
+
+  // Handle form submission and prevent duplicate emails
+  const form = document.querySelector(".signup-form");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+      });
+
+      const text = await response.text();
+
+      if (text.includes("Success")) {
+        alert("Thank you! You're on the list 🎉");
+        form.reset();
+        closeModal(); // Close modal on success
+      } else if (text.includes("Duplicate")) {
+        alert("You’re already subscribed 💌");
+      } else {
+        alert("Oops! Something went wrong.");
+      }
+    } catch (err) {
+      alert("Network error. Please try again.");
+    }
+  });
+
+
+
       // heart emoji floating
 
       window.addEventListener("load", () => {
@@ -328,6 +399,9 @@
         navigator.clipboard.writeText("#KahaniMoments");
         alert("Hashtag copied!");
       };
+
+
+
     </script>
   </body>
 </html>
