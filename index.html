@@ -312,21 +312,43 @@
 
 
 <!-- form -->
-  <form action="https://submit-form.com/w8N9ivRsX" method="POST" class="signup-form" style="margin-top: 1rem;">
-  <input
-    type="email"
-    name="email"
-    placeholder="Enter your email"
-    required
-    style="padding:0.5rem; width:80%; margin-bottom:1rem; border:1px solid #ccc; border-radius:6px;"
-  />
-  <br />
-  <button type="submit" style="padding:0.5rem 1rem; background-color:#b0c3b7; color:white; border:none; border-radius:6px;">
-    Subscribe
-  </button>
-</form>
-<div id="form-success" style="display:none; margin-top:1rem; color:#28a745;">Thanks! You’re on the list 🎉</div>
+ <!-- Email Signup Modal -->
+<div id="emailModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; display:flex; justify-content:center; align-items:center;">
+  <div style="background:white; border-radius:16px; padding:2rem; width:90%; max-width:500px; box-shadow:0 8px 16px rgba(0,0,0,0.2); text-align:center; font-family:'Lora', serif; position:relative;">
+    <button onclick="closeModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+
+    <h2 style="font-family:'Brittany', cursive; font-size:2rem; color:#b0c3b7;">Stay Connected</h2>
+    <p style="font-size:1rem; color:#444; margin-bottom:1rem;">
+      Be the first to hear about new kahani drops, freebies, and more!
+    </p>
+
+    <form action="https://submit-form.com/w8N9ivRsX" method="POST" class="signup-form" style="margin-top: 1rem;">
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter your email"
+        required
+        style="padding:0.5rem; width:80%; margin-bottom:1rem; border:1px solid #ccc; border-radius:6px;"
+      />
+      <br />
+      <button type="submit" style="padding:0.5rem 1rem; background-color:#b0c3b7; color:white; border:none; border-radius:6px;">
+        Subscribe
+      </button>
+    </form>
+
+    <div id="form-success" style="display:none; margin-top:1rem; color:#28a745;">Thanks! You’re on the list 🎉</div>
+  </div>
+</div>
+
 <script>
+  window.addEventListener("load", () => {
+  
+  });
+
+  function closeModal() {
+    document.getElementById("emailModal").style.display = "none";
+  }
+
   const form = document.querySelector(".signup-form");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -351,41 +373,40 @@
         alert("Network error. Please try again.");
       });
   });
+
+  if (!sessionStorage.getItem("modalShown")) {
+  setTimeout(() => {
+    document.getElementById("emailModal").style.display = "flex";
+    sessionStorage.setItem("modalShown", "true");
+  }, 3000);
+}
+
 </script>
 
+<script>
+  // heart emoji floating
+  window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
 
+    const icons = ["❤"];
+    for (let i = 0; i < 15; i++) {
+      const icon = document.createElement("div");
+      icon.classList.add("heart");
+      icon.style.left = Math.random() * 100 + "vw";
+      icon.style.animationDelay = Math.random() * 10 + "s";
+      icon.style.fontSize = (1 + Math.random()).toFixed(2) + "rem";
+      icon.style.animationDuration = (6 + Math.random() * 4).toFixed(2) + "s";
+      icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+      document.body.appendChild(icon);
+    }
+  });
 
-    <script>
-   
+  // hashtag copy to clipboard
+  document.getElementById("tag").onclick = function () {
+    navigator.clipboard.writeText("#KahaniMoments");
+    alert("Hashtag copied!");
+  };
+</script>
 
-
-      // heart emoji floating
-
-      window.addEventListener("load", () => {
-        document.body.classList.add("loaded");
-
-        const icons = ["❤"];
-
-        for (let i = 0; i < 15; i++) {
-          const icon = document.createElement("div");
-          icon.classList.add("heart");
-          icon.style.left = Math.random() * 100 + "vw";
-          icon.style.animationDelay = Math.random() * 10 + "s";
-          icon.style.fontSize = (1 + Math.random()).toFixed(2) + "rem";
-          icon.style.animationDuration =
-            (6 + Math.random() * 4).toFixed(2) + "s";
-          icon.textContent = icons[Math.floor(Math.random() * icons.length)];
-          document.body.appendChild(icon);
-        }
-      });
-
-      document.getElementById("tag").onclick = function () {
-        navigator.clipboard.writeText("#KahaniMoments");
-        alert("Hashtag copied!");
-      };
-
-
-
-    </script>
   </body>
 </html>
