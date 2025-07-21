@@ -310,62 +310,53 @@
       </div>
     </div>
 
-    <!-- Email Signup Modal -->
-<div id="emailModal" class="email-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000;">
-  <div class="modal-content" style="background:white; padding:2rem; border-radius:8px; text-align:center; max-width:400px; width:90%;">
-    <button onclick="closeModal()" style="position:absolute; top:10px; right:15px; font-size:24px;">×</button>
-    <h2>Stay in the Loop</h2>
-    <p>Be the first to hear about new kahani drops, freebies, and more!</p>
-    <form class="signup-form" method="POST">
-      <input type="email" name="email" placeholder="Enter your email" required style="padding:0.5rem; width:80%; margin-bottom:1rem;" />
-      <br />
-      <button type="submit" style="padding:0.5rem 1rem;">Subscribe</button>
-    </form>
-  </div>
-</div>
+
+<!-- form -->
+  <form action="https://submit-form.com/w8N9ivRsX" method="POST" class="signup-form" style="margin-top: 1rem;">
+  <input
+    type="email"
+    name="email"
+    placeholder="Enter your email"
+    required
+    style="padding:0.5rem; width:80%; margin-bottom:1rem; border:1px solid #ccc; border-radius:6px;"
+  />
+  <br />
+  <button type="submit" style="padding:0.5rem 1rem; background-color:#b0c3b7; color:white; border:none; border-radius:6px;">
+    Subscribe
+  </button>
+</form>
+<div id="form-success" style="display:none; margin-top:1rem; color:#28a745;">Thanks! You’re on the list 🎉</div>
+<script>
+  const form = document.querySelector(".signup-form");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          form.style.display = "none";
+          document.getElementById("form-success").style.display = "block";
+        } else {
+          alert("Oops! Something went wrong.");
+        }
+      })
+      .catch(() => {
+        alert("Network error. Please try again.");
+      });
+  });
+</script>
+
+
 
     <script>
-   // email sign up
-// Replace this with your actual Google Apps Script web app URL
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUUe-wN1D9bPwI9U4WEEm4BuGztcDcI9XrShd7fxlRbrwdYOhD_wmskmoVpEuqvPRz0g/exec";
-
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      document.getElementById("emailModal").style.display = "flex";
-    }, 3000); // Show after 3 seconds
-  });
-
-  function closeModal() {
-    document.getElementById("emailModal").style.display = "none";
-  }
-
-  document.querySelector(".signup-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    const email = formData.get("email");
-
-    try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        body: new URLSearchParams({ email })
-      });
-      const text = await response.text();
-
-      if (text.includes("Success")) {
-        alert("Thank you! You're on the list 🎉");
-        this.reset();
-        closeModal();
-      } else if (text.includes("Duplicate")) {
-        alert("You’re already subscribed 💌");
-      } else {
-        alert("Oops! Something went wrong.");
-      }
-    } catch (error) {
-      alert("Network error. Please try again.");
-    }
-  });
-  //  email sign up end
-
+   
 
 
       // heart emoji floating
