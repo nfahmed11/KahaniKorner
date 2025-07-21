@@ -233,29 +233,7 @@
   </head>
   <body>
 
-    <!-- Email Signup Modal -->
-<div class="email-modal" id="emailModal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal()">×</button>
-    <h2 class="signup-heading">Stay in the Loop</h2>
-    <p class="signup-subheading">
-      Be the first to hear about new kahani drops, freebies, and more!
-    </p>
-    <form
-      action="https://script.google.com/macros/s/AKfycbxq-_jV_SHdHAFSFUL6H45HVxLWJAy8RprFYqmqS_-BHXuCTeBG95_zrrgND2BuZk8v9w/exec"
-      method="POST"
-      class="signup-form"
-    >
-      <input
-        type="email"
-        name="email"
-        placeholder="Enter your email"
-        required
-      />
-      <button type="submit">Subscribe</button>
-    </form>
-  </div>
-</div>
+ 
 
 
 
@@ -332,8 +310,25 @@
       </div>
     </div>
 
+    <!-- Email Signup Modal -->
+<div id="emailModal" class="email-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000;">
+  <div class="modal-content" style="background:white; padding:2rem; border-radius:8px; text-align:center; max-width:400px; width:90%;">
+    <button onclick="closeModal()" style="position:absolute; top:10px; right:15px; font-size:24px;">×</button>
+    <h2>Stay in the Loop</h2>
+    <p>Be the first to hear about new kahani drops, freebies, and more!</p>
+    <form class="signup-form" method="POST">
+      <input type="email" name="email" placeholder="Enter your email" required style="padding:0.5rem; width:80%; margin-bottom:1rem;" />
+      <br />
+      <button type="submit" style="padding:0.5rem 1rem;">Subscribe</button>
+    </form>
+  </div>
+</div>
+
     <script>
-     // Show modal after delay or trigger manually
+   // email sign up
+// Replace this with your actual Google Apps Script web app URL
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUUe-wN1D9bPwI9U4WEEm4BuGztcDcI9XrShd7fxlRbrwdYOhD_wmskmoVpEuqvPRz0g/exec";
+
   window.addEventListener("load", () => {
     setTimeout(() => {
       document.getElementById("emailModal").style.display = "flex";
@@ -344,34 +339,32 @@
     document.getElementById("emailModal").style.display = "none";
   }
 
-  // Handle form submission and prevent duplicate emails
-  const form = document.querySelector(".signup-form");
-
-  form.addEventListener("submit", async function (e) {
+  document.querySelector(".signup-form").addEventListener("submit", async function (e) {
     e.preventDefault();
-    const formData = new FormData(form);
+    const formData = new FormData(this);
+    const email = formData.get("email");
 
     try {
-      const response = await fetch(form.action, {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        body: formData,
+        body: new URLSearchParams({ email })
       });
-
       const text = await response.text();
 
       if (text.includes("Success")) {
         alert("Thank you! You're on the list 🎉");
-        form.reset();
-        closeModal(); // Close modal on success
+        this.reset();
+        closeModal();
       } else if (text.includes("Duplicate")) {
         alert("You’re already subscribed 💌");
       } else {
         alert("Oops! Something went wrong.");
       }
-    } catch (err) {
+    } catch (error) {
       alert("Network error. Please try again.");
     }
   });
+  //  email sign up end
 
 
 
