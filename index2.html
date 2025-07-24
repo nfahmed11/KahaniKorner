@@ -1,3 +1,6 @@
+<!-- This is the redirected page with no popup for subscribe(email) -->
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -229,67 +232,6 @@
           font-size: 1.5rem;
         }
       }
-
-
-
-
-      /* form */
-
-      #emailModal {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-  font-family: "Open Sans", sans-serif;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  position: relative;
-}
-
-.modal-content input[type="email"] {
-  padding: 0.5rem;
-  width: 80%;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.modal-content button[type="submit"] {
-  background-color: #b0c3b7;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#form-success {
-  color: green;
-  margin-top: 1rem;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #999;
-}
-
     </style>
   </head>
   <body>
@@ -372,29 +314,6 @@
     </div>
 
 
-<!-- Email Signup Modal -->
-<div id="emailModal" style="display:none;">
-  <div class="modal-content">
-    <button class="close-btn" onclick="document.getElementById('emailModal').style.display = 'none';">×</button>
-
-    <h2 style="color:#b0c3b7; font-family:'Grandstander', cursive; font-size: 1.75rem; margin-top: 0;">
-      Stay Connected
-    </h2>
-    <p style="color:#444; margin-bottom: 1.5rem;">
-      Be the first to hear about new kahani drops, freebies, and more!
-    </p>
-
-    <form action="https://submit-form.com/w8N9ivRsX" method="POST" class="signup-form">
-      <input
-        type="hidden"
-        name="_redirect"
-        value="https://www.kahanikorner.com/index2.html"
-      />
-      <input type="email" name="email" required placeholder="Enter your email" />
-      <button type="submit">Subscribe</button>
-    </form>
-  </div>
-</div>
 
 
 
