@@ -13,92 +13,8 @@
    <link rel="stylesheet" href="quicklinks/SharedCSS/common.css">
 
 
-    <style>
-      :root {
-        --feldgrau: #4a594a;
-        --hookers-green: #687d70;
-        --ash-gray: #b0c3b7;
-        --white-smoke: #f3f1f0;
-        --misty-rose: #f3dedd;
-        --tea-rose: #ffc4c3;
-        --rosy-brown: #d49797;
-        --white: #ffffff;
-        --black: #000000;
-      }
-
-      body {
-        margin: 0;
-        font-family: "Open Sans", sans-serif;
-        background: linear-gradient(to bottom, var(--misty-rose), var(--white-smoke));
-        color: var(--feldgrau);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem 1rem;
-        overflow-x: hidden;
-        opacity: 0;
-        transition: opacity 1s ease;
-        position: relative;
-        min-height: 100vh;
-      }
-
-      body.loaded {
-        opacity: 1;
-      }
-
-      .logo {
-        width: 150px;
-        max-width: 30vw;
-        margin-bottom: 1rem;
-      }
-
-      h1 {
-        font-family: "Grandstander", cursive;
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-        text-align: center;
-        color: var(--rosy-brown);
-      }
-
-      h2 {
-        font-family: "Grandstander", cursive;
-        font-size: 2rem;
-        margin: 0;
-        text-align: center;
-        color: var(--hookers-green);
-      }
-
-      p.subheading {
-        text-align: center;
-        font-size: 1rem;
-        max-width: 400px;
-        margin: 2rem;
-        color: var(--feldgrau);
-      }
-
-      .button {
-        display: block;
-        width: 80%;
-        max-width: 300px;
-        margin: 0.75rem auto;
-        padding: 0.75rem 1rem;
-        background-color: var(--hookers-green);
-        color: var(--white);
-        text-align: center;
-        font-size: 1rem;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
-        transition: transform 0.2s ease, background-color 0.3s ease;
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-      }
-
-      .button:active {
-        transform: scale(0.97);
-        background-color: var(--feldgrau);
-      }
+      <style>
+     
 
       .button:nth-of-type(1) {
         animation-delay: 0.5s;
@@ -114,23 +30,7 @@
         animation-delay: 1.4s;
       }
 
-      @keyframes fadeIn {
-        to {
-          opacity: 1;
-        }
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.04);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
+      
 
       .share-box {
         margin-top: 2rem;
@@ -146,69 +46,11 @@
         animation-fill-mode: forwards;
       }
 
-      .footer {
-        margin-top: 3rem;
-        font-size: 0.85rem;
-        text-align: center;
-        color: var(--feldgrau);
-      }
-
-      .social-icons img {
-        margin: 0 8px;
-        width: 28px;
-        height: 28px;
-        filter: grayscale(60%);
-        transition: filter 0.2s ease, transform 0.2s ease;
-      }
-
-      .social-icons img:hover {
-        filter: grayscale(0);
-        transform: scale(1.1);
-      }
-
-      .social-icons {
-        margin-top: 1rem;
-      }
 
       #tag {
         cursor: pointer;
         color: var(--hookers-green);
         font-weight: bold;
-      }
-
-      .heart {
-        position: absolute;
-        bottom: 0;
-        font-size: 1.5rem;
-        opacity: 0;
-        animation: floatSwirl 6s linear infinite;
-        color: rgba(106, 144, 120, 0.4);
-      }
-
-      @keyframes floatSwirl {
-        0% {
-          transform: translateY(0) translateX(0) rotate(0deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 1;
-        }
-        50% {
-          transform: translateY(-50vh) translateX(20px) rotate(180deg);
-        }
-        100% {
-          transform: translateY(-100vh) translateX(-20px) rotate(360deg);
-          opacity: 0;
-        }
-      }
-
-      @media (max-width: 480px) {
-        h1 {
-          font-size: 2rem;
-        }
-        h2 {
-          font-size: 1.5rem;
-        }
       }
 
 
