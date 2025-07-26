@@ -204,7 +204,7 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
     </a>
 
     <div class="footer">
-      Rooted in culture, topped with sweetness, made for little hearts 💕📖
+      Rooted in culture, topped with sweetness, made for little hearts.
       <div class="social-icons">
         <a
           href="https://www.instagram.com/kahani.korner/"
@@ -237,18 +237,22 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
       window.addEventListener("load", () => {
         document.body.classList.add("loaded");
 
-        const icons = ["❤"];
-        for (let i = 0; i < 15; i++) {
-          const icon = document.createElement("div");
-          icon.classList.add("heart");
-          icon.style.left = Math.random() * 100 + "vw";
-          icon.style.animationDelay = Math.random() * 10 + "s";
-          icon.style.fontSize = (1 + Math.random()).toFixed(2) + "rem";
-          icon.style.animationDuration =
-            (6 + Math.random() * 4).toFixed(2) + "s";
-          icon.textContent = icons[Math.floor(Math.random() * icons.length)];
-          document.body.appendChild(icon);
-        }
+        // pink heart images from Icons8
+const iconSrc = "https://img.icons8.com/color/96/like--v1.png";
+
+
+for (let i = 0; i < 15; i++) {
+  const icon = document.createElement("img");
+  icon.src = iconSrc;
+  icon.classList.add("heart");
+  icon.style.left = Math.random() * 100 + "vw";
+  icon.style.animationDelay = Math.random() * 10 + "s";
+  icon.style.width = (16 + Math.random() * 10).toFixed(2) + "px";
+  icon.style.animationDuration = (6 + Math.random() * 4).toFixed(2) + "s";
+  document.body.appendChild(icon);
+}
+
+
       });
     </script>
   </body>
