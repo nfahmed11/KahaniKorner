@@ -10,73 +10,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        --pink: #fbe7e7;
-        --green: #b0c3b7;
-        --black: #000;
-        --white: #fff;
-      }
+ <link rel="stylesheet" href="../quicklinks/SharedCSS/common.css">
 
-      body {
-        margin: 0;
-font-family: "Open Sans", sans-serif;        background: linear-gradient(to bottom, #fbe7e7, #ffffff);
-        color: var(--black);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem 1rem;
-        overflow-x: hidden;
-        opacity: 0;
-        transition: opacity 1s ease;
-        position: relative;
-        min-height: 100vh;
-        text-align: center;
-      }
+ <style>
+   
+     
+    
 
-      body.loaded {
-        opacity: 1;
-      }
-
-       .logo {
-        width: 150px;
-        max-width: 30vw;
-        margin-bottom: 1rem;
-      }
-
-      h1 {
-        font-family: "Grandstander", cursive;
-        font-size: 3rem;
-        color: #b89794;
-        margin-bottom: 0.3rem;
-      }
-
-      p.description {
-        font-size: 0.95rem;
-        color: #555;
-        max-width: 360px;
-        line-height: 1.5;
-        margin: 1rem auto 2rem;
-      }
-
-      .button {
-        display: block;
-        width: 80%;
-        max-width: 300px;
-        margin: 0.75rem auto;
-        padding: 0.75rem 1rem;
-        background-color: var(--green);
-        color: var(--white);
-        text-align: center;
-        font-size: 1rem;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
-        transition: transform 0.2s ease, background-color 0.3s ease;
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-      }
+    
 
       .button:active {
         transform: scale(0.97);
@@ -177,11 +118,14 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
     </style>
   </head>
   <body>
-    <a href="../index.html" target="_blank" rel="noopener">
-      <img src="images/logo.png" alt="Kahani Korner Logo" class="logo" />
-    </a>
+          <header>
+      <a href="https://kahanikorner.com/">
+        <img src="images/logo.png" alt="Kahani Korner Logo" class="logo" />
+      </a> 
+    </header>
+    
     <h1>Resources</h1>
-    <p class="description">
+    <p class="subheading">
       Click below to explore free resources that make teaching Urdu at home fun
       and meaningful. These tools are designed to spark curiosity, build
       connection, and bring the richness of Urdu language and culture into your
@@ -192,7 +136,7 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
       >Teach Urdu at Home – Mini Guide</a
     >
 
-     <a class="button" href="tutors.html">Tutors</a>
+     <!-- <a class="button" href="tutors.html">Tutors</a> -->
 
     
 

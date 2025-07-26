@@ -20,7 +20,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 2rem 1rem;
+        
         overflow-x: hidden;
         opacity: 0;
         transition: opacity 1s ease;
@@ -32,19 +32,37 @@
         opacity: 1;
       }
 
-      .logo {
-        width: 150px;
-        max-width: 30vw;
-        margin-bottom: 1rem;
+
+      header {
+        width: 100%;
+        background: linear-gradient(135deg, var(--rosy-brown), var(--white-smoke));
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
       }
 
-      h1 {
-        font-family: "Grandstander", cursive;
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-        text-align: center;
-        color: var(--rosy-brown);
-      }
+.logo {
+  width: 120px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+h1 {
+  font-family: "Grandstander", cursive;
+  font-size: clamp(28px, 6vw, 42px);
+  color: var(--rosy-brown);
+  margin: 2rem;
+  font-weight: 700;
+}
+
+
 
       h2 {
         font-family: "Grandstander", cursive;
@@ -54,37 +72,49 @@
         color: var(--hookers-green);
       }
 
+       
+
       p.subheading {
         text-align: center;
-        font-size: 1rem;
-        max-width: 400px;
-        margin: 2rem;
+        font-size: 0.96rem;
+        max-width:360px;
+        margin: 1rem auto 2rem;
         color: var(--feldgrau);
+        
       }
 
-      .button {
-        display: block;
-        width: 80%;
-        max-width: 300px;
-        margin: 0.75rem auto;
-        padding: 0.75rem 1rem;
-        background-color: var(--hookers-green);
-        color: var(--white);
-        text-align: center;
-        font-size: 1rem;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
-        transition: transform 0.2s ease, background-color 0.3s ease;
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-      }
+      
+.button {
+  display: block;
+  width: 80%;
+  max-width: 300px;
+  margin: 0.75rem auto;
+  padding: 0.75rem 1rem;
+  background-color: var(--hookers-green);
+  color: var(--white);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
 
-      .button:active {
-        transform: scale(0.97);
-        background-color: var(--feldgrau);
-      }
+.button:hover {
+  transform: scale(1.03);
+  background-color: var(--ash-gray);
+  box-shadow: 0 0 12px var(--ash-gray); /* Subtle glow */
+}
+
+.button:active {
+  transform: scale(0.97);
+  background-color: var(--ash-gray);
+  box-shadow: 0 0 8px var(--ash-gray);
+}
+
 
 
 /* animations */
@@ -185,13 +215,6 @@
       /* sign up email subscribe */
 
 
-      /* Root Colors (assumed already defined in your base styles) */
-:root {
-  --green: #b0c3b7;
-  --green-dark: #a1b5aa;
-  --white: #fff;
-}
-
 
 /* Initial modal state */
 .email-modal {
@@ -224,9 +247,19 @@ body.loaded .email-modal {
   }
 }
 
+
+
+
+
+
+
+
 /* Modal Content Box */
+
+
+
 .modal-content {
-  background: var(--white);
+  background: var(--white-smoke);
   padding: 2rem;
   border-radius: 12px;
   text-align: center;
@@ -255,15 +288,15 @@ body.loaded .email-modal {
 
 /* Submit Button */
 .modal-content button[type="submit"] {
-  background-color: var(--green);
-  color: var(--white);
+  background-color: var(--ash-gray);
+  color: var(--white-smoke);
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .modal-content button[type="submit"]:hover {
-  background-color: var(--green-dark);
+  background-color: var(--ash-gray);
 }
 
 /* Close Button */
@@ -275,11 +308,11 @@ body.loaded .email-modal {
   background: none;
   border: none;
   cursor: pointer;
-  color: #999;
+  color: var(--feldgrau);
 }
 
 /* Success Message */
 #form-success {
-  color: green;
+  color: var(--feldgrau);
   margin-top: 1rem;
 }

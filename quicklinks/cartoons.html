@@ -10,56 +10,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="quicklinks/SharedCSS/common.css">   
+<link rel="stylesheet" href="/quicklinks/SharedCSS/common.css">   
    <style>
-      :root {
-        --pink: #fbe7e7;
-        --green: #b0c3b7;
-        --black: #000;
-        --white: #fff;
-      }
+      
 
-      body {
-        margin: 0;
-font-family: "Open Sans", sans-serif;        background: linear-gradient(to bottom, #fbe7e7, #ffffff);
-        color: var(--black);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem 1rem;
-        overflow-x: hidden;
-        opacity: 0;
-        transition: opacity 1s ease;
-        position: relative;
-        min-height: 100vh;
-        text-align: center;
-      }
+   
 
-      body.loaded {
-        opacity: 1;
-      }
+     
 
-       .logo {
-        width: 150px;
-        max-width: 30vw;
-        margin-bottom: 1rem;
-      }
+      
 
-      h1 {
-        font-family: "Grandstander", cursive;
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-        text-align: center;
-        color: #b89794;
-      }
-
-      .info-text {
-        font-size: 0.9rem;
-        color: #666;
-        max-width: 360px;
-        margin: 0 auto 1.8rem;
-        line-height: 1.5;
-      }
+     
 
       .filter-container {
         margin-bottom: 1.5rem;
@@ -169,11 +130,6 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
         }
       }
 
-      .translation {
-        font-size: 0.9rem;
-        color: #777;
-        margin-top: 0.3rem;
-      }
 
       .hidden {
         display: none;
@@ -197,69 +153,20 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
         animation-delay: 1.4s;
       }
 
-      @keyframes fadeIn {
-        to {
-          opacity: 1;
-        }
-      }
+     
 
-       .footer {
-        margin-top: 3rem;
-        font-size: 0.85rem;
-        text-align: center;
-      }
-
-      .social-icons img {
-        margin: 0 8px;
-        width: 28px;
-        height: 28px;
-        filter: grayscale(60%);
-        transition: filter 0.2s ease, transform 0.2s ease;
-      }
-
-      .social-icons img:hover {
-        filter: grayscale(0);
-        transform: scale(1.1);
-      }
-
-      .social-icons {
-        margin-top: 1rem;
-      }
-
-      .heart {
-        position: absolute;
-        bottom: 0;
-        font-size: 1.5rem;
-        opacity: 0;
-        animation: floatSwirl 6s linear infinite;
-        color: #b8979481;
-      }
-
-      @keyframes floatSwirl {
-        0% {
-          transform: translateY(0) translateX(0) rotate(0deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 1;
-        }
-        50% {
-          transform: translateY(-50vh) translateX(20px) rotate(180deg);
-        }
-        100% {
-          transform: translateY(-100vh) translateX(-20px) rotate(360deg);
-          opacity: 0;
-        }
-      }
     </style>
   </head>
   <body>
-    <a href="../index.html" target="_blank" rel="noopener">
-      <img src="images/logo.png" alt="Kahani Korner Logo" class="logo" />
-    </a>
+         <header>
+      <a href="https://kahanikorner.com/">
+        <img src="images/logo.png" alt="Kahani Korner Logo" class="logo" />
+      </a> 
+    </header>
+    
     <h1>Urdu Cartoon Picks</h1>
 
-    <p class="info-text">
+    <p class="subheading">
         Discover a delightful collection of Urdu cartoons that entertain and educate. From classic tales to modern adventures, these selections are perfect for young hearts and curious minds. Enjoy the magic of storytelling through vibrant animations and engaging characters.
     </p>
 
@@ -306,19 +213,142 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
 <script>
   // object and function to add new videos onto the page
   const videolist = [
-    {
-      name: "Omar and Hana",
-      type: "channel",
-      url: "https://www.youtube.com/@Omarandhanaurdu/videos?view=0&sort=dd&shelf_id=2",
-      image:
+   
+      
+  {
+    name: "Omar & Hana (Urdu)",
+    type: "channel",
+    url: "https://www.youtube.com/c/Omarandhanaurdu",
+    image:
         "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ65dQLLNBtZQR9Rm1KhDdMYOtEiySVf9J2ERVKSLmBbUNRwYOCxGOoTwl-tBgO-8PyNr6tuw",
-      category: "Islamic",
-      description: "Omar and Hana are curious siblings who love to learn about Islam through fun songs and stories.",
-    },
+      category: "Islamic / Educational",
+    description:
+      "Omar & Hana are loving siblings who explore Islamic values and everyday lessons through songs and stories in Urdu.",
+  },
+  {
+    name: "Burka Avenger",
+    type: "series",
+    url: "https://www.youtube.com/playlist?list=PLXR6od8xw_e_R68FA5FGQ4nF9g9F2f6zi",
+    image: "https://i.ytimg.com/vi/h3JZGLNYwQ8/maxresdefault.jpg",
+    category: "Superhero / Social Issues",
+    description:
+      "Pakistani animated superheroine Jiya (Burka Avenger) fights injustice and supports girls’ education in Urdu.",
+  },
+  {
+    name: "3 Bahadur (Movie)",
+    type: "film / clips",
+    url: "https://www.youtube.com/watch?v=nYFe7wrkoyE",
+    image: "https://i.ytimg.com/vi/nYFe7wrkoyE/sddefault.jpg",
+    category: "Superhero / Adventure",
+    description:
+      "Pakistan’s first full-length CG‑animated superhero film dubbed or subtitled in Urdu.",
+  },
+{
+    name: "3 Bahadur - Revenge of Baba Balam (Movie)",
+    type: "film / clips",
+    url: " https://www.youtube.com/watch?v=KM1idkyZDf8",
+    image: "https://upload.wikimedia.org/wikipedia/en/1/16/3_Bahadur_part_2_poster.jpeg",
+    category: "Superhero / Adventure",
+    description:
+      "Pakistan’s first full-length CG‑animated superhero film dubbed or subtitled in Urdu.",
+  },
+ 
+  {
+    name: "Team Muhafiz",
+    type: "series",
+    url: "https://www.youtube.com/@GeoJuniors",
+    image: "https://yt3.googleusercontent.com/qOzZs3kS_-IF2rzc-4171HShemwCeVwwRz4QPjfglGDbIxRCRFb1VlJq885UpS7FXprboZR1F6k=w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+    category: "Social Justice / Superhero",
+    description:
+      "Animated series about teens fighting social issues, originally in Urdu (via ISPR‑Geo).",
+  },
+  {
+    name: "Kids Planet Urdu",
+    type: "channel",
+    url: "https://www.youtube.com/c/kidsplaneturdu",
+    image: "https://yt3.googleusercontent.com/fVC2VfgnGdFIvGQUD-TKl-QoQ35GXmRqcS9A3c6TI6ooVDogLQ69Qm2crYZGhvQ4O1vS-6KORQ=w2276-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
+    category: "Educational / Rhymes",
+    description:
+      "Fun Urdu nursery rhymes, fairy tales and educational cartoons designed for young children.",
+  },
+  {
+  name: "Quaid Say Baatein",
+  type: "channel",
+  url: "https://www.youtube.com/@QuaidSayBaatein/videos",
+  image: "https://scontent.fmem1-1.fna.fbcdn.net/v/t39.30808-6/339089614_911799786755152_7232974703168831862_n.png?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=fWFSB8dsYVUQ7kNvwEXf47Q&_nc_oc=AdmqSMzgP5BPb2hT2fCMwiC0C-GdRsKLjjpgzYAgaZPnJ4YRBBUjScQIz0NozInmYx8&_nc_zt=23&_nc_ht=scontent.fmem1-1.fna&_nc_gid=s9GWvW6StFZ2LzLpqVx_Kw&oh=00_AfTpulPrE6nNVBXU6pRF2AcY8ZAEZovCReeM4R1JD5Byow&oe=688ABFC0",
+  category: "Patriotic / Educational",
+  description: "Animated series teaching children life lessons and civic values inspired by Quaid-e-Azam’s principles.",
+},
+{
+  name: "Sim Sim Hamara",
+  type: "series",
+  url: "https://www.youtube.com/results?search_query=Sim+Sim+Hamara+Urdu",
+  image: "https://upload.wikimedia.org/wikipedia/en/0/0c/Sim_Sim_Hamara_logo.jpg",
+  category: "Educational / Puppets",
+  description: "Pakistani version of Sesame Street in Urdu teaching letters, kindness, and culture.",
+
+},
+{
+  name: "Commander Safeguard",
+  type: "series",
+  url: "https://www.youtube.com/results?search_query=Commander+Safeguard+Urdu",
+  image: "https://upload.wikimedia.org/wikipedia/en/a/a1/Commander_Safeguard.jpg",
+  category: "Educational / Hygiene",
+  description: "Pakistan’s first animated superhero fighting germs to teach hand‑washing in Urdu.",
+
+},
+{
+  name: "Jan Cartoon",
+  type: "series",
+  url: "https://www.youtube.com/results?search_query=Jan+Cartoon+Urdu",
+  image: "https://upload.wikimedia.org/wikipedia/en/placeholder.jpg",
+  category: "Family / Life Lessons",
+  description: "Light‑hearted animated stories about a curious five‑year‑old boy and everyday adventures in Urdu.",
+
+},
+{
+  name: "Sherazade (Urdu Dubbing)",
+  type: "dubbed",
+  url: "https://www.youtube.com/watch?v=pX0q3UHLKME",
+  image: "https://img.youtube.com/vi/pX0q3UHLKME/hqdefault.jpg",
+  category: "Dubbed Folk Tales",
+  description: "Urdu‑dubbed mega‑episode of Arabian Nights style storytelling.",
+
+},
+{
+  name: "Ghulam Rasool Cartoon Series",
+  type: "series",
+  url: "https://www.youtube.com/results?search_query=Ghulam+Rasool+Cartoon+Urdu",
+  image: "https://img.youtube.com/vi/bWuZrWJjE7M/hqdefault.jpg",
+  category: "Islamic / Moral Stories",
+  description: "3D animated moral stories in Urdu, popular on Kids Zone Pakistan.",
+
+},
+{
+  name: "Kaneez Fatima Cartoon Series",
+  type: "series",
+  url: "https://www.youtube.com/watch?v=S8tiai8LBwY",
+  image: "https://img.youtube.com/vi/S8tiai8LBwY/hqdefault.jpg",
+  category: "Islamic Moral Stories",
+  description: "Compilation series in Urdu/Hindi teaching Islamic values through short stories.",
+
+},
+
+{
+  name: "Wow Kidz Comedy TV",
+  type: "series",
+  url: "https://www.youtube.com/@WowKidzComedyTV/videos",
+  image: "https://scontent.fmem1-2.fna.fbcdn.net/v/t39.30808-6/326348541_485648877053936_2056135035727773146_n.png?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=kFNePqz9MXYQ7kNvwE18G1_&_nc_oc=AdmWcOojcCUnRhwGKENxrN5R1KH0j6yaQW4iWOjro3pqn6ii1rn_d6-UdJcCXitHWhc&_nc_zt=23&_nc_ht=scontent.fmem1-2.fna&_nc_gid=Q-CaGrIgwbzF0K2A9yqzBA&oh=00_AfR3RCtWzAhyyJCE9pP9xS3kW0VZfQXamIiOridASSNUAA&oe=688AF834",
+  category: "Comedy / Adventure",
+  description: "Hilarious duo Motlu and Patlu get into wild adventures. Now available fully dubbed in Urdu for kids!",
+}
+
+
+];
 
 
     
-  ];
+
 
   const grid = document.querySelector(".grid");
   grid.innerHTML = ""; // Clear any hardcoded video-wrapper divs
@@ -328,78 +358,39 @@ font-family: "Open Sans", sans-serif;        background: linear-gradient(to bott
     return match ? match[1] : "";
   }
 
-  videolist.forEach((video) => {
-    const wrapper = document.createElement("div");
-    wrapper.className = `video-wrapper video ${video.category}`;
+ videolist.forEach((video) => {
+  const wrapper = document.createElement("div");
+  wrapper.className = `video-wrapper video ${video.category}`;
 
-    const title = document.createElement("div");
-    title.className = `video-title ${video.category}`;
-    title.textContent = video.name;
+  const title = document.createElement("div");
+  title.className = `video-title ${video.category}`;
+  title.textContent = video.name;
 
-    if (video.type === "channel") {
-      const preview = document.createElement("a");
-      preview.href = video.url;
-      preview.target = "_blank";
-      preview.style.textDecoration = "none";
+  const preview = document.createElement("a");
+  preview.href = video.url;
+  preview.target = "_blank";
+  preview.style.textDecoration = "none";
 
-      const banner = document.createElement("img");
-      banner.src = video.image;
-      banner.alt = video.name;
-      banner.style.width = "100%";
-      banner.style.display = "block";
-      banner.style.objectFit = "cover";
-      banner.style.height = "180px"; // keep same height as iframe thumbnails
+  const banner = document.createElement("img");
+  banner.src = video.image;
+  banner.alt = video.name;
+  banner.style.width = "100%";
+  banner.style.display = "block";
+  banner.style.objectFit = "cover";
+  banner.style.height = "180px";
 
-      preview.appendChild(banner);
-      wrapper.appendChild(preview);
-    } else {
-      // default behavior for embedded videos
-      const preview = document.createElement("div");
-      preview.className = "video-thumbnail";
-      preview.style.position = "relative";
-      preview.style.cursor = "pointer";
+  preview.appendChild(banner);
+  wrapper.appendChild(preview);
 
-      const thumbnail = document.createElement("img");
-      thumbnail.src = `https://img.youtube.com/vi/${getYouTubeID(
-        video.embed
-      )}/hqdefault.jpg`;
-      thumbnail.alt = video.name;
-      thumbnail.style.width = "100%";
-      thumbnail.style.display = "block";
+  const translation = document.createElement("div");
+  translation.className = "translation";
+  translation.textContent = video.description;
 
-      const playButton = document.createElement("div");
-      playButton.innerHTML = "▶️";
-      playButton.style.position = "absolute";
-      playButton.style.top = "50%";
-      playButton.style.left = "50%";
-      playButton.style.transform = "translate(-50%, -50%)";
-      playButton.style.fontSize = "2rem";
-      playButton.style.color = "#fff";
-      playButton.style.textShadow = "0 0 10px rgba(0,0,0,0.6)";
+  wrapper.appendChild(title);
+  wrapper.appendChild(translation);
+  grid.appendChild(wrapper);
+});
 
-      preview.addEventListener("click", () => {
-        const iframe = document.createElement("iframe");
-        iframe.src = video.embed + "?autoplay=1";
-        iframe.setAttribute("allowfullscreen", true);
-        iframe.setAttribute("loading", "lazy");
-        iframe.style.width = "100%";
-        iframe.style.height = "180px";
-        preview.replaceWith(iframe);
-      });
-
-      preview.appendChild(thumbnail);
-      preview.appendChild(playButton);
-      wrapper.appendChild(preview);
-    }
-
-    const translation = document.createElement("div");
-    translation.className = "translation";
-    translation.textContent = video.description;
-
-    wrapper.appendChild(title);
-    wrapper.appendChild(translation);
-    grid.appendChild(wrapper);
-  });
 
   // Filter for category selection
   const filter = document.getElementById("categoryFilter");
