@@ -71,6 +71,11 @@
   </div>
   
 <script>
+// Page load animation
+  window.addEventListener("load", () => {
+        document.body.classList.add("loaded");
+
+
   // object and function to add new videos onto the page
   const videolist =  [
   {
@@ -112,6 +117,14 @@
     image: "images/arwa.png",
     category: "Urdu",
     description: "Our channel's goal is to enhance children's communication skills in English and Urdu while instilling valuable Islamic values.",
+  },
+   {
+    name: "Learn with Alif, Baa and Seen",
+    type: "Books",
+    url: "https://www.youtube.com/@learnwithalifbaaandseen",
+    image: "https://yt3.googleusercontent.com/_VS-9Ui967AvrY7aSzg6WYv99poGyXTUtI9YG4xDRTf7PFwWOF1iifDViV69iel8MrRjAKvYjQ=s160-c-k-c0x00ffffff-no-rj",
+    category: "Urdu",
+    description: "Join for a storytime session to learn Urdu in a fun way!",
   },
     
   ];
@@ -212,8 +225,7 @@
     });
   });
 
-  window.addEventListener("load", () => {
-    document.body.classList.add("loaded");
+  
 
     // pink heart images from Icons8
 const iconSrc = "https://img.icons8.com/color/96/like--v1.png";
