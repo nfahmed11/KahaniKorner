@@ -8,7 +8,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Grandstander:wght@400;700&family=Authentic+Sans:wght@400;700&display=swap"
       rel="stylesheet" />
-    <link rel="stylesheet" href="../style.css" />
+
 
     <style>
       /* Updated CSS for a more polished, child-friendly design */
@@ -31,16 +31,36 @@
         padding: 0;
       }
 
-      header {
+      
+header {
+        width: 100%;
         background: linear-gradient(
           135deg,
           var(--primary),
           var(--secondary-bg)
         );
-        padding: 20px;
-        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
       }
 
+.logo {
+  width: 120px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+
+
+    
+      
       nav {
         text-align: center;
         margin-bottom: 10px;
@@ -339,11 +359,16 @@
   </head>
 
   <body>
+  
+
     <header>
-      <img src="../../images/logo.png" alt="Logo" class="logo" />
+      <a href="https://kahanikorner.com/">
+        <img src="/quicklinks/images/logo.png" alt="Kahani Korner Logo" class="logo" />
+      </a>
+   
     </header>
     <nav>
-      <a href="../index.html">Back to Dada Jee Ka Khet</a>
+      <a href="../index.html">Back</a>
     </nav>
 
     <div class="container">
