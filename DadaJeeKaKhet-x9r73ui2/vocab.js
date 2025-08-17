@@ -509,7 +509,7 @@ export const riddles = [
   },
   {
     word: {
-      romanUrdu: "gaaye",
+      romanUrdu: "Gaaye",
       urdu: "گائے",
       english: "Cow",
     },
