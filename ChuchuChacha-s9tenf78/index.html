@@ -20,6 +20,11 @@
     </style>
   </head>
   <body>
+
+<div id="overlay">
+      🔈 <br> Tap to Unmute
+</div>
+
     <header>
       <a href="https://kahanikorner.com/">
         <img src="../quicklinks/images/logo.png" alt="Kahani Korner Logo" class="logo" />
@@ -40,6 +45,21 @@
         <a href="MemoryGame/game4.html" class="button">Memory Game</a>
       </div>
     </div>
+
+
+    
+     <!-- YouTube iframe -->
+<iframe id="ytplayer"
+  src="https://www.youtube.com/embed/Ehj6WCdNcYI?autoplay=1&start=4&end=184&mute=1&enablejsapi=1"
+  title="YouTube video player"
+  allow="autoplay; encrypted-media"
+  allowfullscreen>
+</iframe>
+
+  
+
+
+
   </body>
    <script>
 
@@ -59,4 +79,47 @@ for (let i = 0; i < 15; i++) {
 }
 
   </script>
+
+
+
+  <script>
+    // Load YouTube API
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    let player;
+    let loopInterval;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytplayer', {
+        events: {
+          'onReady': () => player.playVideo(),
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+    
+let startTime = 4;    // 4 seconds
+let endTime = 184;    // 3 minutes 4 seconds = 184s
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.PLAYING) {
+    clearInterval(loopInterval);
+    loopInterval = setInterval(() => {
+      let t = player.getCurrentTime();
+      if (t >= endTime) player.seekTo(startTime);
+    }, 500);
+  } else {
+    clearInterval(loopInterval);
+  }
+}
+    // Overlay click: unmute and hide overlay
+    const overlay = document.getElementById("overlay");
+    overlay.addEventListener("click", () => {
+      player.unMute();
+      overlay.style.display = "none";
+    });
+  </script>
+
 </html>

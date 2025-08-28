@@ -13,14 +13,26 @@
    <style>
       
       .book-placeholder {
-
         background-image: url("images/bookcover.png");
-        
+      
       }
+
+
+
+
+
     </style>
   </head>
 
   <body>
+<div id="overlay">
+      🔈 <br> Tap to Unmute
+</div>
+
+
+    
+
+
     <header>
       <a href="https://kahanikorner.com/">
         <img src="../quicklinks/images/logo.png" alt="Kahani Korner Logo" class="logo" />
@@ -34,13 +46,24 @@
       <div class="book-placeholder"></div>
 
       <div class="button-container">
-        <!-- <a href="video.html" class="button">Video</a> -->
+        <a href="video.html" class="button">Read Aloud</a>
         <a href="Flashcards/game3.html" class="button">Flashcards</a>
         <a href="MatchingGame/game1.html" class="button">Picture Match</a>
         <a href="RiddleGame/game2.html" class="button">Riddles</a>
         <a href="MemoryGame/game4.html" class="button">Memory Game</a>
       </div>
     </div>
+
+    
+     <!-- YouTube iframe -->
+    <iframe id="ytplayer"
+      src="https://www.youtube.com/embed/yt6k3gzGMjY?autoplay=1&start=0&end=40&mute=1&enablejsapi=1"
+      title="YouTube video player"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  
+
   </body>
 
    <script>
@@ -61,4 +84,45 @@ for (let i = 0; i < 15; i++) {
 }
 
   </script>
+
+
+
+  <script>
+    // Load YouTube API
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    let player;
+    let loopInterval;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytplayer', {
+        events: {
+          'onReady': () => player.playVideo(),
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        clearInterval(loopInterval);
+        loopInterval = setInterval(() => {
+          let t = player.getCurrentTime();
+          if (t >= 99) player.seekTo(0);
+        }, 500);
+      } else {
+        clearInterval(loopInterval);
+      }
+    }
+
+    // Overlay click: unmute and hide overlay
+    const overlay = document.getElementById("overlay");
+    overlay.addEventListener("click", () => {
+      player.unMute();
+      overlay.style.display = "none";
+    });
+  </script>
+
 </html>
