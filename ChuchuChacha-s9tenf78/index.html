@@ -50,7 +50,7 @@
     
      <!-- YouTube iframe -->
 <iframe id="ytplayer"
-  src="https://www.youtube.com/embed/Ehj6WCdNcYI?autoplay=1&start=4&end=184&mute=1&enablejsapi=1"
+  src="https://www.youtube.com/embed/Ehj6WCdNcYI?autoplay=1&start=4&mute=1&enablejsapi=1"
   title="YouTube video player"
   allow="autoplay; encrypted-media"
   allowfullscreen>
@@ -99,16 +99,13 @@ for (let i = 0; i < 15; i++) {
         }
       });
     }
-    
-let startTime = 4;    // 4 seconds
-let endTime = 184;    // 3 minutes 4 seconds = 184s
 
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     clearInterval(loopInterval);
     loopInterval = setInterval(() => {
       let t = player.getCurrentTime();
-      if (t >= endTime) player.seekTo(startTime);
+      if (t >= 179) player.seekTo(4);
     }, 500);
   } else {
     clearInterval(loopInterval);

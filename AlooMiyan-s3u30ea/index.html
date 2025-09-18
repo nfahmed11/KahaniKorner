@@ -47,7 +47,8 @@
     
      <!-- YouTube iframe -->
     <iframe id="ytplayer"
-      src="https://www.youtube.com/embed/9bQqTgCNmmI?autoplay=1&start=0&end=154&mute=1&enablejsapi=1"
+      src="https://www.youtube.com/embed/ndxitY4eYas?si=TYHGVAOCFnOtCclv&autoplay=1&start=0&mute=1&enablejsapi=1"
+
       title="YouTube video player"
       allow="autoplay; encrypted-media"
       allowfullscreen>
@@ -74,42 +75,48 @@ for (let i = 0; i < 15; i++) {
   </script>
 
 
-  <script>
-    // Load YouTube API
-    let tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
+ <script>
+  // Load YouTube API
+  let tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
 
-    let player;
-    let loopInterval;
+  let player;
+  let loopInterval;
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('ytplayer', {
-        events: {
-          'onReady': () => player.playVideo(),
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.PLAYING) {
-        clearInterval(loopInterval);
-        loopInterval = setInterval(() => {
-          let t = player.getCurrentTime();
-          if (t >= 99) player.seekTo(0);
-        }, 500);
-      } else {
-        clearInterval(loopInterval);
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('ytplayer', {
+      events: {
+        'onReady': () => player.playVideo(),
+        'onStateChange': onPlayerStateChange
       }
-    }
-
-    // Overlay click: unmute and hide overlay
-    const overlay = document.getElementById("overlay");
-    overlay.addEventListener("click", () => {
-      player.unMute();
-      overlay.style.display = "none";
     });
-  </script>
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+      clearInterval(loopInterval);
+      loopInterval = setInterval(() => {
+        let t = player.getCurrentTime();
+        if (t >= 150) {
+          player.seekTo(0, true); // restart & play from beginning
+        }
+      }, 500);
+    } else {
+      clearInterval(loopInterval);
+    }
+  }
+
+  // Overlay click: unmute and hide overlay
+  const overlay = document.getElementById("overlay");
+  overlay.addEventListener("click", () => {
+    if (player && player.unMute) {
+      player.unMute();
+      player.playVideo(); // ensure video resumes after unmute
+      overlay.style.display = "none";
+    }
+  });
+</script>
+
 
 </html>
