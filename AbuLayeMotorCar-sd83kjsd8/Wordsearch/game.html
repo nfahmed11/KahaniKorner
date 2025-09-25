@@ -201,7 +201,10 @@ main{
   background:#ffffff;
   line-height: 1;
   overflow: hidden;
+  touch-action: none;           /* NEW: ensure dragging isn’t turned into scrolling/zoom */
 }
+
+
 .cell:hover{outline:2px solid #e0f2fe;}
 .cell[data-sel="1"]{background:#f1f5f9}
 .cell[data-word="1"]{background:#dbeafe}
@@ -691,7 +694,9 @@ function renderGrid(){
     }
   }
 
-  g.addEventListener('pointerleave', () => state.isDragging && clearSelection());
+    g.addEventListener('pointerleave', () => state.isDragging && clearSelection());
+  g.addEventListener('pointermove', onMove, { passive: true }); // NEW: track drag on touch
+
 }
 
 /* Interaction */
@@ -881,8 +886,11 @@ qs('#closeModal').addEventListener('click', ()=>{ qs('#winModal').classList.remo
   }else{
     stopClueAuto();
   }
-
   renderGrid(); // existing
+
+  // NEW: ensure we end selection even if finger lifts off a different element
+  window.addEventListener('pointerup', onEnd, { passive: true });
+
 });
 
 })();
