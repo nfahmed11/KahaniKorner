@@ -34,6 +34,7 @@ body{
   padding:14px 16px;
 }
 
+
 header{
   position:sticky;
   top:0;
@@ -58,16 +59,113 @@ header::before{
   display:none;
 }
 .toolbar{
-  display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+  display: flex
+;
+    flex-direction: row;
+    justify-content: center;
+  gap:12px; flex-wrap:wrap; align-items:center;
   transition:max-height .3s ease, opacity .3s ease; width:100%;
-  justify-content: center;
+
+  
 }
-.toolbar > *{margin:4px 0}
-.toolbar.collapsed{max-height:0; opacity:0; overflow:hidden; pointer-events:none}
 
 
 .status-bar{
   display:none;
+      
+}
+
+/* ===== Chip bars (horizontal, scrollable) ===== */
+/* ===== Pretty sliders (cyan ring thumb + filled track) ===== */
+.slider-group{ margin:6px 0 10px;
+    display: flex
+;
+    flex-direction: column;
+    align-items: center; }
+.slider-label{ font-weight:800; color:#0f172a; display:block; margin-bottom:6px; }
+
+.slider-wrap{ position:relative; padding:10px 2px 14px; }
+
+/* base */
+.slider-wrap input[type="range"]{
+  -webkit-appearance:none; width:100%; background:transparent; height:32px; cursor:pointer;
+  --fill:#42c8ff;         /* left (filled) */
+  --rest:#cfefff;         /* right (unfilled) */
+  --p:0%;                 /* progress (set in JS) */
+}
+
+/* track (WebKit) */
+.slider-wrap input[type="range"]::-webkit-slider-runnable-track{
+  height:10px; border-radius:999px;
+  background:
+    linear-gradient(var(--fill),var(--fill)) 0/var(--p) 100% no-repeat,
+    var(--rest);
+  box-shadow:inset 0 1px 0 rgba(0,0,0,.06);
+}
+.slider-wrap input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:26px; height:26px; border-radius:50%;
+  background:#fff; border:6px solid var(--fill);
+  margin-top:-8px;           /* centers thumb on 10px track */
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+}
+
+/* track (Firefox) */
+.slider-wrap input[type="range"]::-moz-range-track{
+  height:10px; border-radius:999px; background:var(--rest);
+  box-shadow:inset 0 1px 0 rgba(0,0,0,.06);
+}
+.slider-wrap input[type="range"]::-moz-range-progress{
+  height:10px; border-radius:999px; background:var(--fill);
+}
+.slider-wrap input[type="range"]::-moz-range-thumb{
+  width:26px; height:26px; border-radius:50%;
+  background:#fff; border:6px solid var(--fill);
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+}
+
+/* focus/active */
+.slider-wrap input[type="range"]:focus{ outline:none; }
+.slider-wrap input[type="range"]:focus::-webkit-slider-thumb{ box-shadow:0 0 0 6px rgba(66,200,255,.25), 0 2px 8px rgba(0,0,0,.18); }
+.slider-wrap input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.02); }
+.slider-wrap input[type="range"]::-moz-range-thumb:focus{ box-shadow:0 0 0 6px rgba(66,200,255,.25), 0 2px 8px rgba(0,0,0,.18); }
+
+.chipbar{
+  display:flex;
+  gap:8px;
+  padding:8px 0;
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.chipbar::-webkit-scrollbar{ display:none; }
+
+.chipbar .chip{
+  appearance:none;
+  border:1px solid #dbeafe;
+  background:#ffffff;
+  color:#0f172a;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:800;
+  white-space:nowrap;
+  cursor:pointer;
+  box-shadow:0 2px 0 #e5e7eb inset;
+  transition:transform .06s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+}
+.chipbar .chip:hover{ box-shadow:0 0 0 3px #9B5DE533 inset; }
+.chipbar .chip:active{ transform:translateY(1px); }
+.chipbar .chip:focus{ outline:none; box-shadow:0 0 0 3px #00BBF980; }
+
+.chipbar .chip.active{
+  background:#00BBF9;
+  border-color:#00BBF9;
+  color:#fff;
+}
+
+/* Center chip bars on wide screens */
+@media (min-width: 769px){
+  #levelBar, #densityBar{ justify-content:center; }
 }
 
 
@@ -227,6 +325,18 @@ main{
 
 
 
+.toolbar > *{margin:4px 0}
+/* when collapsed */
+  .toolbar.collapsed{
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-12px);    /* ✨ slide up a bit */
+    padding-top: 0;                   /* avoid leftover vertical space */
+    padding-bottom: 0;
+    border-width: 0;                  /* optional: hide border while collapsed */
+  }
 
   /* Show the hamburger on small screens */
   .menu-btn{
@@ -235,9 +345,10 @@ main{
 
   /* (Optional) nicer open animation when JS adds .open */
   .toolbar.open{
-    max-height: 600px;
+    max-height: 600px;          /* enough for all controls */
     opacity: 1;
     pointer-events: auto;
+    transform: translateY(0);   /* slide in place */
   }
   main{ grid-template-columns: 1fr; gap:12px; }
 
@@ -278,8 +389,9 @@ main{
     display:inline-block;
   }
 
-  /* Save vertical space */
-  .legend{ display:none; }
+ 
+  #legendGrid{ display:flex; }
+
 
 
 }
@@ -297,14 +409,16 @@ main{
   /* Status area sits in column 2 and itself is a 2-col grid */
   #statusBar{
     grid-column: 2;
-    display: grid;
+    
+    display: flex
+;
+    justify-content: flex-end;
   }
   #statusBar .stats{
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     grid-template-columns: 1fr auto;    /* [centered words-left] [timer right] */
     align-items: center;
-    width: 100%;
   }
   /* ✅ found/goal centered in the whole header */
   #statusBar .stats > span:nth-child(2){
@@ -323,6 +437,138 @@ main{
   }
 }
 
+/* ===== Sleeker header & control bar ===== */
+header{
+  --bg: rgba(255,255,255,.72);
+  background: var(--bg);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(15,23,42,.06);
+  box-shadow: 0 1px 0 rgba(15,23,42,.04);
+  transition: background .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+header.scrolled{
+  --bg: rgba(255,255,255,.86);
+  border-bottom-color: transparent;
+  box-shadow: 0 10px 30px rgba(15,23,42,.12);
+}
+
+/* Turn the toolbar into a pill-shaped control pod */
+.toolbar{
+  background: rgba(255,255,255,.92);
+  border: 1px solid #e6eaf5;
+  border-radius: 999px;
+  padding: 8px 12px;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+
+  /* ✨ for animation */
+  transform: translateY(0);
+  transition:
+    transform .28s cubic-bezier(.22,.61,.36,1),
+    opacity  .25s ease,
+    max-height .32s ease;
+  will-change: transform, opacity, max-height;
+}
+
+.toolbar > *{ margin:0 !important; }          /* override earlier margin rule */
+
+/* Dividers between control groups */
+.toolbar .divider{
+  width:1px; height:24px; background:#e6eaf5; flex:0 0 1px; border-radius:2px;
+}
+
+/* Make controls feel consistent (pill look) */
+select, button{
+  border-radius: 999px;
+  padding: 8px 12px;
+  box-shadow: none;
+  border:1px solid #e6eaf5;
+}
+button.primary{ background:#00BBF9; border-color:#00BBF9; color:#fff; }
+
+/* Compact slider groups inside the pod */
+.slider-group{
+  margin:0;
+  align-items: flex-start;
+}
+.slider-label{
+  font-size:12px;
+  letter-spacing:.2px;
+  text-transform:uppercase;
+  color:#475569;
+  margin-bottom:4px;
+}
+.slider-wrap{ padding:6px 0 8px; }
+
+/* Stats as a subtle pill on the right */
+.stats{
+  margin-left:auto;                           /* push to the far right */
+  background:#f0f9ff;
+  border:1px solid #e0f2fe;
+  border-radius:999px;
+  padding:6px 10px;
+  gap:10px;
+  color:#0369a1;
+}
+
+/* Nicer hamburger */
+.menu-btn{
+  border:1px solid #e6eaf5;
+  border-radius:12px;
+  padding:6px 10px;
+  background: rgba(255,255,255,.95);
+}
+
+/* When toolbar is expanded on mobile, use a card look instead of a long pill */
+@media (max-width:768px){
+  .toolbar{
+    border-radius:16px;
+    padding:12px;
+    gap:12px;
+  }
+  .toolbar .divider{ display:none; }
+}
+/* Cute Clues button + popover */
+.clue-chooser{ position:relative; }
+
+.clue-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:800; border-radius:999px;
+  padding:8px 12px;
+  background:#fff; border:1px solid #e6eaf5;
+  box-shadow:0 2px 0 #e5e7eb inset;
+  transition:transform .06s ease, box-shadow .2s ease, background .2s ease;
+}
+.clue-btn:hover{ box-shadow:0 0 0 3px #9B5DE533 inset; }
+.clue-btn:active{ transform:translateY(1px); }
+
+/* Blue version that matches “New Game” */
+.clue-btn.primary{
+  background:#00BBF9;
+  border-color:#00BBF9;
+  color:#fff;
+  box-shadow:none;
+}
+.clue-btn.primary:hover{ box-shadow:0 0 0 3px rgba(0,187,249,.25) inset; }
+.clue-btn.primary:focus{ outline:none; box-shadow:0 0 0 3px rgba(0,187,249,.35); }
+.clue-btn.primary:active{ transform:translateY(1px); }
+
+.clue-menu{
+  position:absolute; top:calc(100% + 8px); left:0;
+  min-width: 240px;
+  background:#fff; border:1px solid #eaeef7;
+  border-radius:14px; padding:6px;
+  box-shadow:0 10px 30px rgba(15,23,42,.12);
+  z-index:20;
+}
+.clue-menu button{
+  width:100%; text-align:left;
+  border:none; background:transparent; cursor:pointer;
+  padding:10px 12px; border-radius:10px; font-weight:800; color:#0f172a;
+}
+.clue-menu button:hover{ background:#f1f5f9; }
+.clue-menu button[aria-checked="true"]{ background:#eff6ff; }
+
 
 
 </style>
@@ -336,43 +582,75 @@ main{
 <!-- NEW: always-visible status strip on mobile -->
 <div id="statusBar" class="status-bar" aria-live="polite"></div>
 
-<div id="toolbar" class="toolbar" aria-label="Toolbar">
+    <div id="toolbar" class="toolbar" aria-label="Toolbar">
+  <button id="newGame" class="primary">New Game</button>
 
-      <button id="newGame" class="primary">New Game</button>
-      <label>Difficulty
-        <select id="difficulty">
-          <option value="lvl1">Level 1</option>
-          <option value="lvl2">Level 2</option>
-          <option value="lvl3">Level 3</option>
-          <option value="lvl4">Level 4</option>
-          <option value="lvl5">Level 5</option>
-        </select>
-      </label>
-      <label>Clues
-        <select id="clueSide">
-          <option value="en">English → Find Roman Urdu</option>
-          <option value="ru">Roman Urdu → Find English</option>
-        </select>
-      </label>
-      <button id="toggleTimer" class="ghost">Timer: On</button>
-      <div class="stats" role="status" aria-live="polite">
-        <span>⏱️ <b id="time">0:00</b></span>
-        <span>✅ <b id="foundCount">0</b>/<b id="goalCount">0</b></span>
-      </div>
+  <span class="divider" aria-hidden="true"></span>
+
+  <div class="slider-group">
+    <label for="levelRange" class="slider-label">
+      <strong id="levelLabel">Level 1</strong>
+    </label>
+    <div class="slider-wrap">
+      <input id="levelRange" type="range" min="0" max="5" step="1" value="0" aria-label="Level (1 → 6)">
     </div>
+  </div>
+
+  <div class="slider-group">
+    <label for="densityRange" class="slider-label">
+      Words: <strong id="densityLabel">20%</strong>
+    </label>
+    <div class="slider-wrap">
+      <input id="densityRange" type="range" min="0" max="4" step="1" value="0" aria-label="Word density (20% → 100%)">
+    </div>
+  </div>
+
+  <span class="divider" aria-hidden="true"></span>
+
+  <div class="clue-chooser">
+  <button id="clueBtn" class="primary clue-btn"
+        aria-haspopup="true" aria-expanded="false" aria-controls="clueMenu">
+  Clues
+</button>
+
+
+  <div id="clueMenu" class="clue-menu" role="menu" hidden>
+    <button role="menuitemradio" aria-checked="true"  data-side="en">English → Find Roman Urdu</button>
+    <button role="menuitemradio" aria-checked="false" data-side="ru">Roman Urdu → Find English</button>
+  </div>
+</div>
+
+
+ <!-- was: class="ghost" -->
+<button id="toggleTimer" class="primary">Timer: On</button>
+
+
+  <!-- stats will sit at far right thanks to margin-left:auto -->
+  <div class="stats" role="status" aria-live="polite">
+    <span>⏱️ <b id="time">0:00</b></span>
+    <span>✅ <b id="foundCount">0</b>/<b id="goalCount">0</b></span>
+  </div>
+</div>
+
+
   </div>
 </header>
 
 <main>
   <section class="panel" aria-labelledby="clueHeader">
     <h2 id="clueHeader">Clues</h2>
-    <div class="legend" id="legend"></div>
+    <!-- was id="legend" -->
+<div class="legend" id="legendClues"></div>
+
     <ul id="clues" class="clue-list"></ul>
   </section>
 
   <section class="panel" aria-labelledby="gridHeader">
     <button id="hintBtn" class="hint-btn" title="Flash starting letters (+10s)" aria-label="Hint">Hint</button>
     <h2 id="gridHeader">Word Grid</h2>
+    <!-- was id="legend" -->
+<div class="legend" id="legendGrid"></div>
+
     <div id="grid" class="grid" aria-label="Word search grid"></div>
   </section>
 </main>
@@ -400,20 +678,71 @@ const WORDS = riddles
   .filter(r => r.word && r.word.english && r.word.romanUrdu)
   .map(r => ({ en: r.word.english.trim(), ru: r.word.romanUrdu.trim() }));
 
-const GRID_SIZES = { lvl1: 10, lvl2: 11, lvl3: 13, lvl4: 15, lvl5: 17 };
-const FRACTIONS  = { lvl1: 1/5, lvl2: 2/5, lvl3: 3/5, lvl4: 4/5, lvl5: 1 };
-const DIRECTIONS = [
-  { dx: 1, dy: 0 }, { dx: 0, dy: 1 }, { dx: 1, dy: 1 }, { dx:-1, dy: 1 },
+// Direction vectors (we place letters in the step order below)
+const DIRS = {
+  H:  { dx:  1, dy:  0 },   // horizontal (L→R)
+  HB: { dx: -1, dy:  0 },   // horizontal backwards (R→L)
+  V:  { dx:  0, dy:  1 },   // vertical down
+  VU: { dx:  0, dy: -1 },   // vertical up (backwards vertical)
+  DR: { dx:  1, dy:  1 },   // diagonal down-right
+  DL: { dx: -1, dy:  1 },   // diagonal down-left
+  UR: { dx:  1, dy: -1 },   // diagonal up-right (backwards diagonal)
+  UL: { dx: -1, dy: -1 },   // diagonal up-left  (backwards diagonal)
+};
+
+// Presets per your spec (adult-norm is 17×17 and includes HB)
+const PRESETS = {
+  'kids-easy':  { rows: 8, cols:8, dirs:['H'],                         timer:false },
+  'kids-med':   { rows: 9, cols:9, dirs:['H','V'],                     timer:false },
+  'kids-hard':  { rows: 10, cols:10, dirs:['H','V','DR'],                timer:false },
+  'adult-easy': { rows: 11, cols:11, dirs:['H','V','DR','DL'],           timer:true  },
+  'adult-norm': { rows: 12, cols:12, dirs:['H','V','DR','DL','HB'],      timer:true  },
+  'adult-hard': { rows: 13, cols:13, dirs:['H','V','DR','DL','HB','VU','UR','UL'], timer:true },
+};
+
+// Order for chipbar
+const LEVELS = [
+  { key: 'kids-easy',  label: 'Level 1' },
+  { key: 'kids-med',   label: 'Level 2' },
+  { key: 'kids-hard',  label: 'Level 3' },
+  { key: 'adult-easy', label: 'Level 4' },
+  { key: 'adult-norm', label: 'Level 5' },
+  { key: 'adult-hard', label: 'Level 6' },
 ];
+
+// 1/5 → 5/5
+const DENSITIES = [0.2, 0.4, 0.6, 0.8, 1.0];
+const DENSITY_LABELS = DENSITIES.map(d => `${Math.round(d*100)}%`); // 20…100%
+
+
 const MAX_ATTEMPTS = 2500;
 const PALETTE = ["#9B5DE5","#F15BB5","#FEE440","#00BBF9","#00F5D4"];
 
+
+/* === Condensed-grid tuning === */
+const MAX_CELL_PX = 34;        // cap cell px so tiny grids don’t fill the panel
+const MAX_GRID_AUTOSIZE = 24;  // safety upper bound for auto-sizing (increase if needed)
+
+
 let state = {
+  // grid & placement
   rows: 10, cols: 10, grid: [],
   wordsPlaced: [], selection: [], isDragging:false, startCell:null,
-  found: new Set(), timerOn: true, t0: 0, tId: null,
-  clueSide: 'en', difficulty: 'lvl3',
+  found: new Set(),
+
+  // controls
+  timerOn: true, t0: 0, tId: null,
+  userTimerOverridden: false,
+
+  // language / UI
+  clueSide: 'en',
+
+  // NEW: chipbar-driven config
+  preset: 'kids-easy',              // default
+  densityIdx: 0,                    // 0..4 => 1/5..5/5
+  allowedDirs: PRESETS['kids-easy'].dirs.slice(),
 };
+
 
 /* ===== Utility Functions ===== */
 const qs = s => document.querySelector(s);
@@ -425,6 +754,82 @@ const norm = s => (s||'').toLowerCase().replace(/[^a-z]/g,'');
 const shuffle = a => { for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; };
 const fmtTime = s => { const m = Math.floor(s/60), r = s%60; return `${m}:${r.toString().padStart(2,'0')}`; };
 
+// === Slider helpers ===
+const LEVEL_KEYS = LEVELS.map(x => x.key);               // ["kids-easy", ...]
+const levelRange   = document.getElementById('levelRange');
+const levelLabel   = document.getElementById('levelLabel');
+const densityRange = document.getElementById('densityRange');
+const densityLabel = document.getElementById('densityLabel');
+
+function idxToLevelLabel(i){ return LEVELS[i].label; }
+
+function updateRangeFill(el){
+  const min = +el.min, max = +el.max, val = +el.value;
+  el.style.setProperty('--p', ((val-min)/(max-min))*100 + '%');
+}
+
+// keep sliders + labels in sync with state
+function syncSlidersFromState(){
+  levelRange.value   = LEVEL_KEYS.indexOf(state.preset);
+  densityRange.value = state.densityIdx;
+  levelLabel.textContent   = idxToLevelLabel(+levelRange.value);
+  densityLabel.textContent = DENSITY_LABELS[+densityRange.value];
+  updateRangeFill(levelRange);
+  updateRangeFill(densityRange);
+}
+
+// allowed direction vectors for the current preset
+function getAllowedDirs(){ return state.allowedDirs.map(k => DIRS[k]); }
+
+
+
+
+// live update fill + label while dragging
+levelRange.addEventListener('input',  e => { updateRangeFill(e.target); levelLabel.textContent   = idxToLevelLabel(+e.target.value); });
+densityRange.addEventListener('input',e => { updateRangeFill(e.target); densityLabel.textContent = DENSITY_LABELS[+e.target.value]; });
+
+// commit the change -> use your existing selectors
+levelRange.addEventListener('change', e => {
+  const idx = +e.target.value;
+  selectLevel(LEVEL_KEYS[idx]);      // calls buildPuzzle()
+});
+densityRange.addEventListener('change', e => {
+  selectDensity(+e.target.value);    // calls buildPuzzle()
+});
+
+
+/* ===== Chip bars (levels & density) ===== */
+
+function selectLevel(key){
+  state.preset = key;
+  const P = PRESETS[key];
+  state.rows = P.rows; state.cols = P.cols;
+  state.allowedDirs = P.dirs.slice();
+
+  // Respect user choice: only change timer if not overridden
+  if(!state.userTimerOverridden){
+    state.timerOn = !!P.timer;
+    const btn = qs('#toggleTimer');
+    if(btn) btn.textContent = `Timer: ${state.timerOn ? 'On' : 'Off'}`;
+  }
+
+  syncSlidersFromState();
+
+  buildPuzzle();
+
+
+}
+
+function selectDensity(idx){
+  state.densityIdx = idx;
+
+
+  buildPuzzle();
+  syncSlidersFromState();
+
+}
+
+
 /* Timer */
 function startTimer(){ state.t0 = Date.now(); stopTimer(); if(!state.timerOn){ qs('#time').textContent='0:00'; return; } state.tId=setInterval(()=>{ const sec=Math.floor((Date.now()-state.t0)/1000); qs('#time').textContent=fmtTime(sec); }, 500); }
 function stopTimer(){ if(state.tId){ clearInterval(state.tId); state.tId=null; } }
@@ -433,6 +838,32 @@ function addPenalty(seconds=10){ state.t0 -= seconds*1000; }
 /* Grid + Word Placement Helpers */
 function makeGrid(rows, cols){ return Array.from({length:rows},()=>Array.from({length:cols},()=>null)); }
 function inBounds(r,c){ return r>=0 && c>=0 && r<state.rows && c<state.cols; }
+/* === Placement helpers that don’t rely on global state === */
+function inBoundsSize(r,c, rows, cols){ return r>=0 && c>=0 && r<rows && c<cols; }
+
+function canPlaceSize(grid, word, r, c, dir, rows, cols, allowOverlap=true){
+  for(let i=0;i<word.length;i++){
+    const rr = r + dir.dy*i, cc = c + dir.dx*i;
+    if(!inBoundsSize(rr,cc,rows,cols)) return false;
+    const cell = grid[rr][cc];
+    if(cell){
+      if(!allowOverlap) return false;      // no reuse allowed
+      if(cell !== word[i]) return false;   // reuse allowed only if letters match
+    }
+  }
+  return true;
+}
+
+function placeWordSize(grid, word, r, c, dir){
+  const cells=[];
+  for(let i=0;i<word.length;i++){
+    const rr = r + dir.dy*i, cc = c + dir.dx*i;
+    grid[rr][cc] = word[i];
+    cells.push({r:rr,c:cc});
+  }
+  return cells;
+}
+
 function canPlace(grid, word, r,c, dir){
   for(let i=0;i<word.length;i++){
     const rr=r+dir.dy*i, cc=c+dir.dx*i;
@@ -452,57 +883,86 @@ function placeWord(grid, word, r,c, dir){
   return cells;
 }
 
-function layoutWords(rawPairs){
-  const grid = makeGrid(state.rows, state.cols);
+// Try to place words within a given size, using only the allowed directions
+function layoutWordsForSize(rawPairs, rows, cols, allowOverlap, dirs){
+  const grid = Array.from({length:rows},()=>Array.from({length:cols},()=>null));
   const placed = [];
-  const pairs = [...rawPairs].sort((a,b)=>norm(b.target).length - norm(a.target).length);
+  const pairs = [...rawPairs]
+    .sort((a,b)=> norm(b.target).length - norm(a.target).length); // longest first
 
-  for(const p of pairs){
+  for (const p of pairs) {
     const target = norm(p.target);
-    if(!target || target.length<2) continue;
+    if (!target || target.length < 2) continue;
 
-    let attempts=0, ok=false;
-    while(attempts++<MAX_ATTEMPTS){
-      const dir = choice(DIRECTIONS); const r = rand(state.rows); const c = rand(state.cols);
-      if(canPlace(grid, target, r, c, dir)) {
-        const cells=placeWord(grid,target,r,c,dir);
+    let ok = false;
+
+    // 1) random attempts using only the allowed dirs
+    for (let attempts = 0; attempts < MAX_ATTEMPTS && !ok; attempts++) {
+      const dir = choice(dirs);
+      const r = rand(rows), c = rand(cols);
+      if (canPlaceSize(grid, target, r, c, dir, rows, cols, allowOverlap)) {
+        const cells = placeWordSize(grid, target, r, c, dir);
         placed.push({ id:p.id, text:target, show:p.show, clue:p.clue, color:p.color, cells });
-        ok=true; break;
+        ok = true;
       }
     }
-    if(!ok){
-      outer: for(const dir of DIRECTIONS){
-        for(let r=0;r<state.rows;r++){
-          for(let c=0;c<state.cols;c++){
-            if(canPlace(grid,target,r,c,dir)){
-              const cells=placeWord(grid,target,r,c,dir);
+
+    // 2) exhaustive sweep (still only the allowed dirs)
+    if (!ok) {
+      outer: for (const dir of dirs) {
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            if (canPlaceSize(grid, target, r, c, dir, rows, cols, allowOverlap)) {
+              const cells = placeWordSize(grid, target, r, c, dir);
               placed.push({ id:p.id, text:target, show:p.show, clue:p.clue, color:p.color, cells });
-              ok=true; break outer;
+              ok = true;
+              break outer;
             }
           }
         }
       }
     }
+
+    if (!ok) return { success:false };
   }
 
-  for(let r=0;r<state.rows;r++){
-    for(let c=0;c<state.cols;c++){
-      if(!grid[r][c]) grid[r][c] = letters[rand(letters.length)];
+  // fill empties
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (!grid[r][c]) grid[r][c] = letters[rand(letters.length)];
     }
   }
-  return {grid, placed};
+
+  return { success:true, grid, placed, rows, cols };
 }
 
-/* Build Puzzle */
+
+
+
 function buildPuzzle(){
-  state.difficulty = qs('#difficulty').value;
-  state.clueSide   = qs('#clueSide').value;
-  state.rows = state.cols = GRID_SIZES[state.difficulty];
+  // rows/cols + allowed directions come from the selected preset
+  const P = PRESETS[state.preset];
+  state.rows = P.rows;
+  state.cols = P.cols;
+  state.allowedDirs = P.dirs.slice();
 
-  const frac = FRACTIONS[state.difficulty];
-  const N = Math.max(6, Math.round(WORDS.length * frac));
+// If the old select exists, use it; otherwise keep current state
+const sel = qs('#clueSide');
+if (sel) state.clueSide = sel.value;
+
+
+  // number of words from the density slider
+  const frac = DENSITIES[state.densityIdx];
+// number of words from the density slider — based on grid capacity
+const area = state.rows * state.cols;
+const avgLen = 6; // rough average word length
+const maxByArea = Math.max(6, Math.floor(area / (avgLen + 2))); // padding for crossings
+const densityScale = [0.4, 0.6, 0.75, 0.9, 1.0][state.densityIdx]; // 20→100% feel
+const N = Math.min(WORDS.length, Math.max(6, Math.floor(maxByArea * densityScale)));
+
+
+  // pick words
   const chosen = shuffle([...WORDS]).slice(0, Math.min(N, WORDS.length));
-
   const pairs = chosen.map((w,idx)=>{
     const show   = state.clueSide==='en' ? w.ru : w.en;
     const clue   = state.clueSide==='en' ? w.en : w.ru;
@@ -510,22 +970,92 @@ function buildPuzzle(){
     return { id: idx+'_'+Date.now(), show, clue, target: show, color };
   });
 
-  const {grid, placed} = layoutWords(pairs);
-  state.grid = grid; state.wordsPlaced = placed; state.found = new Set();
+// Lay out with the preset’s directions; auto-expand grid if too tight
+const dirs = getAllowedDirs();
 
-    renderGrid();
+function tryLayout(r, c, overlap = false) {
+  return layoutWordsForSize(pairs, r, c, overlap, dirs);
+}
+
+let res = tryLayout(state.rows, state.cols, /*overlap=*/false);
+if (!res.success) res = tryLayout(state.rows, state.cols, /*overlap=*/true);
+
+// 🚀 Grow the grid up to +8 cells each way until it works
+let grew = 0;
+const MAX_GROW = 8;
+while (!res.success && grew < MAX_GROW) {
+  grew++;
+  const newRows = state.rows + grew;
+  const newCols = state.cols + grew;
+  res = tryLayout(newRows, newCols, /*overlap=*/true);
+  if (res.success) {
+    // lock in the larger size so renderGrid() uses it
+    state.rows = newRows;
+    state.cols = newCols;
+  }
+}
+
+// Final guard: bail gracefully if *still* failing
+if (!res.success) {
+  console.error('Could not generate puzzle even after expanding board.');
+  alert('Too many/long words for this setup. Try a lower density or easier level.');
+  return; // prevents renderGrid() from running with an undefined grid
+}
+
+state.grid = res.grid;
+state.wordsPlaced = res.placed;
+
+
+// Fallback: if still failing, progressively trim the word set and retry
+if (!res.success) {
+  let attemptPairs = pairs.slice();
+  for (let tries = 0; tries < 3 && !res.success; tries++) {
+    attemptPairs = attemptPairs.slice(0, Math.max(6, Math.floor(attemptPairs.length * 0.75)));
+    res = layoutWordsForSize(attemptPairs, state.rows, state.cols, /*allowOverlap=*/true, dirs);
+  }
+}
+
+// Final guard: don’t render without a valid grid
+if (!res.success) {
+  console.error('Could not generate puzzle for current settings.');
+  alert('Too many words for this board. Try a lower density or easier level.');
+  return; // prevents renderGrid() from running with an undefined grid
+}
+
+state.grid = res.grid;
+state.wordsPlaced = res.placed;
+
+
+  state.grid = res.grid;
+  state.wordsPlaced = res.placed;
+  state.found = new Set();
+
+  renderGrid();
   renderClues();
-  setupClueCarousel(); // <— added
-
+  setupClueCarousel();
 
   qs('#goalCount').textContent = String(state.wordsPlaced.length);
   qs('#foundCount').textContent = '0';
-  qs('#legend').innerHTML = state.clueSide==='en'
-    ? '<span class="pill">Clues: English</span><span class="pill">Find: Roman Urdu</span>'
-    : '<span class="pill">Clues: Roman Urdu</span><span class="pill">Find: English</span>';
+  const legendClues = qs('#legendClues');
+const legendGrid  = qs('#legendGrid');
+
+if (legendClues) {
+  legendClues.innerHTML =
+    state.clueSide === 'en'
+      ? '<span class="pill">Clues: English</span>'
+      : '<span class="pill">Clues: Roman Urdu</span>';
+}
+
+if (legendGrid) {
+  legendGrid.innerHTML =
+    state.clueSide === 'en'
+      ? '<span class="pill">Find: Roman Urdu</span>'
+      : '<span class="pill">Find: English</span>';
+}
 
   startTimer();
 }
+
 
 /* Render Clues (desktop list + mobile carousel) */
 function renderClues(){
@@ -664,7 +1194,8 @@ function renderGrid(){
     panelInnerWidth - paddingX - borderX - gap * (state.cols - 1);
 
   // Final cell size (min 24px for readability)
-  const cell = Math.max(24, Math.floor(cellsBand / state.cols));
+  const cell = Math.min(MAX_CELL_PX, Math.max(24, Math.floor(cellsBand / state.cols)));
+
 
   // Lock columns and rows so boxes are perfect squares
   g.style.gridTemplateColumns = `repeat(${state.cols}, ${cell}px)`;
@@ -694,8 +1225,9 @@ function renderGrid(){
     }
   }
 
-    g.addEventListener('pointerleave', () => state.isDragging && clearSelection());
-  g.addEventListener('pointermove', onMove, { passive: true }); // NEW: track drag on touch
+g.addEventListener('pointerleave', () => state.isDragging && clearSelection());
+
+
 
 }
 
@@ -705,32 +1237,66 @@ function cellAt(ev){
   if(!el) return null;
   return { el, r:+el.dataset.r, c:+el.dataset.c };
 }
+
 function onStart(ev){
   ev.preventDefault();
   const cell = cellAt(ev); if(!cell) return;
-  state.isDragging = true; state.selection = [cell]; state.startCell = cell;
+  state.isDragging = true; 
+  state.selection = [cell]; 
+  state.startCell = cell;
+
+  // Capture on the element that received pointerdown
+  cell.el.setPointerCapture?.(ev.pointerId);
+
   markSelected();
 }
+
+
 function onMove(ev){
   if(!state.isDragging) return;
-  const cell = cellAt(ev); if(!cell) return;
+
+  // Find the element under the pointer (touch or mouse)
+  const elAtPoint = document.elementFromPoint(ev.clientX, ev.clientY);
+  const cellEl = elAtPoint && elAtPoint.closest('.cell');
+  if(!cellEl) return;
+
+  const cell = { el: cellEl, r:+cellEl.dataset.r, c:+cellEl.dataset.c };
+
   const a = state.startCell; const b = cell;
   const dr = b.r - a.r, dc = b.c - a.c;
   const adR = Math.abs(dr), adC = Math.abs(dc);
   if(!(adR===0 || adC===0 || adR===adC)) return;
+
   const stepR = Math.sign(dr), stepC = Math.sign(dc);
   const len = Math.max(adR, adC);
-  const path=[]; for(let i=0;i<=len;i++){ path.push({ r:a.r+i*stepR, c:a.c+i*stepC }); }
-  for(const p of path){ if(!inBounds(p.r,p.c)) return; }
-  state.selection = path.map(p=>({ el: document.querySelector(`.cell[data-r="${p.r}"][data-c="${p.c}"]`), r:p.r, c:p.c }));
+  const path=[];
+  for(let i=0;i<=len;i++){
+    const r=a.r+i*stepR, c=a.c+i*stepC;
+    if(!inBounds(r,c)) return;
+    path.push({ r, c });
+  }
+
+  state.selection = path.map(p => ({
+    el: document.querySelector(`.cell[data-r="${p.r}"][data-c="${p.c}"]`),
+    r:p.r, c:p.c
+  }));
   markSelected();
 }
+
+
 function onEnd(){
   if(!state.isDragging) return;
   state.isDragging=false;
   checkSelection();
   clearSelection();
 }
+
+function onCancel(){
+  if(!state.isDragging) return;
+  state.isDragging = false;
+  clearSelection();
+}
+
 
 function markSelected(){
   qsa('.cell').forEach(el=> el.dataset.sel='0');
@@ -812,6 +1378,37 @@ menuToggle.addEventListener('click', ()=>{
   setMenu(open);
 });
 
+// --- Mobile-only helpers to auto-close the toolbar ---
+const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+// Close when tapping/clicking anywhere outside the toolbar
+function closeIfOutside(e){
+  if (!isMobile()) return;
+  if (!toolbar.classList.contains('open')) return;
+
+  const clickedInsideToolbar = toolbar.contains(e.target);
+  const clickedToggle = menuToggle.contains(e.target);
+
+  if (clickedInsideToolbar || clickedToggle) return; // don't auto-close
+  setMenu(false);
+}
+
+
+// use pointerdown so it feels instant on touch devices
+document.addEventListener('click', closeIfOutside);
+
+// Close when scrolling DOWN a bit
+let lastY = window.scrollY;
+window.addEventListener('scroll', () => {
+  if (!isMobile()) { lastY = window.scrollY; return; }
+  const y = window.scrollY;
+  const scrolledDown = y > lastY + 10; // small threshold to avoid jitter
+  lastY = y;
+  if (scrolledDown && toolbar.classList.contains('open')) {
+    setMenu(false);
+  }
+}, { passive: true });
+
 
 /* ===== Mobile status bar relocation ===== */
 function relocateStats(){
@@ -834,8 +1431,66 @@ qs('#newGame').addEventListener('click', ()=>{
   buildPuzzle();
   if(window.innerWidth <= 768){ setMenu(false); }
 });
-qs('#difficulty').addEventListener('change', buildPuzzle);
-qs('#clueSide').addEventListener('change', buildPuzzle);
+
+/* ===== Clue chooser (popover) ===== */
+const clueBtn   = qs('#clueBtn');
+const clueMenu  = qs('#clueMenu');
+
+function updateClueUI(){
+  const modeText = state.clueSide === 'en'
+    ? 'English → Roman Urdu'
+    : 'Roman Urdu → English';
+
+  // Keep the radio menu in sync
+  clueMenu.querySelectorAll('[role="menuitemradio"]').forEach(b=>{
+    b.setAttribute('aria-checked', b.dataset.side === state.clueSide ? 'true' : 'false');
+  });
+
+  // Nice accessibility/tooltip hint since the button text is now just “Clues”
+  clueBtn.setAttribute('aria-label', `Clues (${modeText})`);
+  clueBtn.setAttribute('title', `Clues — ${modeText}`);
+}
+function setClueSide(side){
+  state.clueSide = side;
+  updateClueUI();
+  buildPuzzle();
+}
+
+function toggleClueMenu(open){
+  if(open){
+    clueMenu.hidden = false;
+    clueBtn.setAttribute('aria-expanded','true');
+    clueMenu.querySelector(`[data-side="${state.clueSide}"]`)?.focus();
+  }else{
+    clueMenu.hidden = true;
+    clueBtn.setAttribute('aria-expanded','false');
+  }
+}
+
+clueBtn.addEventListener('click', ()=>{
+  toggleClueMenu(clueMenu.hidden);
+});
+
+clueMenu.addEventListener('click', (e)=>{
+  const item = e.target.closest('[data-side]');
+  if(!item) return;
+  setClueSide(item.dataset.side);
+  toggleClueMenu(false);
+});
+
+// close on outside click / esc
+document.addEventListener('click', (e)=>{
+  if(clueMenu.hidden) return;
+  if(e.target === clueBtn || clueMenu.contains(e.target)) return;
+  toggleClueMenu(false);
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') toggleClueMenu(false);
+});
+
+// keep button label in sync on load
+updateClueUI();
+
 qs('#hintBtn').addEventListener('click', ()=>{
   addPenalty(10);
   for(const w of state.wordsPlaced){ if(!state.found.has(w.id)) flashFirstCell(w.id); }
@@ -856,44 +1511,37 @@ qs('#toggleTimer').addEventListener('click', (e)=>{
 qs('#playAgain').addEventListener('click', ()=>{ qs('#winModal').classList.remove('show'); buildPuzzle(); });
 qs('#closeModal').addEventListener('click', ()=>{ qs('#winModal').classList.remove('show'); });
 
+document.addEventListener('pointermove', onMove, { passive: true });
+document.addEventListener('pointerup', onEnd);
+document.addEventListener('pointercancel', onCancel);
+
 (function init(){
-  qs('#difficulty').value = 'lvl1';
-  if (window.innerWidth <= 768) {
-    setMenu(false);
-  } else {
+  if (window.innerWidth <= 768) setMenu(false);
+  else {
     toolbar.classList.remove('collapsed', 'open');
     menuToggle.textContent = '☰';
     menuToggle.setAttribute('aria-expanded', 'false');
   }
+
+  relocateStats();
+  window.addEventListener('resize', relocateStats); // ← put #3 here
+
+  // sliders reflect default state
+  syncSlidersFromState();
+
   buildPuzzle();
-    relocateStats();  
-
-  // Rescale letters/cells on resize; keeps carousel width and grid sizing correct
- window.addEventListener('resize', () => {
-  if (window.innerWidth > 768) {
-    toolbar.classList.remove('collapsed', 'open');
-    menuToggle.textContent = '☰';
-    menuToggle.setAttribute('aria-expanded', 'false');
-  } else {
-    setMenu(false);
-  }
-
-  relocateStats();  // NEW: keep stats in statusBar on mobile, toolbar on desktop
-
-  applySlidesPerView();                            // existing
-  if(window.innerWidth <= 768 && !carouselPaused){ // existing
-    startClueAuto();
-  }else{
-    stopClueAuto();
-  }
-  renderGrid(); // existing
-
-  // NEW: ensure we end selection even if finger lifts off a different element
-  window.addEventListener('pointerup', onEnd, { passive: true });
-
-});
-
 })();
+
+// Elevate header slightly when page scrolls
+const bumpHeader = () => {
+  const h = document.querySelector('header');
+  if (!h) return;
+  h.classList.toggle('scrolled', window.scrollY > 2);
+};
+window.addEventListener('scroll', bumpHeader, { passive: true });
+bumpHeader();
+
+
 </script>
 </body>
 </html>
