@@ -245,6 +245,7 @@ main{
   box-shadow:0 6px 24px rgba(0,0,0,.06);
   overflow:hidden;
 }
+
 .panel h2{
   margin:6px 0 10px;
   font-size:24px;
@@ -253,6 +254,26 @@ main{
 }
 
 /* ===== Clues ===== */
+.clue-chooser {
+  position: relative;
+  font-size: 24px;
+}
+
+.clue-head{
+  display:flex;
+  align-items:center;
+  justify-content:center;   /* keeps pill + button as a compact group */
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+.clue-head .legend{ margin:0; }  /* remove extra bottom margin from pill row */
+
+@media (max-width:768px){
+  .clue-head{ justify-content:center; }
+}
+
+
 .clue-list{list-style:none; margin:0; padding:0; display:grid; gap:8px}
 .clue {
   padding: 10px 12px;
@@ -282,10 +303,33 @@ main{
   border-radius:20px;
   padding:calc(var(--gridgap) * 2);
   box-shadow:inset 0 1px 0 #f1f5f9;
-  width:fit-content;
-  max-width:100%;
-  margin:0 auto;
+
+  /* max-width:100%; */
+
+
+  width: fit-content;
+  min-width: max-content;
+  margin: 0 auto;
+
 }
+
+.grid-scroll-wrapper {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  padding-bottom: 8px; /* Optional: give space below grid */
+  border-radius: 16px; /* Optional: match your panel style */
+}
+
+.grid-scroll-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.grid-scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+}
+
+
 
 .cell{
   width:34px; height:34px;
@@ -317,8 +361,19 @@ main{
 
 .pill{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; background:#eef2ff; color:#312e81;
       border-radius:999px; font-weight:700; font-size:12px}
-.hint-flash{animation:hintBlink .6s ease-in-out 0s 3}
-@keyframes hintBlink{50%{transform:scale(1.12)} 100%{transform:none}}
+.hint-flash {
+  animation: hintFlash 0.8s ease-in-out 0s 2;
+  background-color: #fcd34d2b !important;  /* bright yellow flash */
+  color: #1f2937 !important;             /* dark text for contrast */
+  border-radius: 8px;
+  z-index: 2;
+}
+
+@keyframes hintFlash {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.22); background-color: #fcd34d4d; }
+  100% { transform: scale(1); }
+}
 
 /* ===== Mobile: swipable one-at-a-time clues ===== */
 @media (max-width: 768px){
@@ -380,6 +435,9 @@ main{
     scroll-snap-align:center;
     border-width:2px;
     border-radius:16px;
+  transition: transform 0.5s ease;
+  will-change: transform;
+
   }
 
   /* Hide the colored dot; center just the label */
@@ -528,8 +586,6 @@ button.primary{ background:#00BBF9; border-color:#00BBF9; color:#fff; }
   }
   .toolbar .divider{ display:none; }
 }
-/* Cute Clues button + popover */
-.clue-chooser{ position:relative; }
 
 .clue-btn{
   display:inline-flex; align-items:center; gap:8px;
@@ -607,18 +663,7 @@ button.primary{ background:#00BBF9; border-color:#00BBF9; color:#fff; }
 
   <span class="divider" aria-hidden="true"></span>
 
-  <div class="clue-chooser">
-  <button id="clueBtn" class="primary clue-btn"
-        aria-haspopup="true" aria-expanded="false" aria-controls="clueMenu">
-  Clues
-</button>
-
-
-  <div id="clueMenu" class="clue-menu" role="menu" hidden>
-    <button role="menuitemradio" aria-checked="true"  data-side="en">English → Find Roman Urdu</button>
-    <button role="menuitemradio" aria-checked="false" data-side="ru">Roman Urdu → Find English</button>
-  </div>
-</div>
+ 
 
 
  <!-- was: class="ghost" -->
@@ -638,21 +683,43 @@ button.primary{ background:#00BBF9; border-color:#00BBF9; color:#fff; }
 
 <main>
   <section class="panel" aria-labelledby="clueHeader">
-    <h2 id="clueHeader">Clues</h2>
-    <!-- was id="legend" -->
-<div class="legend" id="legendClues"></div>
+    <h2 id="clueHeader">
+      <div class="clue-chooser">
+    <button id="clueBtn" class="primary clue-btn"
+            aria-haspopup="true" aria-expanded="false" aria-controls="clueMenu">
+      Clues
+    </button>
 
-    <ul id="clues" class="clue-list"></ul>
+    <div id="clueMenu" class="clue-menu" role="menu" hidden>
+      <button role="menuitemradio" aria-checked="true"  data-side="en">English → Find Roman Urdu</button>
+      <button role="menuitemradio" aria-checked="false" data-side="ru">Roman Urdu → Find English</button>
+    </div>
+  </div>
+    </h2>
+
+<!-- New compact head row: pill + clues button -->
+<div class="clue-head">
+  <div class="legend" id="legendClues"></div>
+
+
+</div>
+
+
+<ul id="clues" class="clue-list"></ul>
+
   </section>
 
-  <section class="panel" aria-labelledby="gridHeader">
-    <button id="hintBtn" class="hint-btn" title="Flash starting letters (+10s)" aria-label="Hint">Hint</button>
-    <h2 id="gridHeader">Word Grid</h2>
-    <!-- was id="legend" -->
-<div class="legend" id="legendGrid"></div>
+ <section class="panel" aria-labelledby="gridHeader">
+  <button id="hintBtn" class="hint-btn">Hint</button>
+  <h2 id="gridHeader">Word Grid</h2>
+  <div class="legend" id="legendGrid"></div>
 
+  <!-- 👇 NEW WRAPPER ADDED HERE -->
+  <div class="grid-scroll-wrapper">
     <div id="grid" class="grid" aria-label="Word search grid"></div>
-  </section>
+  </div>
+</section>
+
 </main>
 
 <div id="winModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="winTitle">
@@ -785,14 +852,15 @@ function getAllowedDirs(){ return state.allowedDirs.map(k => DIRS[k]); }
 
 
 // live update fill + label while dragging
-levelRange.addEventListener('input',  e => { updateRangeFill(e.target); levelLabel.textContent   = idxToLevelLabel(+e.target.value); });
+levelRange.addEventListener('input', e => {
+  updateRangeFill(e.target);
+  levelLabel.textContent = idxToLevelLabel(+e.target.value);
+  selectLevel(LEVEL_KEYS[+e.target.value]);
+});
+
 densityRange.addEventListener('input',e => { updateRangeFill(e.target); densityLabel.textContent = DENSITY_LABELS[+e.target.value]; });
 
-// commit the change -> use your existing selectors
-levelRange.addEventListener('change', e => {
-  const idx = +e.target.value;
-  selectLevel(LEVEL_KEYS[idx]);      // calls buildPuzzle()
-});
+
 densityRange.addEventListener('change', e => {
   selectDensity(+e.target.value);    // calls buildPuzzle()
 });
@@ -1002,9 +1070,6 @@ if (!res.success) {
   return; // prevents renderGrid() from running with an undefined grid
 }
 
-state.grid = res.grid;
-state.wordsPlaced = res.placed;
-
 
 // Fallback: if still failing, progressively trim the word set and retry
 if (!res.success) {
@@ -1104,12 +1169,21 @@ function applySlidesPerView(){
   slidesPerView = (w >= 560 ? 3 : 2);
   ul.style.setProperty('--slides', String(slidesPerView));
 }
-
-function scrollNextClue(){
+function scrollNextClue() {
   const ul = qs('#clues'); 
-  if(!ul) return;
+  if (!ul) return;
+
   const amount = Math.round(ul.clientWidth / slidesPerView);
-  ul.scrollBy({ left: amount, behavior: 'smooth' });
+
+  const maxScroll = ul.scrollWidth - ul.clientWidth;
+  const currentScroll = ul.scrollLeft;
+
+  // If near the end, reset to beginning
+  if (currentScroll + amount >= maxScroll - 5) {
+    ul.scrollTo({ left: 0, behavior: 'smooth' });
+  } else {
+    ul.scrollBy({ left: amount, behavior: 'smooth' });
+  }
 }
 
 function startClueAuto(){
@@ -1304,12 +1378,62 @@ function markSelected(){
 }
 function clearSelection(){ qsa('.cell').forEach(el=> el.dataset.sel='0'); state.selection=[]; state.startCell=null; }
 
-/* Move a found clue to the end of the list (for mobile carousel) */
-function moveClueToEnd(wordId){
+function moveClueToEnd(wordId) {
   const li = document.querySelector(`.clue[data-id="${wordId}"]`);
-  if(li && li.parentElement){
-    li.parentElement.appendChild(li);
+  if (!li || !li.parentElement) return;
+
+  const parent = li.parentElement;
+
+  // Only animate on large screens
+  if (window.innerWidth <= 768) {
+    parent.appendChild(li);
+    return;
   }
+
+  const allItems = [...parent.children];
+
+  // Capture all items’ current positions
+  const firstRects = new Map();
+  allItems.forEach(item => {
+    firstRects.set(item, item.getBoundingClientRect());
+  });
+
+  // Move the item to the end
+  parent.appendChild(li);
+
+  // Capture new positions
+  const lastRects = new Map();
+  allItems.forEach(item => {
+    lastRects.set(item, item.getBoundingClientRect());
+  });
+
+  // Invert + animate
+  allItems.forEach(item => {
+    const first = firstRects.get(item);
+    const last = lastRects.get(item);
+    const dx = first.left - last.left;
+    const dy = first.top - last.top;
+
+    if (dx !== 0 || dy !== 0) {
+      item.style.transform = `translate(${dx}px, ${dy}px)`;
+      item.style.transition = 'none';
+
+      // Trigger reflow
+      item.offsetHeight;
+
+      item.style.transition = 'transform 0.5s ease';
+      item.style.transform = 'translate(0, 0)';
+
+      item.addEventListener(
+        'transitionend',
+        () => {
+          item.style.transform = '';
+          item.style.transition = '';
+        },
+        { once: true }
+      );
+    }
+  });
 }
 
 function checkSelection(){
@@ -1329,15 +1453,17 @@ function checkSelection(){
 
   // Strike the clue and move to end on mobile
   const li = document.querySelector(`.clue[data-id="${hit.id}"]`);
-  if(li){
-    li.classList.add('found');
-    li.style.background = hit.color;
-    li.style.borderColor = hit.color;
-    li.style.color = '#0b0f19';
-    if(window.innerWidth <= 768){
-      moveClueToEnd(hit.id);
-    }
-  }
+  
+  if (li){
+  li.classList.add('found');
+  li.style.background = hit.color;
+  li.style.borderColor = hit.color;
+  li.style.color = '#0b0f19';
+
+  // Delay slightly to ensure DOM is stable before moving
+  setTimeout(() => moveClueToEnd(hit.id), 0);
+}
+
 
   qs('#foundCount').textContent = String(state.found.size);
 
