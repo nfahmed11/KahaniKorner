@@ -57,12 +57,21 @@
 
     
      <!-- YouTube iframe -->
-    <iframe id="ytplayer"
+    <!-- <iframe id="ytplayer"
   src="https://www.youtube.com/embed/yt6k3gzGMjY?autoplay=1&start=0&mute=1&enablejsapi=1"
   title="YouTube video player"
   allow="autoplay; encrypted-media"
   allowfullscreen>
-</iframe>
+</iframe> -->
+<iframe
+  id="ytplayer"
+  src="https://www.youtube.com/embed/yt6k3gzGMjY?enablejsapi=1&autoplay=1&mute=1&start=0&end=98&loop=1&playlist=yt6k3gzGMjY"
+  title="YouTube video player"
+  frameborder="0"
+  allow="autoplay; encrypted-media; accelerometer; clipboard-write; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
 
 
   </body>
@@ -88,7 +97,7 @@ for (let i = 0; i < 15; i++) {
 
 
 
-  <script>
+  <!-- <script>
     // Load YouTube API
     let tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -124,6 +133,50 @@ for (let i = 0; i < 15; i++) {
       player.unMute();
       overlay.style.display = "none";
     });
-  </script>
+  </script> -->
+
+<script>
+// Load YouTube API
+let tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(tag);
+
+let player;
+let loopInterval;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('ytplayer', {
+    events: {
+      'onReady': () => player.playVideo(),
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.PLAYING) {
+    clearInterval(loopInterval);
+    loopInterval = setInterval(() => {
+      let t = player.getCurrentTime();
+      if (t >= 98) {
+        player.seekTo(0, true); // restart & play from beginning
+      }
+    }, 500);
+  } else {
+    clearInterval(loopInterval);
+  }
+}
+
+// Overlay click: unmute and hide overlay
+const overlay = document.getElementById("overlay");
+overlay.addEventListener("click", () => {
+  if (player && player.unMute) {
+    player.unMute();
+    player.playVideo(); // ensure video resumes after unmute
+    overlay.style.display = "none";
+  }
+});
+</script>
+
 
 </html>
