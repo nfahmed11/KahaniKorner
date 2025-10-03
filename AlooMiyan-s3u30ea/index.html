@@ -46,14 +46,17 @@
 
     
     
-     <!-- YouTube iframe -->
-    <iframe id="ytplayer"
-      src="https://www.youtube.com/embed/ndxitY4eYas?si=TYHGVAOCFnOtCclv&autoplay=1&start=0&mute=1&enablejsapi=1"
 
-      title="YouTube video player"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
+  <!-- YouTube iframe -->
+<iframe
+  id="ytplayer"
+  src="https://www.youtube.com/embed/ndxitY4eYas?si=TYHGVAOCFnOtCclv&enablejsapi=1&autoplay=1&mute=1&start=0&loop=1&playlist=ndxitY4eYas"
+  title="YouTube video player"
+  frameborder="0"
+  allow="autoplay; encrypted-media; accelerometer; clipboard-write; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
   
   </body>
    <script>
@@ -76,7 +79,7 @@ for (let i = 0; i < 15; i++) {
   </script>
 
 
- <script>
+<script>
   // Load YouTube API
   let tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
@@ -88,8 +91,8 @@ for (let i = 0; i < 15; i++) {
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('ytplayer', {
       events: {
-        'onReady': () => player.playVideo(),
-        'onStateChange': onPlayerStateChange
+        onReady: () => player.playVideo(),
+        onStateChange: onPlayerStateChange
       }
     });
   }
@@ -98,9 +101,9 @@ for (let i = 0; i < 15; i++) {
     if (event.data === YT.PlayerState.PLAYING) {
       clearInterval(loopInterval);
       loopInterval = setInterval(() => {
-        let t = player.getCurrentTime();
+        const t = player.getCurrentTime();
         if (t >= 150) {
-          player.seekTo(0, true); // restart & play from beginning
+          player.seekTo(0, true); // restart & play from beginning (timestamp unchanged)
         }
       }, 500);
     } else {
