@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kahani Post 💌 | Product</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@400;700;800&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#fafafa; --ink:#111; --sub:#555; --card:#fff; --line:#eee; --brand:#ffd54f;
+    --radius:16px; --shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  html,body{min-height:100%}
+  body{
+    margin:0; background:var(--bg);
+    font-family:"Open Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--ink);
+  }
+  header{padding:16px 24px; text-align:center}
+  .logo{height:56px}
+
+  .page{
+    max-width:1100px; margin:0 auto; padding:24px;
+    display:grid; grid-template-columns: 1fr; gap:24px;
+  }
+  @media (min-width: 960px){
+    .page{ grid-template-columns: 1fr 1fr; align-items:start; }
+  }
+
+  /* LEFT: Sticky Gallery */
+  .gallery{ position:relative; }
+  @media (min-width: 960px){
+    .gallery{ position: sticky; top:24px; }
+  }
+  .gallery-card{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:16px;
+  }
+  .main-frame{
+    aspect-ratio: 4 / 3;
+    background:linear-gradient(135deg,#fbe7e7,#b0c3b7);
+    border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center;
+  }
+  .main-frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .thumbs{margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;}
+  .thumb{width:72px; height:72px; border-radius:10px; overflow:hidden; border:2px solid transparent; cursor:pointer;}
+  .thumb img{width:100%; height:100%; object-fit:cover;}
+  .thumb[aria-current="true"]{border-color:#111;}
+
+  /* RIGHT: Product Info */
+  .info{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:24px;
+  }
+  h1{
+    font-family:"Grandstander",sans-serif; font-weight:800;
+    margin:0 0 6px; font-size:clamp(1.6rem,3vw,2.2rem);
+  }
+  .price{ font-weight:700; margin:4px 0 16px; }
+  .blurb{ color:#333; line-height:1.6; margin:0 0 16px; }
+
+  .card{
+    border:1px solid var(--line); border-radius:12px; padding:16px; margin:16px 0;
+    background:#fff;
+  }
+  .card h3{
+    font-family:"Grandstander",sans-serif; font-weight:700; margin:0 0 10px;
+  }
+
+  .purchase{
+    margin-top:20px;
+    text-align:center; /* center the button */
+  }
+  .btn{
+    font-family:"Grandstander",sans-serif; font-weight:700;
+    padding:14px 24px; border-radius:999px; border:2px solid #111; background:var(--brand);
+    box-shadow:0 4px 0 #111; text-decoration:none; color:#111; display:inline-block;
+    transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 6px 0 #111;}
+  .btn.secondary{background:#fff;}
+
+  .notes{ color:#555; font-size:.95rem; line-height:1.55; text-align:center; }
+  ul.clean{ list-style:none; padding:0; margin:0; }
+  ul.clean li::before{ content:"💫 "; }
+  ul.clean li{ margin:8px 0; }
+
+  .fineprint{
+    font-size:.85rem; color:#666; border-top:1px dashed #e4e4e4; padding-top:12px; margin-top:12px;
+  }
+
+  .edit-subscription{ text-align:center; margin-top:24px; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/">
+    <img src="images/logo.png" alt="Kahani Korner" class="logo">
+  </a>
+</header>
+
+<main class="page">
+  <!-- LEFT: Sticky Gallery -->
+  <section class="gallery">
+    <div class="gallery-card">
+      <div class="main-frame" id="mainFrame">
+        <img id="mainImg" src="images/kahani-post-1.jpg" alt="Kahani Post – envelope and mini newspaper">
+      </div>
+      <div class="thumbs">
+        <button class="thumb" aria-current="true" data-full="images/kahani-post-1.jpg">
+          <img src="images/kahani-post-1-thumb.jpg" alt="">
+        </button>
+        <button class="thumb" data-full="images/kahani-post-2.jpg">
+          <img src="images/kahani-post-2-thumb.jpg" alt="">
+        </button>
+        <button class="thumb" data-full="images/kahani-post-3.jpg">
+          <img src="images/kahani-post-3-thumb.jpg" alt="">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT: Product Info -->
+  <section class="info">
+    <h1>Kahani Post 💌</h1>
+    <p class="price"><strong>$8.99 USD</strong> / month — Free U.S. Shipping</p>
+
+    <p class="blurb">
+     For those who treasure stories, color, and connection — <strong>Kahani Post </strong> brings back the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: handwritten Urdu words, printed paper, and the simple thrill of opening real mail. Inside, you’ll find stories, art, and playful surprises that make learning Urdu feel natural and joyful — like discovering language the way our parents and grandparents once did, slowly and beautifully, over a warm cup of chai.</p>
+
+    <!-- Single purchase block (no "subscribe & save") -->
+    <div class="purchase">
+      <a class="btn" href="https://buy.stripe.com/fZu14p5Amby5b3l8870Fi02" target="_blank" rel="noopener noreferrer">
+        Subscribe Now
+      </a>
+      <p class="notes" style="margin-top:10px;">
+        Ships the <strong>last week of each month</strong>. Orders after the <strong>20th</strong> start the following month. Pause or cancel anytime.
+      </p>
+      <p class="fineprint">
+        This is a recurring purchase. By subscribing, you authorize monthly charges until canceled.
+      </p>
+    </div>
+
+  <div class="card">
+  <h3>What’s inside (varies monthly):</h3>
+  <ul class="clean">
+    <li>A beautifully printed mini newspaper in Urdu & English — perfect for storytime or chai breaks</li>
+    <li>Collectible stickers, recipe cards, or quote prints to spark smiles and conversation</li>
+    <li>Occasional surprise extras that make Urdu learning feel nostalgic, hands-on, and full of wonder</li>
+  </ul>
+</div>
+
+
+    <div class="card">
+      <h3>Good to know</h3>
+      <ul class="clean">
+        <li>U.S. shipping is free</li>
+        <li>Update your address before the 20th for smooth delivery</li>
+        <li>Skip, pause, or cancel anytime via your account</li>
+      </ul>
+    </div>
+
+    <div class="edit-subscription">
+      <a class="btn secondary" href="https://billing.stripe.com/p/login/eVqaEZ8My1Xv1sL0FF0Fi00" target="_blank" rel="noopener noreferrer">
+        Edit Subscription
+      </a>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Image gallery switching
+  const mainImg = document.getElementById('mainImg');
+  document.querySelectorAll('.thumb').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const url = btn.getAttribute('data-full');
+      if (!url) return;
+      mainImg.src = url;
+      document.querySelectorAll('.thumb').forEach(b=>b.setAttribute('aria-current','false'));
+      btn.setAttribute('aria-current','true');
+    });
+  });
+</script>
+</body>
+</html>
