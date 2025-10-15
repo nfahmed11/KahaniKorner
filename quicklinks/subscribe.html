@@ -11,7 +11,7 @@
 
 <style>
   :root{
-    --bg:#fafafa; --ink:#111; --sub:#555; --card:#fff; --line:#eee; --brand:#ffd54f;
+    --bg:#fafafa; --ink:#111; --sub:#555; --card:#fff; --line:#eee; --brand:#c7dbc2;
     --radius:16px; --shadow:0 6px 16px rgba(0,0,0,.08);
   }
   html,body{min-height:100%}
@@ -64,7 +64,7 @@
     font-family:"Grandstander",sans-serif; font-weight:800;
     margin:0 0 6px; font-size:clamp(1.6rem,3vw,2.2rem);
   }
-  .price{ font-weight:700; margin:4px 0 16px; }
+  .price{  margin:4px 0 16px; }
   .blurb{ color:#333; line-height:1.6; margin:0 0 16px; }
 
   .card{
@@ -75,18 +75,20 @@
     font-family:"Grandstander",sans-serif; font-weight:700; margin:0 0 10px;
   }
 
-  .purchase{
-    margin-top:20px;
-    text-align:center; /* center the button */
-  }
+  .purchase {
+  margin: 32px 0; /* equal space top and bottom */
+  text-align: center;
+}
+
   .btn{
     font-family:"Grandstander",sans-serif; font-weight:700;
     padding:14px 24px; border-radius:999px; border:2px solid #111; background:var(--brand);
     box-shadow:0 4px 0 #111; text-decoration:none; color:#111; display:inline-block;
     transition:transform .1s ease, box-shadow .1s ease;
-  }
+    margin: 12px 0; 
+  }:-moz-user-disabled
   .btn:hover{transform:translateY(-2px); box-shadow:0 6px 0 #111;}
-  .btn.secondary{background:#fff;}
+  .btn.secondary{background:#e3bfbf;}
 
   .notes{ color:#555; font-size:.95rem; line-height:1.55; text-align:center; }
   ul.clean{ list-style:none; padding:0; margin:0; }
@@ -131,15 +133,16 @@
 
   <!-- RIGHT: Product Info -->
   <section class="info">
-    <h1>Kahani Post 💌</h1>
-    <p class="price"><strong>$8.99 USD</strong> / month — Free U.S. Shipping</p>
+    <h1>Kahani Post</h1>
+    <p class="price"><strong>$8.99</strong> monthly<br>Free U.S. Shipping</p>
 
-    <p class="blurb">
-     For those who treasure stories, color, and connection — <strong>Kahani Post </strong> brings back the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: handwritten Urdu words, printed paper, and the simple thrill of opening real mail. Inside, you’ll find stories, art, and playful surprises that make learning Urdu feel natural and joyful — like discovering language the way our parents and grandparents once did, slowly and beautifully, over a warm cup of chai.</p>
+   <p class="blurb">
+  For those who treasure stories, color, and connection — <strong>Kahani Post</strong> revives the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: printed paper, handwritten Urdu, and the quiet thrill of opening real mail. Inside are stories, art, and small surprises that make learning Urdu feel natural and joyful — like the way our parents once learned, slowly and beautifully, over a warm cup of chai.
+</p>
 
     <!-- Single purchase block (no "subscribe & save") -->
     <div class="purchase">
-      <a class="btn" href="https://buy.stripe.com/fZu14p5Amby5b3l8870Fi02" target="_blank" rel="noopener noreferrer">
+      <a class="btn" href="https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03" target="_blank" rel="noopener noreferrer">
         Subscribe Now
       </a>
       <p class="notes" style="margin-top:10px;">
@@ -150,7 +153,7 @@
       </p>
     </div>
 
-  <div class="card">
+ <div class="card">
   <h3>What’s inside (varies monthly):</h3>
   <ul class="clean">
     <li>A beautifully printed mini newspaper in Urdu & English — perfect for storytime or chai breaks</li>
@@ -158,6 +161,7 @@
     <li>Occasional surprise extras that make Urdu learning feel nostalgic, hands-on, and full of wonder</li>
   </ul>
 </div>
+
 
 
     <div class="card">
