@@ -13,6 +13,7 @@
   :root{
     --bg:#fafafa; --ink:#111; --sub:#555; --card:#fff; --line:#eee; --brand:#c7dbc2;
     --radius:16px; --shadow:0 6px 16px rgba(0,0,0,.08);
+      --header-height-desktop: 60;
   }
   html,body{min-height:100%}
   body{
@@ -20,9 +21,139 @@
     font-family:"Open Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color:var(--ink);
   }
-  header{padding:16px 24px; text-align:center}
-  .logo{height:56px}
 
+  /* ===== Ins Header (from your snippet) ===== */
+/* ===== Updated Header Styles ===== */
+.ins-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #F3F1F0; /* new background color */
+  border-bottom: 1px solid #eee;
+}
+
+/* Navbar link + icon colors + font size */
+.ins-header__menu-link-title,
+.ins-header__icon {
+  color: #4A594A; /* normal font color */
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-size: 14px; /* new font size */
+  letter-spacing:.02em
+}
+
+/* Hover/focus color */
+.ins-header__menu-link-title:hover,
+.ins-header__icon:hover,
+.ins-header__menu-link-title:focus {
+  color: #B0C3B7; /* hover/focus color */
+}
+
+
+
+
+  .ins-header__wrap
+ {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8px 35px;
+ }
+
+  .ins-header__row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .ins-header__left,.ins-header__center,.ins-header__right{display:flex;align-items:center;gap:12px}
+  .ins-header__menu-inner{gap:18px;
+
+  display: inline-flex;
+    position: relative;
+    align-items: center;
+    height: calc(var(50) * 1px - 8px);
+  }
+  .ins-header__icon{color:#111;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+ 
+
+  .ins-header__logo-image img {
+  height: calc((var(--header-height-desktop) - 20) * 1px);
+  width: auto;
+  display:block
+}
+
+.ins-tile--header.ins-tile--left-logo-text .ins-header__menu-link-title {
+    letter-spacing: .5px;}
+  
+
+    /* Burger button */
+.ins-burger{
+  display: none; /* shown only on small screens */
+  background: transparent;
+  border: 0;
+  padding: 6px;
+  line-height: 1;
+  cursor: pointer;
+  color: #4A594A; /* matches your navbar text */
+}
+
+/* Mobile menu panel */
+.mobile-menu{
+  position: fixed;
+  top: var(--mobile-menu-top, 64px); /* updated via JS on open */
+  left: 0;
+  right: 0;
+  background: #F3F1F0;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+  display: grid;
+  gap: 0;
+  padding: 8px 16px 12px;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .18s ease, opacity .18s ease;
+  z-index: 999; /* just under header (1000) */
+}
+
+.mobile-menu.open{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.mobile-link{
+  display: block;
+  padding: 12px 6px;
+  text-decoration: none;
+  color: #4A594A;
+  font-size: 16px;
+  letter-spacing: .02em;
+  border-radius: 8px;
+}
+
+.mobile-link:hover,
+.mobile-link:focus{
+  color: #B0C3B7;
+  outline: none;
+}
+
+
+
+@media (max-width: 900px){
+  .ins-header__menu-inner { display: none; } /* hide desktop nav */
+  .header-spacer { display: none; } /* hide spacer on small screens */
+   .ins-burger{ display: inline-flex; align-items: center; justify-content: center; }
+  .ins-header__menu-inner{ display: none; } /* you already have this */
+}
+
+@media (max-width: 900px){
+  .ins-header__menu-inner { display: none; } /* hide desktop nav */
+  .header-spacer { display: none; } /* hide spacer on small screens */
+}
+
+  
+  
+
+  /* Give the main content breathing room below sticky header */
+  .header-spacer{height:72px} /* adjust if your header height changes */
+
+  /* ===== Page layout (your existing styles) ===== */
   .page{
     max-width:1100px; margin:0 auto; padding:24px;
     display:grid; grid-template-columns: 1fr; gap:24px;
@@ -54,6 +185,8 @@
   .thumb img{width:100%; height:100%; object-fit:cover;}
   .thumb[aria-current="true"]{border-color:#111;}
 
+#mainImg { transition: opacity .18s ease; }
+
   /* RIGHT: Product Info */
   .info{
     background:var(--card); border:1px solid var(--line);
@@ -75,18 +208,20 @@
     font-family:"Grandstander",sans-serif; font-weight:700; margin:0 0 10px;
   }
 
-  .purchase {
-  margin: 32px 0; /* equal space top and bottom */
-  text-align: center;
-}
+  .purchase { margin: 32px 0; text-align: center; }
+
+  .subscribe-btn {
+      display: flex
+;
+    justify-content: center;}
 
   .btn{
     font-family:"Grandstander",sans-serif; font-weight:700;
     padding:14px 24px; border-radius:999px; border:2px solid #111; background:var(--brand);
     box-shadow:0 4px 0 #111; text-decoration:none; color:#111; display:inline-block;
     transition:transform .1s ease, box-shadow .1s ease;
-    margin: 12px 0; 
-  }:-moz-user-disabled
+    margin: 12px 0;
+  }
   .btn:hover{transform:translateY(-2px); box-shadow:0 6px 0 #111;}
   .btn.secondary{background:#e3bfbf;}
 
@@ -104,30 +239,106 @@
 </head>
 <body>
 
-<header>
-  <a href="/">
-    <img src="images/logo.png" alt="Kahani Korner" class="logo">
+<!-- ===== Your INS HEADER pasted in ===== -->
+<div class="ins-header">
+  <div class="ins-header__wrap">
+    <div class="ins-header__inner">
+      <div class="ins-header__row">
+        <div class="ins-header__left">
+          <div class="ins-header__logo">
+            <a href="/" target="_self" role="button" class="ins-header__logo-inner">
+              <div class="ins-header__logo-image">
+                <div style="background-color:none;" class="ins-header__logo-image-inner">
+                  <picture class="ins-picture ins-picture--full ins-picture--inline">
+                    <source srcset="https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-200x200.webp, https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-600x600.webp 2x" type="image/webp">
+                    <source srcset="https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-200x200.png, https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-600x600.png 2x">
+                    <img src="https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-200x200.png" alt="Kahani Korner" fetchpriority="low">
+                  </picture>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="ins-header__center">
+          <div class="ins-header__menu ins-header__menu--several">
+            <div class="ins-header__menu-wrap">
+              <nav class="ins-header__menu-inner">
+                <div tabindex="0" class="ins-header__menu-link">
+                  <a class="ins-header__menu-link-title" href="/products" aria-label="SHOP">SHOP</a>
+                </div>
+                <div tabindex="0" class="ins-header__menu-link">
+                  <a class="ins-header__menu-link-title" href="https://kahanikorner.com/quicklinks/subscribe.html" aria-label="SUBSCRIBE">SUBSCRIBE</a>
+                </div>
+                <div tabindex="0" class="ins-header__menu-link">
+                  <a class="ins-header__menu-link-title" href="https://kahanikorner.com/quicklinks/resources.html" aria-label="RESOURCES">RESOURCES</a>
+                </div>
+                <div tabindex="0" class="ins-header__menu-link">
+                  <a class="ins-header__menu-link-title" href="#tile-feature-list-tfN9jj" aria-label="FAQ">FAQ</a>
+                </div>
+                <div tabindex="0" class="ins-header__menu-link">
+                  <a class="ins-header__menu-link-title" href="#tile-location-xG9PRx" aria-label="CONTACT">CONTACT</a>
+                </div>
+              </nav>
+            </div>
+            <div class="ins-header__scroller"><div class="ins-header__scroller-marker" style="left:0;width:100%;"></div></div>
+          </div>
+        </div>
+
+        <div class="ins-header__right">
+  <a role="link" class="ins-header__icon ins-header__icon--cart ins-header__icon--cart-text" data-count="1" aria-label="Go to your shopping cart" title="Go to your shopping cart" href="/products/cart">
+    <div class="ins-header__icon-text">CART</div>
   </a>
-</header>
+  <button class="ins-burger" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+    <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<nav id="mobileNav" class="mobile-menu" hidden>
+  <a class="mobile-link" href="/products">SHOP</a>
+  <a class="mobile-link" href="https://kahanikorner.com/quicklinks/subscribe.html">SUBSCRIBE</a>
+  <a class="mobile-link" href="https://kahanikorner.com/quicklinks/resources.html">RESOURCES</a>
+  <a class="mobile-link" href="#tile-feature-list-tfN9jj">FAQ</a>
+  <a class="mobile-link" href="#tile-location-xG9PRx">CONTACT</a>
+</nav>
+
+<div class="header-spacer" aria-hidden="true"></div>
+<!-- ===== End header ===== -->
 
 <main class="page">
   <!-- LEFT: Sticky Gallery -->
   <section class="gallery">
     <div class="gallery-card">
       <div class="main-frame" id="mainFrame">
-        <img id="mainImg" src="images/kahani-post-1.jpg" alt="Kahani Post – envelope and mini newspaper">
+        <img id="mainImg" src="images/kahanitimes.png" alt="Kahani Post – envelope and mini newspaper">
       </div>
-      <div class="thumbs">
-        <button class="thumb" aria-current="true" data-full="images/kahani-post-1.jpg">
-          <img src="images/kahani-post-1-thumb.jpg" alt="">
-        </button>
-        <button class="thumb" data-full="images/kahani-post-2.jpg">
-          <img src="images/kahani-post-2-thumb.jpg" alt="">
-        </button>
-        <button class="thumb" data-full="images/kahani-post-3.jpg">
-          <img src="images/kahani-post-3-thumb.jpg" alt="">
-        </button>
-      </div>
+      <<div class="thumbs">
+  <button class="thumb" type="button" aria-current="true">
+    <img src="images/kahanitimes.png" data-full="images/kahanitimes.png" alt="Kahani Times cover">
+  </button>
+
+  <button class="thumb" type="button">
+    <img src="images/calendar.png" data-full="images/calendar.png" alt="Calendar insert">
+  </button>
+
+  <button class="thumb" type="button">
+    <img src="images/sticker.png" data-full="images/sticker.png" alt="Sticker sheet">
+  </button>
+
+  <button class="thumb" type="button">
+    <img src="images/newspaper.png" data-full="images/newspaper.png" alt="Mini newspaper">
+  </button>
+</div>
+
     </div>
   </section>
 
@@ -136,15 +347,17 @@
     <h1>Kahani Post</h1>
     <p class="price"><strong>$8.99</strong> monthly<br>Free U.S. Shipping</p>
 
-   <p class="blurb">
-  For those who treasure stories, color, and connection — <strong>Kahani Post</strong> revives the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: printed paper, handwritten Urdu, and the quiet thrill of opening real mail. Inside are stories, art, and small surprises that make learning Urdu feel natural and joyful — like the way our parents once learned, slowly and beautifully, over a warm cup of chai.
-</p>
+    <p class="blurb">
+      For those who treasure stories, color, and connection — <strong>Kahani Post</strong> revives the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: printed paper, handwritten Urdu, and the quiet thrill of opening real mail. Inside are stories, art, and small surprises that make learning Urdu feel natural and joyful — like the way our parents once learned, slowly and beautifully, over a warm cup of chai.
+    </p>
 
-    <!-- Single purchase block (no "subscribe & save") -->
-    <div class="purchase">
-      <a class="btn" href="https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03" target="_blank" rel="noopener noreferrer">
+    <div class="subscribe-btn">  <a class="btn" href="https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03" target="_blank" rel="noopener noreferrer">
         Subscribe Now
-      </a>
+      </a> </div>
+   
+
+    <div class="purchase">
+      
       <p class="notes" style="margin-top:10px;">
         Ships the <strong>last week of each month</strong>. Orders after the <strong>20th</strong> start the following month. Pause or cancel anytime.
       </p>
@@ -153,16 +366,14 @@
       </p>
     </div>
 
- <div class="card">
-  <h3>What’s inside (varies monthly):</h3>
-  <ul class="clean">
-    <li>A beautifully printed mini newspaper in Urdu & English — perfect for storytime or chai breaks</li>
-    <li>Collectible stickers, recipe cards, or quote prints to spark smiles and conversation</li>
-    <li>Occasional surprise extras that make Urdu learning feel nostalgic, hands-on, and full of wonder</li>
-  </ul>
-</div>
-
-
+    <div class="card">
+      <h3>What’s inside (varies monthly):</h3>
+      <ul class="clean">
+        <li>A beautifully printed mini newspaper in Urdu & English — perfect for storytime or chai breaks</li>
+        <li>Collectible stickers, recipe cards, or quote prints to spark smiles and conversation</li>
+        <li>Occasional surprise extras that make Urdu learning feel nostalgic, hands-on, and full of wonder</li>
+      </ul>
+    </div>
 
     <div class="card">
       <h3>Good to know</h3>
@@ -182,17 +393,99 @@
 </main>
 
 <script>
-  // Image gallery switching
+
+  // ===== Gallery image swap =====
   const mainImg = document.getElementById('mainImg');
-  document.querySelectorAll('.thumb').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const url = btn.getAttribute('data-full');
-      if (!url) return;
-      mainImg.src = url;
-      document.querySelectorAll('.thumb').forEach(b=>b.setAttribute('aria-current','false'));
-      btn.setAttribute('aria-current','true');
+
+  document.querySelectorAll('.thumb').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const imgEl = btn.querySelector('img');
+      if (!imgEl) return;
+      const url = imgEl.dataset.full || imgEl.getAttribute('src');
+
+      // Optional: quick fade for polish
+      mainImg.style.opacity = '0';
+      const swap = () => {
+        mainImg.src = url;
+        mainImg.onload = () => { mainImg.style.opacity = '1'; };
+        mainImg.onerror = () => {
+          // fallback if 404
+          mainImg.style.opacity = '1';
+          console.warn('Image failed to load:', url);
+        };
+      };
+      // tiny delay lets CSS transition show
+      requestAnimationFrame(swap);
+
+      document.querySelectorAll('.thumb').forEach(b => b.setAttribute('aria-current', 'false'));
+      btn.setAttribute('aria-current', 'true');
     });
   });
+
+
+
+  // burger menu
+
+    // ===== Mobile menu toggle =====
+  const burger = document.querySelector('.ins-burger');
+  const mobileNav = document.getElementById('mobileNav');
+  const headerEl = document.querySelector('.ins-header');
+
+  // Dynamically position menu below header
+  function setMenuTop(){
+    if (!headerEl) return;
+    const rect = headerEl.getBoundingClientRect();
+    document.documentElement.style.setProperty('--mobile-menu-top', rect.height + 'px');
+  }
+
+  // Open menu
+  function openMenu(){
+    setMenuTop();
+    mobileNav.hidden = false;
+    requestAnimationFrame(()=> mobileNav.classList.add('open'));
+    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Close menu');
+    document.addEventListener('click', onDocClick, { capture: true });
+    document.addEventListener('keydown', onEsc);
+  }
+
+  // Close menu
+  function closeMenu(){
+    mobileNav.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Open menu');
+    setTimeout(()=> { mobileNav.hidden = true; }, 180);
+    document.removeEventListener('click', onDocClick, { capture: true });
+    document.removeEventListener('keydown', onEsc);
+  }
+
+  // Toggle open/close
+  function toggleMenu(){
+    const isOpen = mobileNav.classList.contains('open');
+    isOpen ? closeMenu() : openMenu();
+  }
+
+  // Close when clicking outside menu
+  function onDocClick(e){
+    if (!mobileNav.contains(e.target) && !burger.contains(e.target)) {
+      closeMenu();
+    }
+  }
+
+  // Close when pressing ESC
+  function onEsc(e){
+    if (e.key === 'Escape') closeMenu();
+  }
+
+  // Initialize listeners
+  if (burger && mobileNav) {
+    burger.addEventListener('click', toggleMenu);
+    window.addEventListener('resize', setMenuTop);
+    mobileNav.addEventListener('click', (e)=>{
+      if (e.target.matches('a')) closeMenu();
+    });
+  }
+
 </script>
 </body>
 </html>
