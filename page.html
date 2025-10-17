@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kahani Korner — One Story, Two Languages, Endless Memories</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#fff;
+  --ink:#0b0b0b;
+  --muted:#5c5c5c;
+  --brand:#b0c3b7; /* matchy green */
+  --brand-dark:#4a594a;
+  --soft:#f3f1f0;  /* header bg */
+  --card:#ffffff;
+  --line:#ececec;
+  --shadow:0 10px 24px rgba(0,0,0,.08);
+  --radius:16px;
+}
+
+/* ===== Base ===== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Open Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+a{color:inherit; text-decoration:none}
+img{max-width:100%; display:block}
+
+/* ===== Header / Nav ===== */
+.header{
+  position:sticky; top:0; z-index:1000;
+  background:var(--soft);
+  border-bottom:1px solid var(--line);
+}
+.header__wrap{
+  max-width:1120px; margin:0 auto; padding:10px 20px;
+  display:flex; align-items:center; gap:16px; justify-content:space-between;
+}
+.brand{display:flex; align-items:center; gap:12px}
+.brand img{height:48px; width:auto}
+.nav{display:flex; align-items:center; gap:20px}
+.nav a{font-size:14px; letter-spacing:.02em; color:var(--brand-dark)}
+.nav a:hover{color:var(--brand)}
+.cart{font-weight:700}
+.burger{
+  display:none; background:transparent; border:0; padding:6px; color:var(--brand-dark); cursor:pointer;
+}
+@media (max-width: 900px){
+  .nav{display:none}
+  .burger{display:inline-flex}
+}
+
+.mobile{
+  position:fixed; left:0; right:0; top:64px;
+  background:var(--soft); border-bottom:1px solid var(--line);
+  box-shadow:var(--shadow); padding:8px 16px 12px;
+  display:grid; gap:0; transform:translateY(-10px);
+  opacity:0; pointer-events:none; transition:.18s ease;
+}
+.mobile.open{transform:translateY(0); opacity:1; pointer-events:auto}
+.mobile a{padding:12px 6px; border-radius:8px; color:var(--brand-dark)}
+.mobile a:hover{color:var(--brand)}
+
+.header-spacer{height:64px} /* if you later position header:fixed */
+
+/* ===== Sections ===== */
+.wrap{max-width:1120px; margin:0 auto; padding:28px 20px}
+
+/* Hero */
+.hero{
+  display:grid; gap:20px; align-items:center;
+  grid-template-columns: 1.1fr .9fr;
+}
+@media (max-width: 900px){ .hero{grid-template-columns:1fr} }
+.hero h1{
+  font-family:"Grandstander", cursive; font-weight:800;
+  font-size:clamp(1.8rem, 3.2vw, 2.6rem); margin:0 0 10px;
+}
+.hero p{color:#333; line-height:1.6; margin:0 0 16px}
+.cta{
+  display:inline-block; font-family:"Grandstander", cursive; font-weight:700;
+  background:var(--brand); border:2px solid #111; color:#111; padding:12px 20px;
+  border-radius:999px; box-shadow:0 4px 0 #111; transition:transform .1s, box-shadow .1s;
+}
+.cta:hover{transform:translateY(-2px); box-shadow:0 6px 0 #111}
+.hero__media{
+  background:linear-gradient(135deg,#fbe7e7,var(--brand)); border-radius:16px; overflow:hidden
+}
+
+/* Promo bar */
+.promo{background:#fff7d6; border:1px solid #ffe9a3; border-radius:12px; padding:10px 14px; font-weight:600; text-align:center}
+
+/* Cards / rows */
+.section-title{
+  font-family:"Grandstander", cursive; font-weight:800; margin:28px 0 12px; font-size:1.6rem;
+}
+.row{
+  display:grid; gap:18px; grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px){ .row{grid-template-columns:1fr} }
+
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
+  overflow:hidden; display:flex; flex-direction:column;
+}
+.card__img{aspect-ratio: 4/3; background:#fafafa}
+.card__body{padding:16px}
+.card__title{font-weight:700; margin:0 0 6px}
+.card__text{color:#333; margin:0 0 12px}
+.card__cta{margin-top:auto}
+
+/* Why grid */
+.bullets{
+  display:grid; gap:14px; grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 900px){ .bullets{grid-template-columns:1fr} }
+.bullet{
+  background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px;
+}
+.bullet h3{
+  font-family:"Grandstander"; margin:0 0 6px; font-size:1.1rem
+}
+.bullet p{margin:0; color:#444}
+
+/* Testimonials */
+.testi{
+  display:grid; gap:16px; grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px){ .testi{grid-template-columns:1fr} }
+.quote{
+  background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:var(--shadow);
+}
+.quote__head{display:flex; align-items:center; gap:10px; margin-bottom:10px}
+.quote__head img{width:40px; height:40px; border-radius:50%; object-fit:cover}
+.quote__name{font-weight:700}
+
+/* FAQ (accordion) */
+.faq{max-width:900px}
+.faq details{
+  background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin:10px 0;
+}
+.faq summary{cursor:pointer; font-weight:700}
+.faq p{margin:10px 0 0; color:#333}
+
+/* Story */
+.story{
+  background:#fcfcfc; border:1px solid var(--line); border-radius:16px; padding:18px;
+}
+
+/* Contact */
+.contact{
+  background:var(--brand); border:2px dashed #111; border-radius:16px; padding:16px; text-align:center
+}
+
+/* Footer */
+.footer{
+  background:#f7f7f7; border-top:1px solid var(--line)
+}
+.footer .wrap{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.small{color:var(--muted); font-size:.9rem}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="header__wrap">
+    <a class="brand" href="https://kahanikorner.company.site/">
+      <img src="https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-200x200.png" alt="Kahani Korner">
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="https://kahanikorner.company.site/products">SHOP</a>
+      <a href="https://kahanikorner.com/quicklinks/subscribe.html">SUBSCRIBE</a>
+      <a href="https://kahanikorner.com/quicklinks/resources.html">RESOURCES</a>
+      <a href="https://kahanikorner.company.site/#tile-feature-list-tfN9jj">FAQ</a>
+      <a href="https://kahanikorner.company.site/#tile-location-xG9PRx">CONTACT</a>
+      <a class="cart" href="https://kahanikorner.company.site/products/cart">CART</a>
+    </nav>
+
+    <button class="burger" aria-label="Open menu" aria-controls="mnav" aria-expanded="false">
+      <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav id="mnav" class="mobile" hidden>
+  <a href="https://kahanikorner.company.site/products">SHOP</a>
+  <a href="https://kahanikorner.com/quicklinks/subscribe.html">SUBSCRIBE</a>
+  <a href="https://kahanikorner.com/quicklinks/resources.html">RESOURCES</a>
+  <a href="https://kahanikorner.company.site/#tile-feature-list-tfN9jj">FAQ</a>
+  <a href="https://kahanikorner.company.site/#tile-location-xG9PRx">CONTACT</a>
+  <a href="https://kahanikorner.company.site/products/cart">CART</a>
+</nav>
+
+<div class="header-spacer" aria-hidden="true"></div>
+
+<!-- ===== Hero ===== -->
+<section class="wrap hero">
+  <div>
+    <div class="promo">Free Shipping on All Orders — Pre-Order Now (Ships Nov 5th!)</div>
+    <h1>One Story, Two Languages, Endless Memories</h1>
+    <p>Explore enchanting Urdu–English books designed to preserve culture, foster connection, and delight little readers.</p>
+    <p>
+      <a class="cta" href="https://kahanikorner.company.site/products">Explore Books</a>
+    </p>
+  </div>
+  <div class="hero__media">
+    <!-- Replace with your real hero image if you want -->
+    <img src="https://kahanikorner.company.site/_next/static/media/KahaniKorner_hero.3b1f.png" alt="Kahani Korner showcase" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<!-- ===== Starter Pack / Build Library ===== -->
+<section class="wrap">
+  <h2 class="section-title">Kahani Time Starter Pack</h2>
+  <div class="row">
+    <article class="card">
+      <div class="card__img">
+        <img src="https://kahanikorner.company.site/_next/static/media/pack1.abc.png" alt="" onerror="this.parentNode.style.background='#f5f5f5';this.remove();">
+      </div>
+      <div class="card__body">
+        <h3 class="card__title">Everything you need to begin</h3>
+        <p class="card__text">Stories, stickers, games, and videos make Urdu fun — even if you don’t speak it yourself.</p>
+        <p class="card__cta"><a class="cta" href="https://kahanikorner.company.site/products">Shop Now</a></p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card__img">
+        <img src="https://kahanikorner.company.site/_next/static/media/pack2.abc.png" alt="" onerror="this.parentNode.style.background='#f5f5f5';this.remove();">
+      </div>
+      <div class="card__body">
+        <h3 class="card__title">Pre-Order Your Favorites</h3>
+        <p class="card__text">Reserve your books now — shipping begins Nov 5th.</p>
+        <p class="card__cta"><a class="cta" href="https://kahanikorner.company.site/">Pre-Order Now</a></p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card__img">
+        <img src="https://kahanikorner.company.site/_next/static/media/pack3.abc.png" alt="" onerror="this.parentNode.style.background='#f5f5f5';this.remove();">
+      </div>
+      <div class="card__body">
+        <h3 class="card__title">Build Your Library</h3>
+        <p class="card__text">Collect every “Little Kahani” and grow with your child’s curiosity.</p>
+        <p class="card__cta"><a class="cta" href="https://kahanikorner.company.site/">Pre-Order Now</a></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===== Why section ===== -->
+<section class="wrap">
+  <h2 class="section-title">Why Kahani Korner?</h2>
+  <div class="bullets">
+    <div class="bullet">
+      <h3>Preserving Cultural Identity</h3>
+      <p>Books that empower parents to pass on roots — helping kids appreciate heritage in a multicultural world.</p>
+    </div>
+    <div class="bullet">
+      <h3>Inclusive for Multiethnic Families</h3>
+      <p>Designed so English-speaking parents can connect with their child’s South Asian heritage.</p>
+    </div>
+    <div class="bullet">
+      <h3>Bilingual Skill Development</h3>
+      <p>English + Urdu + Roman Urdu support natural learning and confidence.</p>
+    </div>
+    <div class="bullet">
+      <h3>Adaptable for Different Ages</h3>
+      <p>Activities that grow with your child — from toddlers to older learners.</p>
+    </div>
+    <div class="bullet">
+      <h3>Cost-Effective, Endless Activities</h3>
+      <p>Packed with engaging extras that keep learning hands-on and fun.</p>
+    </div>
+    <div class="bullet">
+      <h3>Made for Storytime</h3>
+      <p>Quality print, friendly typography, and vivid art for cozy reading moments.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Testimonials ===== -->
+<section class="wrap">
+  <h2 class="section-title">Bilingual Fun, Family Approved</h2>
+  <div class="testi">
+    <div class="quote">
+      <div class="quote__head">
+        <img src="https://kahanikorner.company.site/_next/static/media/user1.abc.png" alt="" onerror="this.remove()">
+        <div class="quote__name">Sana H.</div>
+      </div>
+      <p>“My kids were instantly hooked! Stickers were a huge hit — they couldn’t wait to use them!”</p>
+    </div>
+    <div class="quote">
+      <div class="quote__head">
+        <img src="https://kahanikorner.company.site/_next/static/media/user2.abc.png" alt="" onerror="this.remove()">
+        <div class="quote__name">Ayesha F.</div>
+      </div>
+      <p>“A bridge between generations! Roman Urdu helps me read with my parents in Urdu.”</p>
+    </div>
+    <div class="quote">
+      <div class="quote__head">
+        <img src="https://kahanikorner.company.site/_next/static/media/user3.abc.png" alt="" onerror="this.remove()">
+        <div class="quote__name">Hassan M.</div>
+      </div>
+      <p>“Beautiful quality and engaging illustrations — a book we keep coming back to.”</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="wrap faq">
+  <h2 class="section-title">Frequently Asked Questions</h2>
+
+  <details>
+    <summary>What is Kahani Korner?</summary>
+    <p>We create Urdu–English storybooks with activities, songs, and games so learning continues after the last page.</p>
+  </details>
+
+  <details>
+    <summary>What age group are the books for?</summary>
+    <p>Toddlers to early readers — with activities that scale up as kids grow.</p>
+  </details>
+
+  <details>
+    <summary>Are your books available in both Urdu and English?</summary>
+    <p>Yes! We use Urdu, English, and Roman Urdu to support mixed-fluency families.</p>
+  </details>
+
+  <details>
+    <summary>What comes in a bundle?</summary>
+    <p>Storybook + stickers or activities (varies), and access to digital extras.</p>
+  </details>
+
+  <details>
+    <summary>Where do you ship and how long does it take?</summary>
+    <p>U.S. shipping is free; timelines vary by pre-order window. See product pages for current dates.</p>
+  </details>
+
+  <details>
+    <summary>Do you offer refunds or exchanges?</summary>
+    <p>If something arrives damaged, contact us and we’ll make it right.</p>
+  </details>
+</section>
+
+<!-- ===== Our Story ===== -->
+<section class="wrap story">
+  <h2 class="section-title">Our Story</h2>
+  <p>Kahani Korner was born at 3 a.m.—somewhere between bouncing a baby and wondering why bilingual books felt like homework. So we made our own: books that speak your family’s languages and don’t stop teaching when you stop reading. With sing-alongs, flashcards, and games, we make bilingual learning effortless and joyful.</p>
+</section>
+
+<!-- ===== Contact ===== -->
+<section class="wrap contact">
+  <h2 class="section-title" style="margin-top:0">Contact Us</h2>
+  <p>Got questions, ideas, or want to say hi? We’re all ears! </p>
+  <p><a class="cta" href="https://form.jotform.com/your-form-id" target="_blank" rel="noopener">Send a Message</a></p>
+  <!-- Replace with your actual Jotform URL from your live site -->
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="small">© 2025 Kahani Korner. All rights reserved.</div>
+    <div class="small">Built for GitHub Pages • <a href="https://kahanikorner.company.site/">Original store</a></div>
+  </div>
+</footer>
+
+<script>
+/* Mobile menu */
+const burger = document.querySelector('.burger');
+const mobile = document.getElementById('mnav');
+if (burger && mobile){
+  const open = () => {
+    mobile.hidden = false;
+    requestAnimationFrame(()=> mobile.classList.add('open'));
+    burger.setAttribute('aria-expanded','true');
+    burger.setAttribute('aria-label','Close menu');
+    document.addEventListener('click', outside, {capture:true});
+    document.addEventListener('keydown', esc);
+  };
+  const close = () => {
+    mobile.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+    burger.setAttribute('aria-label','Open menu');
+    setTimeout(()=> mobile.hidden = true, 180);
+    document.removeEventListener('click', outside, {capture:true});
+    document.removeEventListener('keydown', esc);
+  };
+  const toggle = () => mobile.classList.contains('open') ? close() : open();
+  const outside = (e) => { if (!mobile.contains(e.target) && !burger.contains(e.target)) close(); };
+  const esc = (e) => { if (e.key === 'Escape') close(); };
+  burger.addEventListener('click', toggle);
+  mobile.addEventListener('click', e => { if (e.target.matches('a')) close(); });
+}
+</script>
+</body>
+</html>
