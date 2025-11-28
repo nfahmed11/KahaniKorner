@@ -359,27 +359,7 @@ export const riddles = [
     },
   },
 },
-{
 
-  image: "../images/motay.png",
-  riddles: {
-    easy: {
-      english: "Soft and round like a cuddly bear,\nFull of squeezable charm and flair.",
-      romanUrdu: "Gol mol jaise pyara sa khilauna,\nChoosi lagta jaise koi sona.",
-      urdu: "گول مول جیسے پیارا سا کھلونا،\nچوسِی لگتا جیسے کوئی سونا۔"
-    },
-    medium: {
-      english: "Tummy like a little drum,\nCute and bouncy — yum yum yum!",
-      romanUrdu: "Pet ho jaise chhota sa dhol,\nPyar se bolein — bilkul gol.",
-      urdu: "پیٹ ہو جیسے چھوٹا سا ڈھول،\nپیار سے بولیں — بالکل گول۔"
-    },
-    hard: {
-      english: "Shaped like a happy pudding ball,\nLoved by everyone, big and small.",
-      romanUrdu: "Muskuraata sa meetha sa roop,\nSab ko bhaye — jaise chaand ka dhoop.",
-      urdu: "مسکراتا سا میٹھا سا روپ،\nسب کو بھائے — جیسے چاند کا دھوپ۔"
-    },
-  },
-},
 {
   word: {
     romanUrdu: "motay",
