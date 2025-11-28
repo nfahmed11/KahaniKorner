@@ -74,16 +74,16 @@
       </div>
     </div>
 
-    
-<iframe
+    <iframe
   id="ytplayer"
-  src="https://www.youtube.com/embed/yt6k3gzGMjY?enablejsapi=1&autoplay=1&mute=1&start=0&end=98&loop=1&playlist=yt6k3gzGMjY"
+  src="https://www.youtube.com/embed/k8sN7Vl3IFQ?enablejsapi=1&autoplay=1&mute=1&start=0&loop=1&playlist=k8sN7Vl3IFQ"
   title="YouTube video player"
   frameborder="0"
   allow="autoplay; encrypted-media; accelerometer; clipboard-write; gyroscope; picture-in-picture; web-share"
   referrerpolicy="strict-origin-when-cross-origin"
   allowfullscreen
 ></iframe>
+
 
 
   </body>
@@ -117,10 +117,16 @@ document.head.appendChild(tag);
 let player;
 let loopInterval;
 
+const loopStart = 34;     // seconds  (00:34)
+const loopEnd = 214;      // seconds  (03:34)
+
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('ytplayer', {
     events: {
-      'onReady': () => player.playVideo(),
+      'onReady': () => {
+        player.seekTo(loopStart, true);
+        player.playVideo();
+      },
       'onStateChange': onPlayerStateChange
     }
   });
@@ -131,14 +137,15 @@ function onPlayerStateChange(event) {
     clearInterval(loopInterval);
     loopInterval = setInterval(() => {
       let t = player.getCurrentTime();
-      if (t >= 98) {
-        player.seekTo(0, true); // restart & play from beginning
+      if (t >= loopEnd) {
+        player.seekTo(loopStart, true);
       }
     }, 500);
   } else {
     clearInterval(loopInterval);
   }
 }
+
 
 // Overlay click: unmute and hide overlay
 const overlay = document.getElementById("overlay");
