@@ -360,11 +360,7 @@ export const riddles = [
   },
 },
 {
-  word: {
-    romanUrdu: "motay",
-    urdu: "موٹے",
-    english: "fat / chubby",
-  },
+
   image: "../images/motay.png",
   riddles: {
     easy: {
