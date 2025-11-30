@@ -10,397 +10,1050 @@
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#fff;
-  --ink:#0b0b0b;
-  --muted:#5c5c5c;
-  --brand:#b0c3b7; /* matchy green */
-  --brand-dark:#4a594a;
-  --soft:#f3f1f0;  /* header bg */
-  --card:#ffffff;
-  --line:#ececec;
-  --shadow:0 10px 24px rgba(0,0,0,.08);
-  --radius:16px;
+:root {
+  --green: #b0c3b7;
+  --green-dark: #3d5446;
+  --pink: #fbe7e7;
+  --ink: #1c2524;
+  --muted: #5c6b68;
+  --card: #ffffff;
+  --line: #e5e7eb;
+  --radius-lg: 18px;
+  --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.12);
 }
 
-/* ===== Base ===== */
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Open Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-}
-a{color:inherit; text-decoration:none}
-img{max-width:100%; display:block}
+/* RESET / BASE */
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
-/* ===== Header / Nav ===== */
-.header{
-  position:sticky; top:0; z-index:1000;
-  background:var(--soft);
-  border-bottom:1px solid var(--line);
-}
-.header__wrap{
-  max-width:1120px; margin:0 auto; padding:10px 20px;
-  display:flex; align-items:center; gap:16px; justify-content:space-between;
-}
-.brand{display:flex; align-items:center; gap:12px}
-.brand img{height:48px; width:auto}
-.nav{display:flex; align-items:center; gap:20px}
-.nav a{font-size:14px; letter-spacing:.02em; color:var(--brand-dark)}
-.nav a:hover{color:var(--brand)}
-.cart{font-weight:700}
-.burger{
-  display:none; background:transparent; border:0; padding:6px; color:var(--brand-dark); cursor:pointer;
-}
-@media (max-width: 900px){
-  .nav{display:none}
-  .burger{display:inline-flex}
+body {
+  margin: 0;
+  font-family: "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  background: #ffffff;
 }
 
-.mobile{
-  position:fixed; left:0; right:0; top:64px;
-  background:var(--soft); border-bottom:1px solid var(--line);
-  box-shadow:var(--shadow); padding:8px 16px 12px;
-  display:grid; gap:0; transform:translateY(-10px);
-  opacity:0; pointer-events:none; transition:.18s ease;
-}
-.mobile.open{transform:translateY(0); opacity:1; pointer-events:auto}
-.mobile a{padding:12px 6px; border-radius:8px; color:var(--brand-dark)}
-.mobile a:hover{color:var(--brand)}
+img { max-width: 100%; display: block; }
 
-.header-spacer{height:64px} /* if you later position header:fixed */
-
-/* ===== Sections ===== */
-.wrap{max-width:1120px; margin:0 auto; padding:28px 20px}
-
-/* Hero */
-.hero{
-  display:grid; gap:20px; align-items:center;
-  grid-template-columns: 1.1fr .9fr;
-}
-@media (max-width: 900px){ .hero{grid-template-columns:1fr} }
-.hero h1{
-  font-family:"Grandstander", cursive; font-weight:800;
-  font-size:clamp(1.8rem, 3.2vw, 2.6rem); margin:0 0 10px;
-}
-.hero p{color:#333; line-height:1.6; margin:0 0 16px}
-.cta{
-  display:inline-block; font-family:"Grandstander", cursive; font-weight:700;
-  background:var(--brand); border:2px solid #111; color:#111; padding:12px 20px;
-  border-radius:999px; box-shadow:0 4px 0 #111; transition:transform .1s, box-shadow .1s;
-}
-.cta:hover{transform:translateY(-2px); box-shadow:0 6px 0 #111}
-.hero__media{
-  background:linear-gradient(135deg,#fbe7e7,var(--brand)); border-radius:16px; overflow:hidden
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Promo bar */
-.promo{background:#fff7d6; border:1px solid #ffe9a3; border-radius:12px; padding:10px 14px; font-weight:600; text-align:center}
-
-/* Cards / rows */
-.section-title{
-  font-family:"Grandstander", cursive; font-weight:800; margin:28px 0 12px; font-size:1.6rem;
-}
-.row{
-  display:grid; gap:18px; grid-template-columns: repeat(3, 1fr);
-}
-@media (max-width: 900px){ .row{grid-template-columns:1fr} }
-
-.card{
-  background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
-  overflow:hidden; display:flex; flex-direction:column;
-}
-.card__img{aspect-ratio: 4/3; background:#fafafa}
-.card__body{padding:16px}
-.card__title{font-weight:700; margin:0 0 6px}
-.card__text{color:#333; margin:0 0 12px}
-.card__cta{margin-top:auto}
-
-/* Why grid */
-.bullets{
-  display:grid; gap:14px; grid-template-columns: repeat(2, 1fr);
-}
-@media (max-width: 900px){ .bullets{grid-template-columns:1fr} }
-.bullet{
-  background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px;
-}
-.bullet h3{
-  font-family:"Grandstander"; margin:0 0 6px; font-size:1.1rem
-}
-.bullet p{margin:0; color:#444}
-
-/* Testimonials */
-.testi{
-  display:grid; gap:16px; grid-template-columns: repeat(3, 1fr);
-}
-@media (max-width: 900px){ .testi{grid-template-columns:1fr} }
-.quote{
-  background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:var(--shadow);
-}
-.quote__head{display:flex; align-items:center; gap:10px; margin-bottom:10px}
-.quote__head img{width:40px; height:40px; border-radius:50%; object-fit:cover}
-.quote__name{font-weight:700}
-
-/* FAQ (accordion) */
-.faq{max-width:900px}
-.faq details{
-  background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin:10px 0;
-}
-.faq summary{cursor:pointer; font-weight:700}
-.faq p{margin:10px 0 0; color:#333}
-
-/* Story */
-.story{
-  background:#fcfcfc; border:1px solid var(--line); border-radius:16px; padding:18px;
+main {
+  min-height: 100vh;
 }
 
-/* Contact */
-.contact{
-  background:var(--brand); border:2px dashed #111; border-radius:16px; padding:16px; text-align:center
+/* TOP PROMO BAR */.topbar {
+  background: var(--green);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-/* Footer */
-.footer{
-  background:#f7f7f7; border-top:1px solid var(--line)
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
-.footer .wrap{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
-.small{color:var(--muted); font-size:.9rem}
+
+.topbar__track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 22s linear infinite;
+}
+
+.topbar__track span {
+  display: inline-block;
+  padding-right: 50px;
+  opacity: 0.9;
+}
+
+
+
+
+.topbar__inner span {
+  opacity: 0.9;
+}
+
+.topbar__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+@keyframes topbar-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%); /* scroll full width to the left */
+  }
+}
+
+
+/* HEADER / NAV */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.header__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand img {
+  height: 44px;
+  width: auto;
+}
+
+.brand__wordmark {
+  font-family: "Grandstander", cursive;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  font-size: 18px;
+  color: var(--green-dark);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nav a {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.nav a:hover {
+  color: var(--green-dark);
+}
+
+.nav__cta {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--green-dark);
+  color: var(--green-dark);
+}
+
+.nav__cta:hover {
+  background: var(--green-dark);
+  color: #ffffff;
+}
+
+/* MOBILE NAV */
+.burger {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--green-dark);
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 880px) {
+  .nav { display: none; }
+  .burger { display: inline-flex; }
+  .mobile-nav {
+    position: sticky;
+    top: 56px;
+    z-index: 30;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f3f5;
+  }
+  .mobile-nav.open { display: block; }
+  .mobile-nav__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 8px 20px 12px;
+    display: grid;
+    gap: 4px;
+  }
+  .mobile-nav a {
+    padding: 8px 4px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+}
+
+/* LAYOUT HELPERS */
+.section {
+  width: 100%;
+  padding: 52px 20px;
+}
+
+.section--tight {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.section__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.section__title {
+  font-family: "Grandstander", cursive;
+  font-size: 32px;
+  margin: 0 0 18px;
+  text-align: center;
+}
+
+.section__title--left {
+  text-align: left;
+}
+
+.section__eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  color: #ffffff;
+}
+
+.hero__bg {
+  position: relative;
+  min-height: 520px; /* was 460px */
+  border-radius: 0 0 28px 28px;
+  overflow: hidden;
+  box-shadow: 0 32px 60px rgba(15, 23, 42, 0.35);
+}
+
+.hero__bg-image {
+  position: absolute;
+  top: -120px;
+  left: -20px;
+  right: -20px;
+  bottom: -120px;
+  background-image:
+    linear-gradient(120deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25)),
+    url("homepage_images/fam.png");
+  background-size: cover;
+  background-position: center center; /* centers image */
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .hero__bg {
+    min-height: 420px; /* a bit shorter on phones */
+  }
+
+  .hero__bg-image {
+    top: -40px;   /* less overshoot = less cropping */
+    bottom: -40px;
+    left: 0;
+    right: 0;
+  }
+}
+
+
+.hero__inner {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 72px 20px 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.hero__heading {
+  font-family: "Grandstander", cursive;
+  font-weight: 800;
+  font-size: clamp(32px, 5vw, 54px);
+  line-height: 1.1;
+  margin: 0 0 16px;
+  max-width: 560px;
+}
+
+.hero__sub {
+  max-width: 540px;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.96;
+  margin-bottom: 24px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 0;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+
+.btn--primary {
+  background: var(--green);
+  color: #0f172a;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+}
+
+.btn--ghost {
+  background: rgba(15,23,42,0.8);
+  border: 1px solid rgba(255,255,255,0.7);
+  color: #ffffff;
+}
+
+.btn--ghost:hover {
+  background: rgba(15,23,42,0.95);
+}
+
+/* FEATURED BOOK/SUBSCRIBE CARDS */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 24px;
+}
+
+@media (max-width: 880px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.feature-card__media {
+  position: relative;
+  padding-top: 70%;         /* taller hero-style image like your mock */
+  background: #b0c3b7;
+}
+
+.feature-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feature-card__body {
+  padding: 24px 26px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card__heading {
+  font-family: "Grandstander", cursive;
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin: 0 0 10px;
+}
+
+.feature-card__copy {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.feature-card__link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+
+.feature-card__link::after {
+  content: "→";
+  transition: transform 0.15s ease;
+}
+
+.feature-card__link:hover::after {
+  transform: translateX(2px);
+}
+
+.feature-card__label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.feature-card__title {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.feature-card__text {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+/* STARTER PACK SPLIT SECTION */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
+  gap: 40px;
+  align-items: center;
+}
+
+
+@media (max-width: 880px) {
+  .split { grid-template-columns: 1fr; }
+}
+
+/* STARTER PACK VIDEO MEDIA */
+.starter-media {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  background: #000;
+}
+
+.starter-video {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 ratio */
+}
+
+.starter-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Soft white overlay on top of the video */
+.starter-video__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.25); /* tweak opacity if you want more/less softness */
+  pointer-events: none;
+}
+
+
+.split--pink {
+  background: var(--pink);
+  border-radius: 28px;
+  padding: 34px 32px;
+  box-shadow: var(--shadow-soft);
+}
+
+.split__title {
+  font-family: "Grandstander", cursive;
+  font-size: 30px;
+  margin: 0 0 10px;
+}
+
+.split__text {
+  margin: 0 0 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* WHY GRID */
+.why {
+  background: #f8faf9;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 18px;
+}
+
+@media (max-width: 980px) {
+  .why-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.why-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  border: 1px solid #e4e9e6;
+  box-shadow: 0 10px 24px rgba(15,23,42,0.04);
+}
+
+.why-card__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #e5f0ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.why-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.why-card p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* TESTIMONIALS */
+.testimonials {
+  background: var(--pink);
+}
+
+.testi-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+@media (max-width: 1120px) {
+  .testi-row { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 720px) {
+  .testi-row { grid-template-columns: 1fr; }
+}
+
+.testi-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 10px 26px rgba(15,23,42,0.08);
+}
+
+.testi-card p {
+  font-size: 14px;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.testi-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.testi-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #d1d5db;
+}
+
+.testi-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* STORY */
+.story {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.story p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* CONTACT */
+.contact {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.contact__options {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* CONTACT SECTION UPDATED */
+.contact-section {
+  background: var(--green);
+  color: #ffffff;
+  border-radius: 0;
+}
+
+.contact-section .section__inner {
+  max-width: 900px;           /* a bit narrower for a cozy feel */
+  margin: 0 auto;
+}
+
+.contact-section .section__title {
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); /* 2 columns on wide */
+  gap: 40px;
+  align-items: center;
+  justify-items: center;      /* center both columns */
+}
+
+.contact-text {
+  text-align: center;
+  max-width: 460px;
+}
+
+.contact-text p {
+  color: rgba(255,255,255,0.9);
+}
+
+.contact-image {
+  display: flex;
+  justify-content: center;
+}
+
+.contact-image img {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* For mobile responsiveness */
+@media (max-width: 880px) {
+  .contact-grid {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+    text-align: center;
+  }
+
+  .contact-image {
+    order: -1;                 /* image goes on top */
+    margin-bottom: 20px;
+  }
+
+  .contact-text {
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+
+
+/* FOOTER */
+.footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 22px 20px 26px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
 </style>
 </head>
 <body>
 
-<!-- ===== Header ===== -->
+<div class="topbar">
+  <div class="topbar__inner">
+    <div class="topbar__track">
+      <span>Pre-Order Books Now</span>
+       <span>•</span>
+      <span>Free Shipping on All US Orders</span>
+        <span>•</span>
+          <span>Pre-Order Books Now</span>
+       <span>•</span>
+      <span>Free Shipping on All US Orders</span>
+        <span>•</span>
+          <span>Pre-Order Books Now</span>
+       <span>•</span>
+      <span>Free Shipping on All US Orders</span>
+        <span>•</span>
+    </div>
+  </div>
+</div>
+
+
+
 <header class="header">
-  <div class="header__wrap">
-    <a class="brand" href="https://kahanikorner.company.site/">
-      <img src="https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-200x200.png" alt="Kahani Korner">
+  <div class="header__inner">
+    <a class="brand" href="www.kahanikorner.com">
+      <img src="https://dhgf5mcbrms62.cloudfront.net/111245156/header-fcHJMd/kelZcbr-200x200.png" alt="Kahani Korner logo">
+      <span class="brand__wordmark">Kahani Korner</span>
     </a>
 
     <nav class="nav" aria-label="Primary">
-      <a href="https://kahanikorner.company.site/products">SHOP</a>
-      <a href="https://kahanikorner.com/quicklinks/subscribe.html">SUBSCRIBE</a>
-      <a href="https://kahanikorner.com/quicklinks/resources.html">RESOURCES</a>
-      <a href="https://kahanikorner.company.site/#tile-feature-list-tfN9jj">FAQ</a>
-      <a href="https://kahanikorner.company.site/#tile-location-xG9PRx">CONTACT</a>
-      <a class="cart" href="https://kahanikorner.company.site/products/cart">CART</a>
+      <a href="/quicklinks/kahani-bundle.html">Shop</a>
+      <a href="https://kahanikorner.com/quicklinks/subscribe.html">Subscribe</a>
+      <a href="https://kahanikorner.com/quicklinks/resources.html">Resources</a>
+       <a href="#why">About Us</a>
+      <a href="#faq">Help</a>
+       <a href="#faq">Contact</a>
+      <a class="nav__cta" href="https://kahanikorner.company.site/products/cart">Cart</a>
     </nav>
 
-    <button class="burger" aria-label="Open menu" aria-controls="mnav" aria-expanded="false">
-      <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z" fill="currentColor"/></svg>
+    <button class="burger" aria-label="Open menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+      </svg>
     </button>
   </div>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__inner">
+      <a href="/quicklinks/kahani-bundle.html">Shop</a>
+      <a href="https://kahanikorner.com/quicklinks/subscribe.html">Subscribe</a>
+      <a href="#why">About Us</a>
+      <a href="#faq">Help</a>
+       <a href="#faq">Contact</a>
+      <a href="https://kahanikorner.company.site/products/cart">Cart</a>
+    </div>
+  </nav>
 </header>
 
-<nav id="mnav" class="mobile" hidden>
-  <a href="https://kahanikorner.company.site/products">SHOP</a>
-  <a href="https://kahanikorner.com/quicklinks/subscribe.html">SUBSCRIBE</a>
-  <a href="https://kahanikorner.com/quicklinks/resources.html">RESOURCES</a>
-  <a href="https://kahanikorner.company.site/#tile-feature-list-tfN9jj">FAQ</a>
-  <a href="https://kahanikorner.company.site/#tile-location-xG9PRx">CONTACT</a>
-  <a href="https://kahanikorner.company.site/products/cart">CART</a>
-</nav>
-
-<div class="header-spacer" aria-hidden="true"></div>
-
-<!-- ===== Hero ===== -->
-<section class="wrap hero">
-  <div>
-    <div class="promo">Free Shipping on All Orders — Pre-Order Now (Ships Nov 5th!)</div>
-    <h1>One Story, Two Languages, Endless Memories</h1>
-    <p>Explore enchanting Urdu–English books designed to preserve culture, foster connection, and delight little readers.</p>
-    <p>
-      <a class="cta" href="https://kahanikorner.company.site/products">Explore Books</a>
-    </p>
-  </div>
-  <div class="hero__media">
-    <!-- Replace with your real hero image if you want -->
-    <img src="https://kahanikorner.company.site/_next/static/media/KahaniKorner_hero.3b1f.png" alt="Kahani Korner showcase" onerror="this.style.display='none'">
-  </div>
-</section>
-
-<!-- ===== Starter Pack / Build Library ===== -->
-<section class="wrap">
-  <h2 class="section-title">Kahani Time Starter Pack</h2>
-  <div class="row">
-    <article class="card">
-      <div class="card__img">
-        <img src="https://kahanikorner.company.site/_next/static/media/pack1.abc.png" alt="" onerror="this.parentNode.style.background='#f5f5f5';this.remove();">
+<main>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero__bg">
+      <div class="hero__bg-image"></div>
+      <div class="hero__inner">
+        <h1 id="hero-heading" class="hero__heading">
+          One Story,<BR>Two Languages,<BR>Endless Memories
+        </h1>
+        <p class="hero__sub">
+          Explore enchanting Urdu–English books designed to preserve culture, foster connection,
+          and make little hearts love to read.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="/quicklinks/kahani-bundle.html">Shop</a>
+          <a class="btn btn--ghost" href="https://kahanikorner.com/quicklinks/subscribe.html">Subscribe</a>
+        </div>
       </div>
-      <div class="card__body">
-        <h3 class="card__title">Everything you need to begin</h3>
-        <p class="card__text">Stories, stickers, games, and videos make Urdu fun — even if you don’t speak it yourself.</p>
-        <p class="card__cta"><a class="cta" href="https://kahanikorner.company.site/products">Shop Now</a></p>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="card__img">
-        <img src="https://kahanikorner.company.site/_next/static/media/pack2.abc.png" alt="" onerror="this.parentNode.style.background='#f5f5f5';this.remove();">
-      </div>
-      <div class="card__body">
-        <h3 class="card__title">Pre-Order Your Favorites</h3>
-        <p class="card__text">Reserve your books now — shipping begins Nov 5th.</p>
-        <p class="card__cta"><a class="cta" href="https://kahanikorner.company.site/">Pre-Order Now</a></p>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="card__img">
-        <img src="https://kahanikorner.company.site/_next/static/media/pack3.abc.png" alt="" onerror="this.parentNode.style.background='#f5f5f5';this.remove();">
-      </div>
-      <div class="card__body">
-        <h3 class="card__title">Build Your Library</h3>
-        <p class="card__text">Collect every “Little Kahani” and grow with your child’s curiosity.</p>
-        <p class="card__cta"><a class="cta" href="https://kahanikorner.company.site/">Pre-Order Now</a></p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ===== Why section ===== -->
-<section class="wrap">
-  <h2 class="section-title">Why Kahani Korner?</h2>
-  <div class="bullets">
-    <div class="bullet">
-      <h3>Preserving Cultural Identity</h3>
-      <p>Books that empower parents to pass on roots — helping kids appreciate heritage in a multicultural world.</p>
     </div>
-    <div class="bullet">
-      <h3>Inclusive for Multiethnic Families</h3>
-      <p>Designed so English-speaking parents can connect with their child’s South Asian heritage.</p>
+  </section>
+
+  <!-- BOOKS / SUBSCRIBE FEATURE CARDS -->
+  <section class="section section--tight" aria-label="Books and subscription">
+    <div class="section__inner">
+      <div class="grid-2">
+        <article class="feature-card">
+          <div class="feature-card__media">
+            <img src="quicklinks/images/books.png" alt="Urdu–English picture books spread out on a rug">
+          </div>
+          <div class="feature-card__body">
+            <h2 class="feature-card__heading">BOOKS</h2>
+            <p class="feature-card__copy">
+              Build your library with bilingual, activity-rich stories.
+            </p>
+            <a class="feature-card__link" href="/quicklinks/kahani-bundle.html">Build your library</a>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__media">
+            <img src="quicklinks/images/kahanitimes.png" alt="Language activity kit with flashcards and stickers on a table">
+          </div>
+          <div class="feature-card__body">
+            <h2 class="feature-card__heading">SUBSCRIBE</h2>
+            <p class="feature-card__copy">
+              Monthly Post with stickers, games &amp; mini activities.
+            </p>
+            <a class="feature-card__link" href="https://kahanikorner.com/quicklinks/subscribe.html">Monthly Post</a>
+          </div>
+        </article>
+      </div>
     </div>
-    <div class="bullet">
-      <h3>Bilingual Skill Development</h3>
-      <p>English + Urdu + Roman Urdu support natural learning and confidence.</p>
-    </div>
-    <div class="bullet">
-      <h3>Adaptable for Different Ages</h3>
-      <p>Activities that grow with your child — from toddlers to older learners.</p>
-    </div>
-    <div class="bullet">
-      <h3>Cost-Effective, Endless Activities</h3>
-      <p>Packed with engaging extras that keep learning hands-on and fun.</p>
-    </div>
-    <div class="bullet">
-      <h3>Made for Storytime</h3>
-      <p>Quality print, friendly typography, and vivid art for cozy reading moments.</p>
+  </section>
+
+<!-- STARTER PACK SPLIT SECTION -->
+<section class="section">
+  <div class="section__inner">
+    <div class="split split--pink">
+      <div>
+        <div class="section__eyebrow">Starter Pack</div>
+        <h2 class="split__title">Kahani Time Starter Pack</h2>
+        <p class="split__text">
+          Kahani Korner isn’t just a book — it’s a toolkit for language learning.
+          Stories, stickers, flashcards, and videos make Urdu fun, even if you don’t speak it yourself.
+        </p>
+        <button class="btn btn--primary" onclick="window.location.href='https://kahanikorner.company.site/products'">
+          Shop Now
+        </button>
+      </div>
+
+      <!-- VIDEO COLUMN -->
+      <div class="starter-media">
+        <div class="starter-video">
+          <iframe
+            src="https://www.youtube.com/embed/PonnXQJ7Jnk?autoplay=1&mute=1&loop=1&playlist=PonnXQJ7Jnk&controls=0&modestbranding=1&rel=0"
+            title="Kahani Korner Starter Pack"
+            frameborder="0"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <div class="starter-video__overlay"></div>
+        </div>
+      </div>
+      <!-- END VIDEO COLUMN -->
+
     </div>
   </div>
 </section>
 
-<!-- ===== Testimonials ===== -->
-<section class="wrap">
-  <h2 class="section-title">Bilingual Fun, Family Approved</h2>
-  <div class="testi">
-    <div class="quote">
-      <div class="quote__head">
-        <img src="https://kahanikorner.company.site/_next/static/media/user1.abc.png" alt="" onerror="this.remove()">
-        <div class="quote__name">Sana H.</div>
+
+  <!-- WHY KAHANI KORNER -->
+  <section class="section why" id="why">
+    <div class="section__inner">
+      <h2 class="section__title">Why Kahani Korner?</h2>
+      <div class="why-grid">
+        <article class="why-card">
+          <div class="why-card__icon">🌿</div>
+          <h3>Preserving Cultural Identity</h3>
+          <p>Pass on Pakistani heritage and language proudly, through stories kids actually ask for.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-card__icon">🤝</div>
+          <h3>Inclusive for Multietnic Families</h3>
+          <p>English, Urdu, and Roman Urdu support homes where not everyone speaks the same language.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-card__icon">🧠</div>
+          <h3>Bilingual Skill Development</h3>
+          <p>Gentle exposure across both scripts builds confidence, recognition, and real-world vocabulary.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-card__icon">📈</div>
+          <h3>Adaptable to Different Ages</h3>
+          <p>From toddlers to early readers, activities stretch to match your child’s stage.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-card__icon">💌</div>
+          <h3>Joyful & Cost-Effective</h3>
+          <p>Each bundle is packed with reuseable prompts so one story creates many play sessions.</p>
+        </article>
+
+        <article class="why-card">
+          <div class="why-card__icon">✨</div>
+          <h3>Story-First Magic</h3>
+          <p>Kids ask to read again — and again — because the fun doesn’t stop at “The End.”</p>
+        </article>
       </div>
-      <p>“My kids were instantly hooked! Stickers were a huge hit — they couldn’t wait to use them!”</p>
     </div>
-    <div class="quote">
-      <div class="quote__head">
-        <img src="https://kahanikorner.company.site/_next/static/media/user2.abc.png" alt="" onerror="this.remove()">
-        <div class="quote__name">Ayesha F.</div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials" id="reviews">
+    <div class="section__inner">
+      <h2 class="section__title">Bilingual Fun, Family Approved</h2>
+      <div class="testi-row">
+        <article class="testi-card">
+          <p>“My 4-year-old repeats the Urdu words out loud. The stickers were a huge hit!”</p>
+          <div class="testi-meta">
+            <div class="testi-avatar"></div>
+            <div class="testi-name">Sara H.</div>
+          </div>
+        </article>
+
+        <article class="testi-card">
+          <p>“Not just reading — it’s interactive. There’s always something to do on each page.”</p>
+          <div class="testi-meta">
+            <div class="testi-avatar"></div>
+            <div class="testi-name">Hasan M.</div>
+          </div>
+        </article>
+
+        <article class="testi-card">
+          <p>“Quality is incredible. Colors are rich and the pages feel durable and gift-worthy.”</p>
+          <div class="testi-meta">
+            <div class="testi-avatar"></div>
+            <div class="testi-name">Fareeq M.</div>
+          </div>
+        </article>
+
+        <article class="testi-card">
+          <p>“A bridge between generations. Roman Urdu lets grandparents join storytime too.”</p>
+          <div class="testi-meta">
+            <div class="testi-avatar"></div>
+            <div class="testi-name">Ayesha F.</div>
+          </div>
+        </article>
       </div>
-      <p>“A bridge between generations! Roman Urdu helps me read with my parents in Urdu.”</p>
     </div>
-    <div class="quote">
-      <div class="quote__head">
-        <img src="https://kahanikorner.company.site/_next/static/media/user3.abc.png" alt="" onerror="this.remove()">
-        <div class="quote__name">Hassan M.</div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="section">
+    <div class="section__inner">
+      <div class="story">
+        <h2 class="section__title">Our Story</h2>
+        <p>
+          Kahani Korner was born at 3 a.m. — somewhere between rocking a baby and wondering why bilingual books
+          felt like homework. We wanted stories that sounded like home and looked like our kids. So we created
+          cozy, activity-rich books that invite Urdu into everyday family life, one little kahani at a time.
+        </p>
       </div>
-      <p>“Beautiful quality and engaging illustrations — a book we keep coming back to.”</p>
     </div>
+  </section>
+
+<!-- CONTACT US -->
+<section class="section contact-section" id="contact">
+  <div class="section__inner">
+    
+    <div class="contact-grid">
+      
+      <div class="contact-text">
+        <h2 class="section__title">Contact Us</h2>
+        <p>
+          Questions about orders, partnerships, or bulk classroom sets?
+          We’d love to hear from you.
+        </p>
+        <div class="contact__options">
+          <a class="btn btn--primary" href="mailto:hello@kahanikorner.com">Email us</a>
+        </div>
+      </div>
+
+      <div class="contact-image">
+        <img src="homepage_images/email.png" alt="Kahani Korner Contact" />
+      </div>
+
+    </div>
+
   </div>
 </section>
 
-<!-- ===== FAQ ===== -->
-<section class="wrap faq">
-  <h2 class="section-title">Frequently Asked Questions</h2>
+</main>
 
-  <details>
-    <summary>What is Kahani Korner?</summary>
-    <p>We create Urdu–English storybooks with activities, songs, and games so learning continues after the last page.</p>
-  </details>
-
-  <details>
-    <summary>What age group are the books for?</summary>
-    <p>Toddlers to early readers — with activities that scale up as kids grow.</p>
-  </details>
-
-  <details>
-    <summary>Are your books available in both Urdu and English?</summary>
-    <p>Yes! We use Urdu, English, and Roman Urdu to support mixed-fluency families.</p>
-  </details>
-
-  <details>
-    <summary>What comes in a bundle?</summary>
-    <p>Storybook + stickers or activities (varies), and access to digital extras.</p>
-  </details>
-
-  <details>
-    <summary>Where do you ship and how long does it take?</summary>
-    <p>U.S. shipping is free; timelines vary by pre-order window. See product pages for current dates.</p>
-  </details>
-
-  <details>
-    <summary>Do you offer refunds or exchanges?</summary>
-    <p>If something arrives damaged, contact us and we’ll make it right.</p>
-  </details>
-</section>
-
-<!-- ===== Our Story ===== -->
-<section class="wrap story">
-  <h2 class="section-title">Our Story</h2>
-  <p>Kahani Korner was born at 3 a.m.—somewhere between bouncing a baby and wondering why bilingual books felt like homework. So we made our own: books that speak your family’s languages and don’t stop teaching when you stop reading. With sing-alongs, flashcards, and games, we make bilingual learning effortless and joyful.</p>
-</section>
-
-<!-- ===== Contact ===== -->
-<section class="wrap contact">
-  <h2 class="section-title" style="margin-top:0">Contact Us</h2>
-  <p>Got questions, ideas, or want to say hi? We’re all ears! </p>
-  <p><a class="cta" href="https://form.jotform.com/your-form-id" target="_blank" rel="noopener">Send a Message</a></p>
-  <!-- Replace with your actual Jotform URL from your live site -->
-</section>
-
-<!-- ===== Footer ===== -->
 <footer class="footer">
-  <div class="wrap">
-    <div class="small">© 2025 Kahani Korner. All rights reserved.</div>
-    <div class="small">Built for GitHub Pages • <a href="https://kahanikorner.company.site/">Original store</a></div>
+  <div class="footer__inner">
+    <span>© 2025 Kahani Korner. All rights reserved.</span>
+    <span>Shop at <a href="https://kahanikorner.company.site/">kahanikorner.company.site</a></span>
   </div>
 </footer>
 
 <script>
-/* Mobile menu */
 const burger = document.querySelector('.burger');
-const mobile = document.getElementById('mnav');
-if (burger && mobile){
-  const open = () => {
-    mobile.hidden = false;
-    requestAnimationFrame(()=> mobile.classList.add('open'));
-    burger.setAttribute('aria-expanded','true');
-    burger.setAttribute('aria-label','Close menu');
-    document.addEventListener('click', outside, {capture:true});
-    document.addEventListener('keydown', esc);
-  };
-  const close = () => {
-    mobile.classList.remove('open');
-    burger.setAttribute('aria-expanded','false');
-    burger.setAttribute('aria-label','Open menu');
-    setTimeout(()=> mobile.hidden = true, 180);
-    document.removeEventListener('click', outside, {capture:true});
-    document.removeEventListener('keydown', esc);
-  };
-  const toggle = () => mobile.classList.contains('open') ? close() : open();
-  const outside = (e) => { if (!mobile.contains(e.target) && !burger.contains(e.target)) close(); };
-  const esc = (e) => { if (e.key === 'Escape') close(); };
-  burger.addEventListener('click', toggle);
-  mobile.addEventListener('click', e => { if (e.target.matches('a')) close(); });
+const mobileNav = document.getElementById('mobileNav');
+
+if (burger && mobileNav) {
+  burger.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    burger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  });
 }
+
+
+
+// PARALLAX SAFE (never exposes edges)
+const heroBgImage = document.querySelector('.hero__bg-image');
+function handleParallax() {
+  if (!heroBgImage) return;
+
+  const scrolled = window.scrollY;
+
+  // softer parallax, safe for mobile and desktop
+  const factor = window.innerWidth <= 768 ? 0.03 : 0.08;
+  const maxShift = window.innerWidth <= 768 ? 20 : 40;
+
+  const shift = Math.min(scrolled * factor, maxShift);
+  heroBgImage.style.transform = `translateY(-${shift}px)`;
+}
+
+window.addEventListener('scroll', handleParallax);
+window.addEventListener('load', handleParallax);
+
 </script>
 </body>
 </html>
