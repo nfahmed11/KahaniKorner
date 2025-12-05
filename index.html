@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- icons from font aweseome -->
-<script src="https://kit.fontawesome.com/be65a01054.js" crossorigin="anonymous"></script>
+
 
   <!-- Microsoft Analytics tag to track analytics  -->
 <script type="text/javascript">
@@ -35,6 +34,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="homepage_images/fam.png">
+  <link href="/_assets/css/fontawesome.css" rel="stylesheet" />
+<link href="/_assets/css/solid.css" rel="stylesheet" />
 
   <!-- Custom Styles -->
   <style>
@@ -901,36 +902,131 @@ margin: 0.5rem 0.5rem;
       line-height: 1.6;
     }
 
-    /* --- OUR STORY SECTION --- */
- /* Center the Our Story block */
-.story {
-  max-width: 720px;
-  margin: 0 auto;        /* centers the whole card */
-  text-align: center;    /* centers heading inside */
+
+/* --- MOBILE WHY FLOATING ICON MODE --- */
+@media (max-width: 768px) {
+
+  /* hide desktop grid on mobile */
+  .why-grid {
+    display: none;
+  }
+
+  .why-mobile {
+    margin-top: 2rem;
+  }
+
+  .why-mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    justify-items: center;
+  }
+
+  .why-float {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    border: 2px solid var(--ash-grey);
+    background: var(--white);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--granite);
+    font-size: 1.8rem;
+    cursor: pointer;
+
+    /* gentle “floating” using margin animation */
+    animation: whyFloat 4.5s ease-in-out infinite alternate;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  /* slightly staggered animation speeds so they don't move in sync */
+  .why-float:nth-child(2) { animation-duration: 5s; }
+  .why-float:nth-child(3) { animation-duration: 5.5s; }
+  .why-float:nth-child(4) { animation-duration: 4.2s; }
+  .why-float:nth-child(5) { animation-duration: 5.8s; }
+  .why-float:nth-child(6) { animation-duration: 4.7s; }
+  .why-float:nth-child(7) { animation-duration: 5.3s; }
+  .why-float:nth-child(8) { animation-duration: 4.9s; }
+
+  @keyframes whyFloat {
+    0%   { margin-top: 0; }
+    100% { margin-top: 6px; }
+  }
+
+  /* glow on hover and when active (clicked) */
+  .why-float:hover,
+  .why-float.active {
+    background: var(--soft-blush);
+    border-color: var(--rosy-taupe);
+    box-shadow:
+      0 0 0 2px var(--cotton-rose),
+      0 0 18px rgba(212, 151, 151, 0.7);
+    transform: translateY(-4px) scale(1.03);
+  }
+
+  /* Expanded text card below icons */
+  .why-mobile-card {
+    margin-top: 1.75rem;
+    background: var(--white);
+    border-radius: 18px;
+    border: 2px solid var(--ash-grey);
+    box-shadow: var(--shadow-soft);
+
+    /* smooth open/close */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(8px);
+    padding: 0 1.4rem; /* no vertical padding when closed */
+    position: relative;
+
+    transition:
+      max-height 0.35s ease,
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      padding 0.3s ease;
+  }
+
+  .why-mobile-card.open {
+    max-height: 260px; /* enough room for text */
+    opacity: 1;
+    transform: translateY(0);
+    padding: 1.2rem 1.4rem 1.6rem;
+  }
+
+  #why-mobile-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--granite);
+    cursor: pointer;
+  }
+
+  #why-mobile-title {
+    margin: 0 1.2rem 0.4rem 0;
+    color: var(--granite);
+    text-shadow: none;
+    font-size: 1.05rem;
+  }
+
+  #why-mobile-text {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
 }
 
-/* Light pink background just for Our Story section */
-.story-section {
-  background: var(--soft-blush);
-}
-
-.story .section__title {
-  margin-bottom: 1.5rem;
-  text-align: center;    /* override the global left-align */
-}
-
-.story p {
-  margin: 0;
-  color: var(--granite);
-  line-height: 1.8;
-  font-size: 1rem;
-  background: var(--white);
-  padding: 1.5rem 1.75rem;
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--ash-grey);
-  box-shadow: var(--shadow-soft);
-  text-align: left;      /* keep body text readable */
-}
 
 
     /* --- REVIEWS SECTION (MARQUEE CAROUSEL) --- */
@@ -1465,58 +1561,120 @@ margin: 0.5rem 0.5rem;
     <div class="why-grid">
 
       <article class="why-card">
-        <div class="why-card__icon">🌿</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
         <h3>Preserving Cultural Identity</h3>
         <p>Pass on Pakistani heritage and language proudly, through stories kids actually ask for.</p>
       </article>
 
       <article class="why-card">
-        <div class="why-card__icon">🤝</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-people-group"></i>
+        </div>
         <h3>Inclusive for Multiethnic Families</h3>
         <p>English, Urdu, and Roman Urdu support homes where not everyone speaks the same language.</p>
       </article>
 
       <article class="why-card">
-        <div class="why-card__icon">🧠</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-brain"></i>
+        </div>
         <h3>Bilingual Skill Development</h3>
         <p>Gentle exposure across both scripts builds confidence, recognition, and real-world vocabulary.</p>
       </article>
 
       <article class="why-card">
-        <div class="why-card__icon">📈</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
         <h3>Adaptable to Different Ages</h3>
         <p>From toddlers to early readers, activities stretch to match your child’s stage.</p>
       </article>
 
       <article class="why-card">
-        <div class="why-card__icon">💌</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-envelope-open-text"></i>
+        </div>
         <h3>Joyful & Cost-Effective</h3>
         <p>Each bundle is packed with reusable prompts so one story creates many play sessions.</p>
       </article>
 
       <article class="why-card">
-        <div class="why-card__icon">✨</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
         <h3>Story-First Magic</h3>
         <p>Kids ask to read again — and again — because the fun doesn’t stop at “The End.”</p>
       </article>
 
-      <!-- NEW CARD 7 -->
       <article class="why-card">
-        <div class="why-card__icon">📚</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
         <h3>Parent-Friendly Resources</h3>
         <p>You don’t need to be fluent in Urdu — English, Roman Urdu, and built-in prompts make it easy for everyone.</p>
       </article>
 
-      <!-- NEW CARD 8 -->
       <article class="why-card">
-        <div class="why-card__icon">🏡</div>
+        <div class="why-card__icon">
+          <i class="fa-solid fa-house-chimney"></i>
+        </div>
         <h3>Made for Real-Life Homes</h3>
         <p>Short stories, tactile elements, and activities that fit naturally into busy family routines.</p>
       </article>
 
     </div>
+
+
+<!-- MOBILE FLOATING ICON MODE -->
+<div class="why-mobile">
+  <div class="why-mobile-grid">
+    <button class="why-float" data-card="identity">
+      <i class="fa-solid fa-leaf"></i>
+    </button>
+
+    <button class="why-float" data-card="families">
+      <i class="fa-solid fa-people-group"></i>
+    </button>
+
+    <button class="why-float" data-card="skills">
+      <i class="fa-solid fa-brain"></i>
+    </button>
+
+    <button class="why-float" data-card="ages">
+      <i class="fa-solid fa-chart-line"></i>
+    </button>
+
+    <button class="why-float" data-card="value">
+      <i class="fa-solid fa-envelope-open-text"></i>
+    </button>
+
+    <button class="why-float" data-card="magic">
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+    </button>
+
+    <button class="why-float" data-card="parents">
+      <i class="fa-solid fa-book-open"></i>
+    </button>
+
+    <button class="why-float" data-card="home">
+      <i class="fa-solid fa-house-chimney"></i>
+    </button>
+  </div>
+
+  <!-- EXPANDED CARD -->
+  <div id="why-mobile-card" class="why-mobile-card">
+    <button id="why-mobile-close" aria-label="Close why card">&times;</button>
+    <h3 id="why-mobile-title"></h3>
+    <p id="why-mobile-text"></p>
+  </div>
+</div>
+
+
   </div>
 </section>
+
 
 
  <!-- OUR STORY -->
@@ -1788,7 +1946,95 @@ margin: 0.5rem 0.5rem;
 </footer>
 
 
+
   <script>
+
+    // --- WHY MOBILE FLOATING ICONS LOGIC ---
+const whyData = {
+  identity: {
+    title: "Preserving Cultural Identity",
+    text: "Pass on Pakistani heritage proudly through stories kids genuinely enjoy."
+  },
+  families: {
+    title: "Inclusive for Multiethnic Families",
+    text: "Urdu, English, and Roman Urdu support blended-language homes."
+  },
+  skills: {
+    title: "Bilingual Skill Development",
+    text: "Early exposure builds recognition, confidence, and joyful learning."
+  },
+  ages: {
+    title: "Adaptable to Different Ages",
+    text: "Toddlers to early readers all learn at their own level."
+  },
+  value: {
+    title: "Joyful & Cost-Effective",
+    text: "Each bundle provides reusable prompts so one story becomes many play sessions."
+  },
+  magic: {
+    title: "Story-First Magic",
+    text: "Kids reread again and again — the fun doesn’t stop at “The End.”"
+  },
+  parents: {
+    title: "Parent-Friendly Resources",
+    text: "Designed for Urdu speakers and non-speakers alike, with built-in prompts."
+  },
+  home: {
+    title: "Made for Real-Life Homes",
+    text: "Short stories, tactile elements, and activities that slide into busy routines."
+  }
+};
+
+const whyIcons = document.querySelectorAll('.why-float');
+const whyCard = document.getElementById('why-mobile-card');
+const whyTitle = document.getElementById('why-mobile-title');
+const whyText = document.getElementById('why-mobile-text');
+const whyClose = document.getElementById('why-mobile-close');
+
+let openWhyKey = null;
+
+function closeWhyCard() {
+  if (!whyCard) return;
+  whyCard.classList.remove('open');
+  openWhyKey = null;
+  whyIcons.forEach(icon => icon.classList.remove('active'));
+}
+
+if (whyIcons && whyCard && whyTitle && whyText) {
+  whyIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      const key = icon.dataset.card;
+      const data = whyData[key];
+
+      // If tapping the same icon, close
+      if (openWhyKey === key) {
+        closeWhyCard();
+        return;
+      }
+
+      // Mark active icon (glow) & clear others
+      whyIcons.forEach(i => i.classList.remove('active'));
+      icon.classList.add('active');
+
+      // Update content
+      whyTitle.textContent = data.title;
+      whyText.textContent = data.text;
+
+      // Open card with smooth transition
+      whyCard.classList.add('open');
+      openWhyKey = key;
+    });
+  });
+}
+
+if (whyClose) {
+  whyClose.addEventListener('click', () => {
+    closeWhyCard();
+  });
+}
+
+
+
     // --- STRIPE BUILDER LOGIC ---
     function buildStripePayload(cartItems) {
       const line_items = cartItems.map(item => {
