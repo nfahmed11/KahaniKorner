@@ -687,19 +687,24 @@ margin: 0.5rem 0.5rem;
       transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
       text-decoration: none;
     }
+.btn--primary {
+  background: var(--mint);              /* same color */
+  color: var(--granite);               /* same text color */
+  border: 2px solid var(--granite);    /* a bit sturdier border */
+  box-shadow: 0 4px 0 var(--deep-teal); /* 3D base like Subscribe */
+}
 
-    .btn--primary {
-      background: var(--mint);              /* light green */
-      color: var(--granite);
-      box-shadow: 0 8px 20px rgba(201, 220, 206, 0.55);
-      border: 1px solid var(--granite);
-    }
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--deep-teal);
+  background: #d7e5db;                 /* same hover color */
+}
 
-    .btn--primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(201, 220, 206, 0.7);
-      background: #d7e5db;
-    }
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 var(--deep-teal);
+}
+
 
     .btn--ghost {
       background: var(--granite);
@@ -858,7 +863,7 @@ margin: 0.5rem 0.5rem;
 
     /* --- WHY KAHANI KORNER SECTION --- */
     .why {
-      background: var(--white-smoke);
+      background: var(--green);
     }
     
     /* Center the Why Kahani Korner heading */
@@ -874,7 +879,7 @@ margin: 0.5rem 0.5rem;
     }
 
     .why-card {
-      background: var(--white);
+      background: var(--white-smoke);
       border-radius: var(--radius-lg);
       border: 2px solid var(--ash-grey);
       padding: 1.75rem 1.75rem 1.5rem;
@@ -910,16 +915,26 @@ margin: 0.5rem 0.5rem;
       line-height: 1.6;
     }
 
+ .why-mobile {
+  display: none;
+}
+
+.why-mobile-grid {
+  display: none;
+}
+
+
 
 /* --- MOBILE WHY FLOATING ICON MODE --- */
+
 @media (max-width: 768px) {
 
-  /* hide desktop grid on mobile */
   .why-grid {
     display: none;
   }
 
   .why-mobile {
+    display: block;
     margin-top: 2rem;
   }
 
@@ -931,20 +946,20 @@ margin: 0.5rem 0.5rem;
   }
 
   .why-float {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     border-radius: 18px;
     border: 2px solid var(--ash-grey);
     background: var(--white);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
     display: flex;
+    flex-direction: column;          /* icon + label stacked */
     align-items: center;
     justify-content: center;
+    gap: 4px;
     color: var(--granite);
-    font-size: 1.8rem;
+    font-size: 1.6rem;               /* icon size */
     cursor: pointer;
-
-    /* gentle “floating” using margin animation */
     animation: whyFloat 4.5s ease-in-out infinite alternate;
     transition:
       transform 0.2s ease,
@@ -952,6 +967,16 @@ margin: 0.5rem 0.5rem;
       border-color 0.2s ease,
       background-color 0.2s ease;
   }
+
+  .why-float-label {
+    font-size: 0.7rem;
+    line-height: 1.2;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  /* rest of your staggered animation durations + whyFloat keyframes + active state etc... */
+}
 
   /* slightly staggered animation speeds so they don't move in sync */
   .why-float:nth-child(2) { animation-duration: 5s; }
@@ -1033,8 +1058,14 @@ margin: 0.5rem 0.5rem;
     font-size: 0.95rem;
     line-height: 1.6;
   }
-}
 
+
+
+/*  --- OUR STORY --- */
+
+.story .section__title {
+  text-align:center;
+}
 
 
     /* --- REVIEWS SECTION (MARQUEE CAROUSEL) --- */
@@ -1414,15 +1445,14 @@ margin: 0.5rem 0.5rem;
   <!-- Header -->
   <header class="header">
     <div class="header__inner">
-      <a href="landing.html" class="brand">
+      <a href="www.kahanikorner.com" class="brand">
         <i class="fa-solid fa-book-open-reader brand-icon"></i>
         Kahani Korner
       </a>
-
-      <nav class="nav">
-        <a href="quicklinks/kahani-bundle.html">Shop</a>
-        <a href="quicklinks/subscribe.html">Subscribe</a>
-        <a href="quicklinks/resources.html">Resources</a>
+<nav class="nav">
+        <a href="https://kahanikorner.com/quicklinks/kahani-bundle">Shop</a>
+        <a href="https://kahanikorner.com/quicklinks/subscribe">Subscribe</a>
+        <a href="https://kahanikorner.com/quicklinks/resources">Resources</a>
         <a href=#faq>Help</a>
         <a href="#contact">Contact</a>
         <button class="cart-btn-landing" id="cart-btn">
@@ -1497,7 +1527,7 @@ margin: 0.5rem 0.5rem;
         </p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="quicklinks/kahani-bundle.html">Shop</a>
-          <a class="btn btn--ghost" href="#">Subscribe</a>
+          <a class="btn btn--ghost" href="quicklinks/subscribe.html">Subscribe</a>
         </div>
       </div>
     </div>
@@ -1636,48 +1666,57 @@ margin: 0.5rem 0.5rem;
 
 
 <!-- MOBILE FLOATING ICON MODE -->
+
+<div class="why-mobile-grid">
+  <button class="why-float" data-card="identity">
+    <i class="fa-solid fa-leaf"></i>
+    <span class="why-float-label">Identity</span>
+  </button>
+
+  <button class="why-float" data-card="families">
+    <i class="fa-solid fa-people-group"></i>
+    <span class="why-float-label">Families</span>
+  </button>
+
+  <button class="why-float" data-card="skills">
+    <i class="fa-solid fa-brain"></i>
+    <span class="why-float-label">Skills</span>
+  </button>
+
+  <button class="why-float" data-card="ages">
+    <i class="fa-solid fa-chart-line"></i>
+    <span class="why-float-label">Ages</span>
+  </button>
+
+  <button class="why-float" data-card="value">
+    <i class="fa-solid fa-envelope-open-text"></i>
+    <span class="why-float-label">Value</span>
+  </button>
+
+  <button class="why-float" data-card="magic">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <span class="why-float-label">Magic</span>
+  </button>
+
+  <button class="why-float" data-card="parents">
+    <i class="fa-solid fa-book-open"></i>
+    <span class="why-float-label">Parents</span>
+  </button>
+
+  <button class="why-float" data-card="home">
+    <i class="fa-solid fa-house-chimney"></i>
+    <span class="why-float-label">Home</span>
+  </button>
+</div>
+
 <div class="why-mobile">
-  <div class="why-mobile-grid">
-    <button class="why-float" data-card="identity">
-      <i class="fa-solid fa-leaf"></i>
-    </button>
-
-    <button class="why-float" data-card="families">
-      <i class="fa-solid fa-people-group"></i>
-    </button>
-
-    <button class="why-float" data-card="skills">
-      <i class="fa-solid fa-brain"></i>
-    </button>
-
-    <button class="why-float" data-card="ages">
-      <i class="fa-solid fa-chart-line"></i>
-    </button>
-
-    <button class="why-float" data-card="value">
-      <i class="fa-solid fa-envelope-open-text"></i>
-    </button>
-
-    <button class="why-float" data-card="magic">
-      <i class="fa-solid fa-wand-magic-sparkles"></i>
-    </button>
-
-    <button class="why-float" data-card="parents">
-      <i class="fa-solid fa-book-open"></i>
-    </button>
-
-    <button class="why-float" data-card="home">
-      <i class="fa-solid fa-house-chimney"></i>
-    </button>
-  </div>
-
-  <!-- EXPANDED CARD -->
   <div id="why-mobile-card" class="why-mobile-card">
-    <button id="why-mobile-close" aria-label="Close why card">&times;</button>
+    <button id="why-mobile-close" aria-label="Close details">×</button>
     <h3 id="why-mobile-title"></h3>
     <p id="why-mobile-text"></p>
   </div>
 </div>
+
 
 
   </div>
@@ -1981,8 +2020,8 @@ const whyData = {
   },
   magic: {
     title: "Story-First Magic",
-    text: "Kids reread again and again — the fun doesn’t stop at “The End.”"
-  },
+    text: "Kids reread again and again — the fun doesn’t stop at 'The End.'"
+   },
   parents: {
     title: "Parent-Friendly Resources",
     text: "Designed for Urdu speakers and non-speakers alike, with built-in prompts."
@@ -2008,7 +2047,9 @@ function closeWhyCard() {
   whyIcons.forEach(icon => icon.classList.remove('active'));
 }
 
+
 if (whyIcons && whyCard && whyTitle && whyText) {
+  // Set up click handlers
   whyIcons.forEach(icon => {
     icon.addEventListener('click', () => {
       const key = icon.dataset.card;
@@ -2033,7 +2074,22 @@ if (whyIcons && whyCard && whyTitle && whyText) {
       openWhyKey = key;
     });
   });
+
+  // ✅ Open the first why card by default on mobile
+  if (window.innerWidth <= 768 && whyIcons.length > 0) {
+    const first = whyIcons[0];
+    const key = first.dataset.card;
+    const data = whyData[key];
+
+    whyIcons.forEach(i => i.classList.remove('active'));
+    first.classList.add('active');
+    whyTitle.textContent = data.title;
+    whyText.textContent = data.text;
+    whyCard.classList.add('open');
+    openWhyKey = key;
+  }
 }
+
 
 if (whyClose) {
   whyClose.addEventListener('click', () => {

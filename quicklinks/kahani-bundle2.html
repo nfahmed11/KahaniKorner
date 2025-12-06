@@ -22,9 +22,9 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kahani Post 💌 | Product</title>
+  <title>All of the Kahani's Bundle | Product</title>
 
-  <!-- Font Awesome Icons (match blueprint) -->
+  <!-- Font Awesome Icons (match landing) -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -33,13 +33,13 @@
     referrerpolicy="no-referrer"
   />
 
-  <!-- Google Fonts (match blueprint) -->
+  <!-- Google Fonts (match landing) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- THEME VARIABLES (from blueprint) --- */
+    /* --- THEME VARIABLES (from landing) --- */
     :root {
       --granite: #4A594A;
       --deep-teal: #687D70;
@@ -62,6 +62,7 @@
 
       --card-bg: #ffffff;
       --muted: #5c6b68;
+      --danger: #ef4444;
     }
 
     /* --- RESET & BASE --- */
@@ -92,7 +93,7 @@
 
     .hidden { display: none !important; }
 
-    /* --- TOP PROMO BAR (blueprint) --- */
+    /* --- TOP PROMO BAR (match landing) --- */
     .topbar {
       background: var(--green);
       color: #ffffff;
@@ -125,7 +126,7 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* --- HEADER (glass pill, blueprint) --- */
+    /* --- HEADER (match landing) --- */
     .header {
       position: fixed;
       top: 1.75rem;
@@ -197,7 +198,7 @@
       color: var(--granite);
     }
 
-    /* --- CART BUTTON (blueprint) --- */
+    /* --- CART BUTTON (match landing) --- */
     .cart-btn-landing {
       background: var(--mint);
       border: 2px solid var(--granite);
@@ -242,193 +243,7 @@
       border: 2px solid var(--white-smoke);
     }
 
-    /* --- CART OVERLAY (blueprint) --- */
-    .cart-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(74, 89, 74, 0.2);
-      z-index: 100;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      backdrop-filter: blur(4px);
-      pointer-events: none;
-    }
-
-    .cart-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .cart-sidebar {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      bottom: 1rem;
-      width: calc(100% - 2rem);
-      max-width: 400px;
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 0 0 4px var(--ash-grey);
-      transform: translateX(110%);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .cart-overlay.open .cart-sidebar {
-      transform: translateX(0);
-    }
-
-    .cart-header {
-      padding: 1.5rem;
-      border-bottom: 2px dashed var(--ash-grey);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--white-smoke);
-    }
-
-    .close-btn {
-      background: var(--soft-blush);
-      border: none;
-      font-size: 1.25rem;
-      color: var(--granite);
-      padding: 0.5rem;
-      border-radius: 50%;
-      width: 2.5rem;
-      height: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      cursor: pointer;
-    }
-
-    .close-btn:hover {
-      background: var(--cotton-rose);
-    }
-
-    .cart-items {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.5rem;
-    }
-
-    .cart-item {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      background: var(--white-smoke);
-      padding: 1rem;
-      border-radius: 1rem;
-    }
-
-    .cart-item img {
-      width: 4rem;
-      height: 4rem;
-      border-radius: 0.75rem;
-      object-fit: cover;
-      background: white;
-    }
-
-    .cart-item-details {
-      flex: 1;
-    }
-
-    .cart-item-details h4 {
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .cart-item-price {
-      font-weight: 700;
-      color: var(--rosy-taupe);
-      margin-bottom: 0.5rem;
-    }
-
-    .cart-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .qty-btn {
-      width: 1.75rem;
-      height: 1.75rem;
-      border: 2px solid var(--ash-grey);
-      background: white;
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: var(--granite);
-      cursor: pointer;
-    }
-
-    .qty-btn:hover {
-      border-color: var(--deep-teal);
-      color: var(--deep-teal);
-    }
-
-    .remove-btn {
-      margin-left: auto;
-      background: none;
-      border: none;
-      color: #ef4444;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .cart-footer {
-      padding: 1.5rem;
-      border-top: 2px dashed var(--ash-grey);
-      background: var(--white-smoke);
-    }
-
-    .cart-total {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--granite);
-      margin-bottom: 1rem;
-    }
-
-    .checkout-btn {
-      width: 100%;
-      padding: 1.25rem;
-      background: var(--granite);
-      color: white;
-      border: none;
-      border-radius: 1rem;
-      font-size: 1.125rem;
-      font-weight: 700;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 0 var(--deep-teal);
-      cursor: pointer;
-    }
-
-    .checkout-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 0 var(--deep-teal);
-    }
-
-    .checkout-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 0 0 var(--deep-teal);
-    }
-
-    .empty-cart-msg {
-      text-align: center;
-      color: var(--deep-teal);
-      margin-top: 2rem;
-      font-style: italic;
-    }
-
-    /* --- MOBILE MENU OVERLAY (blueprint) --- */
+    /* --- MOBILE MENU (drawer, from landing) --- */
     .mobile-menu-overlay {
       position: fixed;
       inset: 0;
@@ -543,7 +358,188 @@
       }
     }
 
-    /* --- BUTTONS (blueprint) --- */
+    /* --- CART OVERLAY & SIDEBAR (match landing) --- */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(74, 89, 74, 0.2);
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+
+    .cart-overlay.open {
+      opacity: 1;
+    }
+
+    .cart-sidebar {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      width: calc(100% - 2rem);
+      max-width: 400px;
+      background: var(--card-bg);
+      border-radius: 1.5rem;
+      box-shadow: 0 0 0 4px var(--ash-grey);
+      transform: translateX(110%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .cart-overlay.open .cart-sidebar {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 1.5rem;
+      border-bottom: 2px dashed var(--ash-grey);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--white-smoke);
+    }
+
+    .close-btn {
+      background: var(--soft-blush);
+      border: none;
+      font-size: 1.25rem;
+      color: var(--granite);
+      padding: 0.5rem;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .close-btn:hover {
+      background: var(--cotton-rose);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      background: var(--white-smoke);
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+
+    .cart-item img {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 0.75rem;
+      object-fit: cover;
+      background: white;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-details h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .cart-item-price {
+      font-weight: 700;
+      color: var(--rosy-taupe);
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qty-btn {
+      width: 1.75rem;
+      height: 1.75rem;
+      border: 2px solid var(--ash-grey);
+      background: white;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--granite);
+    }
+
+    .qty-btn:hover {
+      border-color: var(--deep-teal);
+      color: var(--deep-teal);
+    }
+
+    .remove-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--danger);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 2px dashed var(--ash-grey);
+      background: var(--white-smoke);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--granite);
+      margin-bottom: 1rem;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 1.25rem;
+      background: var(--granite);
+      color: white;
+      border: none;
+      border-radius: 1rem;
+      font-size: 1.125rem;
+      font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 0 var(--deep-teal);
+    }
+
+    .checkout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 var(--deep-teal);
+    }
+
+    .checkout-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 0 0 var(--deep-teal);
+    }
+
+    .empty-cart-msg {
+      text-align: center;
+      color: var(--deep-teal);
+      margin-top: 2rem;
+      font-style: italic;
+    }
+
+    /* --- BUTTONS (from landing) --- */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -579,25 +575,12 @@
       box-shadow: 0 0 0 var(--deep-teal);
     }
 
-    .btn.secondary {
-      background: var(--soft-blush);
-      color: var(--granite);
-      border: 2px solid var(--granite);
-      box-shadow: 0 4px 0 var(--deep-teal);
-    }
-
-    .btn.secondary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 0 var(--deep-teal);
-      background: #f7cfce;
-    }
+    /* --- PRODUCT PAGE LAYOUT --- */
 
     /* spacer so content clears fixed header */
     .header-spacer {
       height: 120px;
     }
-
-    /* --- PRODUCT PAGE LAYOUT (same pattern as first product page) --- */
 
     .product-main {
       max-width: 1100px;
@@ -650,7 +633,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: opacity .18s ease;
+      transition: opacity 0.18s ease;
     }
 
     .thumbs {
@@ -720,7 +703,6 @@
       font-size: 0.95rem;
       line-height: 1.55;
       margin: 0 0 0.75rem;
-      text-align: center;
     }
 
     .fineprint {
@@ -729,7 +711,6 @@
       border-top: 1px dashed var(--ash-grey);
       padding-top: 0.75rem;
       margin-top: 0.75rem;
-      text-align: center;
     }
 
     .card {
@@ -766,12 +747,7 @@
       margin-top: 0.75rem;
     }
 
-    .edit-subscription {
-      text-align: center;
-      margin-top: 24px;
-    }
-
-    /* Floating hearts from your original page */
+    /* Floating hearts (kept) */
     .heart {
       position: fixed;
       bottom: -40px;
@@ -793,12 +769,11 @@
       .nav { display: none; }
       .mobile-toggle { display: block; }
     }
-
   </style>
 </head>
 <body>
 
-  <!-- Top Promo Bar (blueprint) -->
+  <!-- Top Promo Bar (same as landing) -->
   <div class="topbar">
     <div class="topbar__inner">
       <div class="topbar__track">
@@ -818,15 +793,16 @@
     </div>
   </div>
 
-  <!-- Header (blueprint) -->
+  <!-- Header (match landing) -->
   <header class="header">
     <div class="header__inner">
-      <a href="https://kahanikorner.com" class="brand">
+      <a href="www.kahanikorner.com" class="brand">
         <i class="fa-solid fa-book-open-reader brand-icon"></i>
         Kahani Korner
       </a>
 
-     <nav class="nav">
+    
+<nav class="nav">
         <a href="https://kahanikorner.com/quicklinks/kahani-bundle">Shop</a>
         <a href="https://kahanikorner.com/quicklinks/subscribe">Subscribe</a>
         <a href="https://kahanikorner.com/quicklinks/resources">Resources</a>
@@ -838,18 +814,20 @@
         </button>
       </nav>
 
-      <button class="mobile-toggle" id="mobile-toggle">
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Open menu">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
   </header>
 
-  <!-- Cart Overlay (blueprint) -->
+  <!-- Cart Overlay (match landing) -->
   <div id="cart-overlay" class="cart-overlay hidden">
     <div class="cart-sidebar">
       <div class="cart-header">
         <h2>Your Cart</h2>
-        <button id="close-cart" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        <button id="close-cart" class="close-btn" aria-label="Close cart">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
       <div id="cart-items" class="cart-items">
         <!-- Items will be injected here by JS -->
@@ -865,7 +843,7 @@
     </div>
   </div>
 
-  <!-- Mobile Menu Overlay (blueprint) -->
+  <!-- Mobile Menu Overlay (same structure & links as landing) -->
   <div id="mobile-menu-overlay" class="mobile-menu-overlay hidden">
     <nav class="mobile-menu">
       <div class="mobile-menu__header">
@@ -879,20 +857,11 @@
       </div>
 
       <ul class="mobile-menu__links">
-        <li> <a href="https://kahanikorner.com/quicklinks/kahani-bundle">Shop</a></li>
-        <li>      <a href="https://kahanikorner.com/quicklinks/subscribe">Subscribe</a>  </li>
-        <li> <a href="https://kahanikorner.com/quicklinks/resources">Resources</a></li>
-        <li> <a href=#faq>Help</a></li>
-        <li>  <a href="#contact">Contact</a></li>
-
-        
-        
-       
-       
-      
-
-
-
+        <li><a href="quicklinks/kahani-bundle.html">Shop</a></li>
+        <li><a href="quicklinks/subscribe.html">Subscribe</a></li>
+        <li><a href="quicklinks/resources.html">Resources</a></li>
+        <li><a href="#faq">Help</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
   </div>
@@ -900,33 +869,22 @@
   <!-- spacer for fixed header -->
   <div class="header-spacer" aria-hidden="true"></div>
 
-  <!-- MAIN PRODUCT CONTENT -->
   <main class="product-main">
     <!-- LEFT: Sticky Gallery -->
     <section class="gallery">
       <div class="gallery-card">
         <div class="main-frame" id="mainFrame">
-          <img id="mainImg" src="images/kahanitimes.png" alt="Kahani Post – envelope and mini newspaper">
+          <img id="mainImg" src="images/books.png" alt="books">
         </div>
         <div class="thumbs">
           <button class="thumb" type="button" aria-current="true">
-            <img src="images/kahanitimes.png" data-full="images/kahanitimes.png" alt="Kahani Times cover">
+            <img src="images/books.png" data-full="images/books.png" alt="books">
           </button>
-
-          <button class="thumb" type="button">
-            <img src="images/calendar.png" data-full="images/calendar.png" alt="Calendar insert">
+          <button class="thumb" type="button" aria-current="false">
+            <img src="images/bookcontents.png" data-full="images/bookcontents.png" alt="books inside pages">
           </button>
-
-          <button class="thumb" type="button">
-            <img src="images/chip.png" data-full="images/chip.png" alt="Decorative chip insert">
-          </button>
-
-          <button class="thumb" type="button">
-            <img src="images/sticker.png" data-full="images/sticker.png" alt="Sticker sheet">
-          </button>
-
-          <button class="thumb" type="button">
-            <img src="images/newspaper.png" data-full="images/newspaper.png" alt="Mini newspaper">
+          <button class="thumb" type="button" aria-current="false">
+            <img src="images/books2.png" data-full="images/books2.png" alt="books alternate angle">
           </button>
         </div>
       </div>
@@ -934,77 +892,109 @@
 
     <!-- RIGHT: Product Info -->
     <section class="info">
-      <h1>Kahani Post</h1>
-      <p class="price"><strong>$8.99</strong> monthly<br>Free U.S. Shipping</p>
-
-      <p class="blurb">
-        For those who treasure stories, color, and connection — <strong>Kahani Post</strong> revives the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: printed paper, handwritten Urdu, and the quiet thrill of opening real mail. Inside are stories, art, and small surprises that make learning Urdu feel natural and joyful — like the way our parents once learned, slowly and beautifully, over a warm cup of chai.
+      <h1>All the Kahanis</h1>
+      <p class="price">
+        <strong>$62.00</strong><br>
+        Free U.S. Shipping
       </p>
 
-      <div class="subscribe-btn">
-        <a
-          class="btn btn--primary"
-          href="https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          U.S. Subscription
-        </a>
-      </div>
+      <p class="blurb">
+        These stories are more than just books — they’re a way of passing on culture, laughter, and language from one generation to the next. Each Kahani brings a little bit of home into your child’s world, strengthening bonds and building memories that feel warm, personal, and rooted in who we are.
+      </p>
 
+      <!-- Currently still a direct Stripe link.
+           When you’re ready, you can replace this with an "Add to Cart"
+           that pushes into the shared cart & uses the checkout button above. -->
       <div class="subscribe-btn">
         <a
           class="btn btn--primary"
-          href="https://buy.stripe.com/bJe14p5Am1Xv5J17430Fi04"
+          href="https://buy.stripe.com/dRm3cx1k6dGddbt1JJ0Fi07"
           target="_blank"
           rel="noopener noreferrer"
         >
-          International Subscription
+          Buy Now
         </a>
       </div>
 
       <div class="purchase">
-        <p class="notes" style="margin-top:10px;">
-          Ships the <strong>last week of each month</strong>. Orders after the <strong>18th</strong> start the following month. Pause or cancel anytime.
+        <p class="notes">
+          Each bundle is <strong>hand-assembled with care</strong>, which takes around <strong>8–10 business days</strong>. Thank you for your patience — it’ll be worth the wait 😊
         </p>
+
         <p class="fineprint">
-          This is a recurring purchase. By subscribing, you authorize monthly charges until canceled.
+          If your package arrives damaged, we’ll replace it — just send us a photo within 72 hours of delivery.
+          International orders may take longer due to customs processing.
         </p>
       </div>
 
       <div class="card">
-        <h3>What’s inside (varies monthly):</h3>
+        <h3>What’s inside:</h3>
         <ul class="clean">
-          <li>A beautifully printed mini newspaper in Urdu &amp; English — perfect for storytime or chai breaks</li>
-          <li>Collectible stickers, recipe cards, or quote prints to spark smiles and conversation</li>
-          <li>Occasional surprise extras that make Urdu learning feel nostalgic, hands-on, and full of wonder</li>
+          <li>4 beautifully printed Kahani storybooks</li>
+          <li>4 themed activity books with coloring, puzzles, and word games</li>
+          <li>4 sticker sheets to support vocabulary and recognition</li>
+          <li>4 flash card sets for playful language exposure</li>
+          <li>4 sequencing/story-order cards to build narrative comprehension</li>
+          <li>A special QR code linking to additional vocabulary practice, printable worksheets, and online Urdu games</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Good to know</h3>
         <ul class="clean">
-          <li>Shipping is free</li>
-          <li>Update your address before the 20th for smooth delivery</li>
-          <li>Skip, pause, or cancel anytime via your account</li>
+          <li>Bilingual in three formats — Urdu script, Roman Urdu, and English</li>
+          <li>Printed on child-safe, matte-finish paper</li>
+          <li>Designed for all ages looking to build and strengthen Urdu vocabulary</li>
         </ul>
-      </div>
-
-      <div class="edit-subscription">
-        <a
-          class="btn secondary"
-          href="https://billing.stripe.com/p/login/eVqaEZ8My1Xv1sL0FF0Fi00"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Edit Subscription
-        </a>
       </div>
     </section>
   </main>
 
   <script>
-    // --- STRIPE BUILDER LOGIC (same as blueprint; used if you later hook "Add to Cart") ---
+    // Floating hearts (kept from original page)
+    window.addEventListener("load", () => {
+      const iconSrc = "https://img.icons8.com/color/96/like--v1.png";
+      for (let i = 0; i < 15; i++) {
+        const icon = document.createElement("img");
+        icon.src = iconSrc;
+        icon.classList.add("heart");
+        icon.style.left = Math.random() * 100 + "vw";
+        icon.style.animationDelay = Math.random() * 10 + "s";
+        icon.style.width = (16 + Math.random() * 10).toFixed(2) + "px";
+        icon.style.animationDuration = (6 + Math.random() * 4).toFixed(2) + "s";
+        document.body.appendChild(icon);
+      }
+    });
+
+    // Gallery image swap
+    (function () {
+      const mainImg = document.getElementById("mainImg");
+      const thumbs = document.querySelectorAll(".thumb");
+
+      thumbs.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const imgEl = btn.querySelector("img");
+          if (!imgEl) return;
+          const url = imgEl.dataset.full || imgEl.getAttribute("src");
+
+          mainImg.style.opacity = "0";
+          const swap = () => {
+            mainImg.src = url;
+            mainImg.onload = () => { mainImg.style.opacity = "1"; };
+            mainImg.onerror = () => {
+              mainImg.style.opacity = "1";
+              console.warn("Image failed to load:", url);
+            };
+          };
+          requestAnimationFrame(swap);
+
+          thumbs.forEach(b => b.setAttribute("aria-current", "false"));
+          btn.setAttribute("aria-current", "true");
+        });
+      });
+    })();
+
+    // --- STRIPE BUILDER LOGIC (from landing) ---
     function buildStripePayload(cartItems) {
       const line_items = cartItems.map(item => {
         return {
@@ -1015,32 +1005,31 @@
       return { line_items: line_items };
     }
 
-    // --- PRODUCT DATA (example; matches landing blueprint) ---
+    // Shared product catalog (same as landing; you can extend this later)
     const products = [
       {
         id: "price_1SYLwPP4FFhr5UNAc6JmV0iR",
-        name: "The Kahani Times Subscription (USA)",
+        name: "The Kahani Times Subscription (USA) - Annual",
         price: 55.0,
         image: "./assets/TheKahaniTimes.png"
       },
       {
         id: "price_1SJFOHP4FFhr5UNAShdcDISg",
-        name: "The Kahani Times Subscription (USA)",
+        name: "The Kahani Times Subscription (USA) - Monthly",
         price: 8.99,
         image: "./assets/TheKahaniTimes.png"
       },
       {
         id: "price_1SHXL0P4FFhr5UNA8oB0SpsX",
-        name: "The Kahani Times Subscription (USA)",
+        name: "The Kahani Times Subscription (USA) - Full Bundle",
         price: 129.0,
         image: "./assets/TheKahaniTimes.png"
       }
     ];
 
-    // --- STATE ---
+    // --- CART STATE & DOM (same behavior as landing) ---
     let cart = [];
 
-    // --- DOM ELEMENTS (shared) ---
     const cartBtn = document.getElementById("cart-btn");
     const closeCartBtn = document.getElementById("close-cart");
     const cartOverlay = document.getElementById("cart-overlay");
@@ -1052,7 +1041,6 @@
     const mobileToggle = document.getElementById("mobile-toggle");
     const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
 
-    // --- CART LOGIC (blueprint) ---
     function updateCartUI() {
       if (!cartBadge) return;
 
@@ -1098,7 +1086,7 @@
       if (item) {
         item.quantity += change;
         if (item.quantity <= 0) {
-          removeFromCart(productId);
+          window.removeFromCart(productId);
         } else {
           updateCartUI();
         }
@@ -1154,7 +1142,6 @@
       }
     }
 
-    // --- MOBILE MENU (blueprint) ---
     function openMobileMenu() {
       if (!mobileMenuOverlay) return;
       mobileMenuOverlay.classList.remove("hidden");
@@ -1171,61 +1158,19 @@
       }, 300);
     }
 
-    // --- GALLERY IMAGE SWAP (your logic) ---
-    function initGallery() {
-      const mainImg = document.getElementById('mainImg');
-      const thumbs = document.querySelectorAll('.thumb');
-
-      thumbs.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const imgEl = btn.querySelector('img');
-          if (!imgEl) return;
-          const url = imgEl.dataset.full || imgEl.getAttribute('src');
-
-          mainImg.style.opacity = '0';
-          const swap = () => {
-            mainImg.src = url;
-            mainImg.onload = () => { mainImg.style.opacity = '1'; };
-            mainImg.onerror = () => {
-              mainImg.style.opacity = '1';
-              console.warn('Image failed to load:', url);
-            };
-          };
-          requestAnimationFrame(swap);
-
-          thumbs.forEach(b => b.setAttribute('aria-current', 'false'));
-          btn.setAttribute('aria-current', 'true');
-        });
-      });
-    }
-
-    // --- FLOATING HEARTS (kept for vibe) ---
-    function initHearts() {
-      const iconSrc = "https://img.icons8.com/color/96/like--v1.png";
-      for (let i = 0; i < 15; i++) {
-        const icon = document.createElement("img");
-        icon.src = iconSrc;
-        icon.classList.add("heart");
-        icon.style.left = Math.random() * 100 + "vw";
-        icon.style.animationDelay = Math.random() * 10 + "s";
-        icon.style.width = (16 + Math.random() * 10).toFixed(2) + "px";
-        icon.style.animationDuration = (6 + Math.random() * 4).toFixed(2) + "s";
-        document.body.appendChild(icon);
-      }
-    }
-
-    // --- INIT ---
-    function initPage() {
+    // INIT cart + mobile menu
+    (function init() {
       updateCartUI();
-      initGallery();
 
       if (cartBtn) cartBtn.addEventListener("click", openCart);
       if (closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
+
       if (cartOverlay) {
         cartOverlay.addEventListener("click", (e) => {
           if (e.target === cartOverlay) closeCart();
         });
       }
+
       if (checkoutBtn) checkoutBtn.addEventListener("click", handleCheckout);
 
       if (mobileToggle && mobileMenuOverlay) {
@@ -1245,12 +1190,7 @@
           link.addEventListener("click", closeMobileMenu);
         });
       }
-    }
-
-    window.addEventListener("load", () => {
-      initPage();
-      initHearts();
-    });
+    })();
   </script>
 </body>
 </html>
