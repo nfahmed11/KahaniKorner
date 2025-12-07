@@ -41,12 +41,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="_assets/images/fam.png">
+  <link rel="preload" as="image" href="./_assets/images/fam.png">
   <!-- <link href="/_assets/css/fontawesome.css" rel="stylesheet" />
 <link href="/_assets/css/solid.css" rel="stylesheet" /> -->
 
   <!-- Custom Styles -->
   <style>
+
+     /* Floating hearts (kept) */
+    .heart {
+      position: fixed;
+      bottom: -40px;
+      left: 0;
+      pointer-events: none;
+      opacity: 0.9;
+      animation: floatUp linear infinite;
+      z-index: 50;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0); opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+
     /* --- THEME VARIABLES --- */
     :root {
       --granite: #4A594A;
@@ -2014,187 +2033,153 @@ margin: 0.5rem 0.5rem;
 
 
 
-  <script>
+  
+<script>
+  // --- WHY MOBILE FLOATING ICONS LOGIC ---
+  const whyData = {
+    identity: {
+      title: "Preserving Cultural Identity",
+      text: "Pass on Pakistani heritage proudly through stories kids genuinely enjoy."
+    },
+    families: {
+      title: "Inclusive for Multiethnic Families",
+      text: "Urdu, English, and Roman Urdu support blended-language homes."
+    },
+    skills: {
+      title: "Bilingual Skill Development",
+      text: "Early exposure builds recognition, confidence, and joyful learning."
+    },
+    ages: {
+      title: "Adaptable to Different Ages",
+      text: "Toddlers to early readers all learn at their own level."
+    },
+    value: {
+      title: "Joyful & Cost-Effective",
+      text: "Each bundle provides reusable prompts so one story becomes many play sessions."
+    },
+    magic: {
+      title: "Story-First Magic",
+      text: "Kids reread again and again — the fun doesn’t stop at 'The End.'"
+    },
+    parents: {
+      title: "Parent-Friendly Resources",
+      text: "Designed for Urdu speakers and non-speakers alike, with built-in prompts."
+    },
+    home: {
+      title: "Made for Real-Life Homes",
+      text: "Short stories, tactile elements, and activities that slide into busy routines."
+    }
+  };
 
-    // --- WHY MOBILE FLOATING ICONS LOGIC ---
-const whyData = {
-  identity: {
-    title: "Preserving Cultural Identity",
-    text: "Pass on Pakistani heritage proudly through stories kids genuinely enjoy."
-  },
-  families: {
-    title: "Inclusive for Multiethnic Families",
-    text: "Urdu, English, and Roman Urdu support blended-language homes."
-  },
-  skills: {
-    title: "Bilingual Skill Development",
-    text: "Early exposure builds recognition, confidence, and joyful learning."
-  },
-  ages: {
-    title: "Adaptable to Different Ages",
-    text: "Toddlers to early readers all learn at their own level."
-  },
-  value: {
-    title: "Joyful & Cost-Effective",
-    text: "Each bundle provides reusable prompts so one story becomes many play sessions."
-  },
-  magic: {
-    title: "Story-First Magic",
-    text: "Kids reread again and again — the fun doesn’t stop at 'The End.'"
-   },
-  parents: {
-    title: "Parent-Friendly Resources",
-    text: "Designed for Urdu speakers and non-speakers alike, with built-in prompts."
-  },
-  home: {
-    title: "Made for Real-Life Homes",
-    text: "Short stories, tactile elements, and activities that slide into busy routines."
+  const whyIcons = document.querySelectorAll('.why-float');
+  const whyCard = document.getElementById('why-mobile-card');
+  const whyTitle = document.getElementById('why-mobile-title');
+  const whyText = document.getElementById('why-mobile-text');
+  const whyClose = document.getElementById('why-mobile-close');
+
+  let openWhyKey = null;
+
+  function closeWhyCard() {
+    if (!whyCard) return;
+    whyCard.classList.remove('open');
+    openWhyKey = null;
+    whyIcons.forEach(icon => icon.classList.remove('active'));
   }
-};
 
-const whyIcons = document.querySelectorAll('.why-float');
-const whyCard = document.getElementById('why-mobile-card');
-const whyTitle = document.getElementById('why-mobile-title');
-const whyText = document.getElementById('why-mobile-text');
-const whyClose = document.getElementById('why-mobile-close');
+  if (whyIcons && whyCard && whyTitle && whyText) {
+    // Set up click handlers
+    whyIcons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        const key = icon.dataset.card;
+        const data = whyData[key];
 
-let openWhyKey = null;
+        // If tapping the same icon, close
+        if (openWhyKey === key) {
+          closeWhyCard();
+          return;
+        }
 
-function closeWhyCard() {
-  if (!whyCard) return;
-  whyCard.classList.remove('open');
-  openWhyKey = null;
-  whyIcons.forEach(icon => icon.classList.remove('active'));
-}
+        // Mark active icon (glow) & clear others
+        whyIcons.forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
 
+        // Update content
+        whyTitle.textContent = data.title;
+        whyText.textContent = data.text;
 
-if (whyIcons && whyCard && whyTitle && whyText) {
-  // Set up click handlers
-  whyIcons.forEach(icon => {
-    icon.addEventListener('click', () => {
-      const key = icon.dataset.card;
+        // Open card with smooth transition
+        whyCard.classList.add('open');
+        openWhyKey = key;
+      });
+    });
+
+    // Open the first why card by default on mobile
+    if (window.innerWidth <= 768 && whyIcons.length > 0) {
+      const first = whyIcons[0];
+      const key = first.dataset.card;
       const data = whyData[key];
 
-      // If tapping the same icon, close
-      if (openWhyKey === key) {
-        closeWhyCard();
-        return;
-      }
-
-      // Mark active icon (glow) & clear others
       whyIcons.forEach(i => i.classList.remove('active'));
-      icon.classList.add('active');
-
-      // Update content
+      first.classList.add('active');
       whyTitle.textContent = data.title;
       whyText.textContent = data.text;
-
-      // Open card with smooth transition
       whyCard.classList.add('open');
       openWhyKey = key;
-    });
-  });
-
-  // ✅ Open the first why card by default on mobile
-  if (window.innerWidth <= 768 && whyIcons.length > 0) {
-    const first = whyIcons[0];
-    const key = first.dataset.card;
-    const data = whyData[key];
-
-    whyIcons.forEach(i => i.classList.remove('active'));
-    first.classList.add('active');
-    whyTitle.textContent = data.title;
-    whyText.textContent = data.text;
-    whyCard.classList.add('open');
-    openWhyKey = key;
-  }
-}
-
-
-if (whyClose) {
-  whyClose.addEventListener('click', () => {
-    closeWhyCard();
-  });
-}
-
-
-
-    // --- STRIPE BUILDER LOGIC ---
-    function buildStripePayload(cartItems) {
-      const line_items = cartItems.map(item => {
-        return {
-          price: item.id,
-          quantity: item.quantity,
-        };
-      });
-      return { line_items: line_items };
     }
+  }
 
-    // --- PRODUCT DATA (Shared) ---
-    const products = [
-      {
-        id: "price_1SYLwPP4FFhr5UNAc6JmV0iR",
-        name: "The Kahani Times Subscription (USA)",
-        price: 55.0,
-        image: "./assets/TheKahaniTimes.png"
-      },
-      {
-        id: "price_1SJFOHP4FFhr5UNAShdcDISg",
-        name: "The Kahani Times Subscription (USA)",
-        price: 8.99,
-        image: "./assets/TheKahaniTimes.png"
-      },
-      {
-        id: "price_1SHXL0P4FFhr5UNA8oB0SpsX",
-        name: "The Kahani Times Subscription (USA)",
-        price: 129.0,
-        image: "./assets/TheKahaniTimes.png"
-      }
-    ];
+  if (whyClose) {
+    whyClose.addEventListener('click', () => {
+      closeWhyCard();
+    });
+  }
 
-    // --- STATE ---
-    let cart = [];
-
-    // --- DOM ELEMENTS ---
-    const cartBtn = document.getElementById("cart-btn");
-    const closeCartBtn = document.getElementById("close-cart");
-    const cartOverlay = document.getElementById("cart-overlay");
-    const cartItemsContainer = document.getElementById("cart-items");
-    const cartTotalAmount = document.getElementById("cart-total-amount");
-    const cartBadge = document.getElementById("cart-badge");
-    const checkoutBtn = document.getElementById("checkout-btn");
-
-    const heroSection = document.querySelector('.hero');
-    const headerEl = document.querySelector('.header');
-    const heroBgImage = document.querySelector('.hero__bg-image');
-
-    // NEW: Mobile menu elements
+  // --- MOBILE MENU LOGIC ---
   const mobileToggle = document.getElementById("mobile-toggle");
   const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
 
-    // --- INIT ---
-    function init() {
-      updateCartUI();
+  function openMobileMenu() {
+    if (!mobileMenuOverlay) return;
+    mobileMenuOverlay.classList.remove("hidden");
+    requestAnimationFrame(() => {
+      mobileMenuOverlay.classList.add("open");
+    });
+  }
 
-      if (cartBtn) cartBtn.addEventListener("click", openCart);
-      if (closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
-      if (cartOverlay) {
-        cartOverlay.addEventListener("click", (e) => {
-          if (e.target === cartOverlay) closeCart();
-        });
-      }
-      if (checkoutBtn) checkoutBtn.addEventListener("click", handleCheckout);
+  function closeMobileMenu() {
+    if (!mobileMenuOverlay) return;
+    mobileMenuOverlay.classList.remove("open");
+    setTimeout(() => {
+      mobileMenuOverlay.classList.add("hidden");
+    }, 300); // match CSS transition
+  }
 
-          // Mobile menu
+  // --- PARALLAX EFFECT FOR HERO ---
+  const heroBgImage = document.querySelector('.hero__bg-image');
+
+  function handleParallax() {
+    if (!heroBgImage) return;
+
+    const viewportHeight = window.innerHeight;
+    const scrolled = window.scrollY;
+    const clamped = Math.max(0, Math.min(scrolled, viewportHeight));
+
+    const maxShift = window.innerWidth <= 768 ? 40 : 60;
+    const progress = clamped / viewportHeight;
+    const shift = progress * maxShift;
+
+    heroBgImage.style.transform = `translateY(${shift}px)`;
+  }
+
+  function initLandingPage() {
+    // Mobile menu wiring
     if (mobileToggle && mobileMenuOverlay) {
       mobileToggle.addEventListener("click", openMobileMenu);
 
       mobileMenuOverlay.addEventListener("click", (e) => {
-        // click outside drawer closes it
         if (e.target === mobileMenuOverlay) closeMobileMenu();
       });
 
-      // Close button + close on link click
       const closeBtn = mobileMenuOverlay.querySelector(".mobile-menu__close");
       const menuLinks = mobileMenuOverlay.querySelectorAll(".mobile-menu__links a");
 
@@ -2206,155 +2191,31 @@ if (whyClose) {
       });
     }
 
+    handleParallax();
+  }
 
-      handleParallax();
-    }
+  window.addEventListener('scroll', handleParallax);
+  window.addEventListener('load', initLandingPage);
 
-    // --- CART LOGIC ---
-    function updateCartUI() {
-      if (!cartBadge) return;
-
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      cartBadge.textContent = totalItems;
-      
-      if (totalItems === 0) {
-        cartBadge.classList.add("hidden");
-      } else {
-        cartBadge.classList.remove("hidden");
+    window.addEventListener("load", () => {
+      const iconSrc = "https://img.icons8.com/color/96/like--v1.png";
+      for (let i = 0; i < 15; i++) {
+        const icon = document.createElement("img");
+        icon.src = iconSrc;
+        icon.classList.add("heart");
+        icon.style.left = Math.random() * 100 + "vw";
+        icon.style.animationDelay = Math.random() * 10 + "s";
+        icon.style.width = (16 + Math.random() * 10).toFixed(2) + "px";
+        icon.style.animationDuration = (6 + Math.random() * 4).toFixed(2) + "s";
+        document.body.appendChild(icon);
       }
-
-      if (cartTotalAmount) {
-        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        cartTotalAmount.textContent = `$${total.toFixed(2)}`;
-      }
-
-      if (cartItemsContainer) {
-        if (cart.length === 0) {
-          cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Your cart is empty.</div>';
-        } else {
-          cartItemsContainer.innerHTML = cart.map(item => `
-            <div class="cart-item">
-              <img src="${item.image}" alt="${item.name}">
-              <div class="cart-item-details">
-                <h4>${item.name}</h4>
-                <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-                <div class="cart-controls">
-                  <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
-                  <span>${item.quantity}</span>
-                  <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
-                  <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
-                </div>
-              </div>
-            </div>
-          `).join("");
-        }
-      }
-    }
-
-    window.updateQuantity = (productId, change) => {
-      const item = cart.find((item) => item.id === productId);
-      if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-          removeFromCart(productId);
-        } else {
-          updateCartUI();
-        }
-      }
-    };
-
-    window.removeFromCart = (productId) => {
-      cart = cart.filter((item) => item.id !== productId);
-      updateCartUI();
-    };
-
-    function openCart() {
-      if (!cartOverlay) return;
-      cartOverlay.classList.remove("hidden");
-      setTimeout(() => cartOverlay.classList.add("open"), 10);
-    }
-
-    function closeCart() {
-      if (!cartOverlay) return;
-      cartOverlay.classList.remove("open");
-      setTimeout(() => cartOverlay.classList.add("hidden"), 300);
-    }
-
-    async function handleCheckout() {
-      if (cart.length === 0) return;
-
-      const { line_items } = buildStripePayload(cart);
-      const originalText = checkoutBtn.innerText;
-      checkoutBtn.innerText = "Redirecting to Stripe...";
-      checkoutBtn.disabled = true;
-
-      try {
-        const response = await fetch("/create-checkout-session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: line_items }),
-        });
-
-        if (!response.ok) {
-          alert("There was a problem starting checkout. Please try again.");
-          checkoutBtn.innerText = originalText;
-          checkoutBtn.disabled = false;
-          return;
-        }
-
-        const data = await response.json();
-        window.location.href = data.url;
-      } catch (err) {
-        console.error("Error:", err);
-        alert("Unexpected error. Please try again.");
-        checkoutBtn.innerText = originalText;
-        checkoutBtn.disabled = false;
-      }
-    }
-
-      function openMobileMenu() {
-    if (!mobileMenuOverlay) return;
-    mobileMenuOverlay.classList.remove("hidden");
-    // allow CSS to see the element before toggling .open
-    requestAnimationFrame(() => {
-      mobileMenuOverlay.classList.add("open");
     });
-  }
-
-  function closeMobileMenu() {
-    if (!mobileMenuOverlay) return;
-    mobileMenuOverlay.classList.remove("open");
-    setTimeout(() => {
-      mobileMenuOverlay.classList.add("hidden");
-    }, 300); // match CSS transition duration
-  }
-
-
-    // --- PARALLAX EFFECT FOR HERO ---
-    function handleParallax() {
-      if (!heroBgImage) return;
-
-      const viewportHeight = window.innerHeight;
-      const scrolled = window.scrollY;
-
-      const clamped = Math.max(0, Math.min(scrolled, viewportHeight));
-
-      const maxShift = window.innerWidth <= 768 ? 40 : 60;
-      const progress = clamped / viewportHeight;
-      const shift = progress * maxShift;
-
-      heroBgImage.style.transform = `translateY(${shift}px)`;
-    }
-
-
-
-    // --- MOBILE NAV BAR ---
     
-    window.addEventListener('scroll', () => {
-      handleParallax();
-    });
 
-    window.addEventListener('load', init);
-  </script>
+
+</script>
+<script src="_assets/cart.js"></script>
+
 </body>
 </html>
+ 
