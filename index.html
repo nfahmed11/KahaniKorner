@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="homepage_images/fam.png">
+  <link rel="preload" as="image" href="_assets/images/fam.png">
   <!-- <link href="/_assets/css/fontawesome.css" rel="stylesheet" />
 <link href="/_assets/css/solid.css" rel="stylesheet" /> -->
 
@@ -242,6 +242,36 @@ margin: 0.5rem 0.5rem;
     }
 
 /* --- MOBILE MENU (SLIDE-IN DRAWER) --- */
+@media (max-width: 768px) {
+  .header__inner {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mobile-toggle {
+    display: block !important;
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .brand {
+    grid-column: 2;
+    justify-self: center;
+    margin-right: 0; /* reset if needed */
+  }
+
+  .cart-btn-landing {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .nav {
+    display: none !important;
+  }
+}
+
 .mobile-menu-overlay {
   position: fixed;
   inset: 0;
@@ -594,7 +624,7 @@ margin: 0.5rem 0.5rem;
       min-height: 80vh;        /* taller hero */
       border-radius: 0 0 28px 28px;
       overflow: hidden;
-      box-shadow: 0 32px 60px rgba(15, 23, 42, 0.35);
+      box-shadow: 0 32px 60px rgba(223, 225, 229, 0.35);
       margin-bottom: 4rem;
       display:flex;
     }
@@ -607,7 +637,7 @@ margin: 0.5rem 0.5rem;
       bottom: -40px;
       background-image:
         linear-gradient(120deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25)),
-        url("homepage_images/fam.png");  /* ✅ switch back to .png */
+        url("_assets/images/fam.png");  
       background-size: cover;
       background-position: center top;
       will-change: transform;
@@ -1063,7 +1093,7 @@ margin: 0.5rem 0.5rem;
 
 /*  --- OUR STORY --- */
 
-.story .section__title {
+.story, .story h2 {
   text-align:center;
 }
 
@@ -1358,13 +1388,7 @@ margin: 0.5rem 0.5rem;
   font-weight: 700;
 }
 
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 1.5rem 0;  /* pick this or 2rem, your preference */
-  flex-wrap: wrap;
-}
+
 
 /* Social icons */
 .social-icons {
@@ -1445,25 +1469,27 @@ margin: 0.5rem 0.5rem;
   <!-- Header -->
   <header class="header">
     <div class="header__inner">
+      <button class="mobile-toggle" id="mobile-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
       <a href="www.kahanikorner.com" class="brand">
         <i class="fa-solid fa-book-open-reader brand-icon"></i>
         Kahani Korner
       </a>
-<nav class="nav">
+
+      <nav class="nav">
         <a href="https://kahanikorner.com/quicklinks/kahani-bundle">Shop</a>
         <a href="https://kahanikorner.com/quicklinks/subscribe">Subscribe</a>
         <a href="https://kahanikorner.com/quicklinks/resources">Resources</a>
         <a href=#faq>Help</a>
         <a href="#contact">Contact</a>
-        <button class="cart-btn-landing" id="cart-btn">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <span class="cart-badge-landing hidden" id="cart-badge">0</span>
-        </button>
       </nav>
 
-     <button class="mobile-toggle" id="mobile-toggle">
-  <i class="fa-solid fa-bars"></i>
-</button>
+      <button class="cart-btn-landing" id="cart-btn">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-badge-landing hidden" id="cart-badge">0</span>
+      </button>
 
     </div>
   </header>
@@ -1955,12 +1981,6 @@ margin: 0.5rem 0.5rem;
   <p class="footer-tagline">
     Rooted in culture, topped with sweetness, made for little hearts.
   </p>
-
-  <div class="footer-links">
-    <a href="quicklinks/kahani-bundle.html">Shop</a>
-    <a href="#">Subscribe</a>
-    <a href="#contact">Contact</a>
-  </div>
 
   <div class="social-icons">
     <a
