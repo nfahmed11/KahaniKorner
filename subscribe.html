@@ -599,6 +599,16 @@
       margin: 0 auto;
     }
 
+    #shop-hero {
+  text-align: center;
+}
+
+#shop-hero .shop-hero-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
     .shop-hero-heading {
       font-family: "Grandstander", cursive;
       font-weight: 800;
@@ -619,9 +629,11 @@
     /* --- CUSTOM DROPDOWN (from product page) --- */
     .filter-container {
       display: flex;
-      justify-content: flex-start;
       margin-bottom: 2.5rem;
-    }
+  display: flex;
+  justify-content: center;
+}
+
 
     .custom-select-wrapper {
       position: relative;
@@ -1230,12 +1242,12 @@
   <main class="shop-main">
     <div class="shop-main-inner">
       <!-- Shop hero text -->
-      <section aria-labelledby="shop-heading" style="margin-bottom: 2.5rem;">
+      <section id="shop-hero" aria-labelledby="shop-heading" style="margin-bottom: 2.5rem;">
         <h1 id="shop-heading" class="shop-hero-heading">
-          Kahani Korner Products
+          Kahani Korner Subscriptions
         </h1>
         <p class="shop-hero-sub">
-          Enhance your little one’s Urdu–English journey with cozy diaspora essentials — books, subscriptions, and goodies that feel like home.
+          Get our curated nostaligia packed monthly subscription snail mail, filled with enchanting stories and cultural treasures delivered right to your doorstep.
         </p>
       </section>
 
@@ -1284,7 +1296,7 @@
               <p id="detail-description"></p>
             </div>
             <div class="detail-features-box">
-              <h3>Why you'll love it</h3>
+              <h3>What you need to know</h3>
               <ul id="detail-features"></ul>
             </div>
             <button id="detail-add-to-cart-btn" class="add-to-cart-btn large-btn">
@@ -1365,10 +1377,10 @@
       {
         id: "price_1SYLwPP4FFhr5UNAc6JmV0iR",
         name: "The Kahani Times Subscription (USA)",
-        price: 55.0,
+        price: 8.99,
         description:
-          "For those who treasure stories, color, and connection — The Kahani Times revives the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: printed paper, handwritten Urdu, and the quiet thrill of opening real mail. Inside are stories, art, and small surprises that make learning Urdu feel natural and joyful — like the way our parents once learned, slowly and beautifully, over a warm cup of chai.",
-        image: "./assets/TheKahaniTimes.png",
+          "For those who treasure stories, color, and connection — The Kahani Times revives the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: printed paper, nostaligic items, and the quiet thrill of opening real mail. Inside are stories, art, and small surprises that make learning Urdu feel natural and joyful — like the way our parents once learned, slowly and beautifully, over a warm cup of chai.",
+        image: "/_assets/images/products/subscribe/kahanitimes.png",
         category: "subscriptions",
         features: [
           "Shipping occurs the last week of each month; orders placed after the 20th begin the following month.",
@@ -1377,20 +1389,20 @@
           "Shipping is free; update your address before the 20th for timely delivery.",
         ],
         images: [
-          "./_assets/images/products/subscribe/kahanitimes.png",
-          "./_assets/images/products/subscribe/artprint.png",
-          "./_assets/images/products/subscribe/calendar.png",
-          "./kahanitimes-recipe.png",
-          "./_assets/images/products/subscribe/newspaper.png",
-          "./_assets/images/products/subscribe/sticker.png",
+          "/_assets/images/products/subscribe/kahanitimes.png",
+          "/_assets/images/products/subscribe/artprint.png",
+          "/_assets/images/products/subscribe/calendar.png",
+          "/_assets/images/products/subscribe/chip.png",
+          "/_assets/images/products/subscribe/newspaper.png",
+          "/_assets/images/products/subscribe/sticker.png",
         ],
       },{
-        id: "price_1SYLwPP4FFhr5UNAc6JmV0iR",
+        id: "international-sub",
         name: "The Kahani Times Subscription (International)",
         price: 9.99,
         description:
           "For those who treasure stories, color, and connection — The Kahani Times revives the charm of old-school storytelling. Each month’s envelope feels like a keepsake from gentler times: printed paper, handwritten Urdu, and the quiet thrill of opening real mail. Inside are stories, art, and small surprises that make learning Urdu feel natural and joyful — like the way our parents once learned, slowly and beautifully, over a warm cup of chai.",
-        image: "./assets/TheKahaniTimes.png",
+        image: "/_assets/images/products/subscribe/kahanitimes.png",
         category: "subscriptions",
         features: [
           "Shipping occurs the last week of each month; orders placed after the 20th begin the following month.",
@@ -1399,12 +1411,12 @@
           "Shipping is free; update your address before the 20th for timely delivery.",
         ],
         images: [
-          "./_assets/images/products/subscribe/kahanitimes.png",
-          "./_assets/images/products/subscribe/artprint.png",
-          "./_assets/images/products/subscribe/calendar.png",
-          "./kahanitimes-recipe.png",
-          "./_assets/images/products/subscribe/newspaper.png",
-          "./_assets/images/products/subscribe/sticker.png",
+          "/_assets/images/products/subscribe/kahanitimes.png",
+          "/_assets/images/products/subscribe/artprint.png",
+          "/_assets/images/products/subscribe/calendar.png",
+          "/_assets/images/products/subscribe/chip.png",
+          "/_assets/images/products/subscribe/newspaper.png",
+          "/_assets/images/products/subscribe/sticker.png",
         ],
       }];
 
@@ -1477,9 +1489,16 @@
         backToStoreBtn.addEventListener("click", closeProductDetails);
       }
       if (detailAddToCartBtn) {
-       detailAddToCartBtn.addEventListener("click", () => {
-  window.location.href = "https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03";
+    detailAddToCartBtn.addEventListener("click", () => {
+  const product = products.find(p => p.id === currentProductId);
+
+  if (product.id === "international-sub") {
+    window.location.href = "https://buy.stripe.com/bJe14p5Am1Xv5J17430Fi04";
+  } else {
+    window.location.href = "https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03";
+  }
 });
+
 
       }
 
@@ -1542,10 +1561,15 @@
               <h3>${product.name}</h3>
               <span class="price">$${product.price.toFixed(2)}</span>
             </div>
-           <button class="add-to-cart-btn"
-  onclick="event.stopPropagation(); window.location.href='https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03'">
+          <button class="add-to-cart-btn"
+  onclick="event.stopPropagation(); window.location.href='${
+    product.id === "international-sub"
+      ? "https://buy.stripe.com/bJe14p5Am1Xv5J17430Fi04"
+      : "https://buy.stripe.com/14AeVf1k6au16N5agf0Fi03"
+  }'">
   Subscribe Now <i class="fa-solid fa-arrow-right"></i>
 </button>
+
 
           </div>
         </article>
