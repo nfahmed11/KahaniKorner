@@ -599,6 +599,29 @@
       margin: 0 auto;
     }
 
+    .shop-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.shop-hero-sub {
+  max-width: 520px;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+
+
     .shop-hero-heading {
       font-family: "Grandstander", cursive;
       font-weight: 800;
@@ -617,11 +640,7 @@
     }
 
     /* --- CUSTOM DROPDOWN (from product page) --- */
-    .filter-container {
-      display: flex;
-      justify-content: flex-start;
-      margin-bottom: 2.5rem;
-    }
+   
 
     .custom-select-wrapper {
       position: relative;
@@ -1230,14 +1249,15 @@
   <main class="shop-main">
     <div class="shop-main-inner">
       <!-- Shop hero text -->
-    <section id="shop-hero-section" aria-labelledby="shop-heading" style="margin-bottom: 2.5rem;">
+  <section id="shop-hero-section" aria-labelledby="shop-heading" class="shop-hero">
   <h1 id="shop-heading" class="shop-hero-heading">
-    Kahani Korner Products
+    Kahani Korner Subscriptions
   </h1>
   <p class="shop-hero-sub">
-    Enhance your little one’s Urdu–English journey with cozy diaspora essentials — books, subscriptions, and goodies that feel like home.
+    Get our curated nostaligia packed monthly subscription snail mail, filled with enchanting stories and cultural treasures delivered right to your doorstep.
   </p>
 </section>
+
 
 
       <!-- Filter Section -->
@@ -1289,9 +1309,10 @@
               <h3>Why you'll love it</h3>
               <ul id="detail-features"></ul>
             </div>
-            <button id="detail-add-to-cart-btn" class="add-to-cart-btn large-btn">
-              Add to Cart <i class="fa-solid fa-plus"></i>
-            </button>
+           <button id="detail-add-to-cart-btn" class="add-to-cart-btn large-btn">
+  Buy Now
+</button>
+
           </div>
         </div>
       </section>
@@ -1309,14 +1330,15 @@
   </div>
 
   <!-- Simple FAQ + Contact anchors to satisfy nav links -->
-  <section class="section faq-section" id="faq">
-    <div class="section__inner" style="max-width:800px; margin:0 auto;">
-      <h2 class="section__title" style="text-align:left;">Need Help?</h2>
-      <p style="color:var(--muted); max-width:520px;">
-        Have a question about shipping, subscriptions, or gifts? Email us anytime — we’re a tiny team but we read every message.
-      </p>
-    </div>
-  </section>
+<section class="section faq-section" id="faq">
+  <div class="section__inner" style="max-width:800px; margin:0 auto; text-align:center;">
+    <h2 class="section__title" style="text-align:center;">Need Help?</h2>
+    <p style="color:var(--muted); max-width:520px; margin:0 auto;">
+      Have a question about shipping, subscriptions, or gifts? Email us anytime — we’re a tiny team but we read every message.
+    </p>
+  </div>
+</section>
+
 
   <section class="section contact-section" id="contact">
     <div class="section__inner" style="max-width:800px; margin:0 auto; text-align:center;">
@@ -1458,13 +1480,12 @@ const filterContainerEl = document.getElementById("filter-container");
       if (backToStoreBtn) {
         backToStoreBtn.addEventListener("click", closeProductDetails);
       }
-      if (detailAddToCartBtn) {
-        detailAddToCartBtn.addEventListener("click", () => {
-          if (currentProductId) {
-            addToCart(currentProductId);
-          }
-        });
-      }
+    if (detailAddToCartBtn) {
+  detailAddToCartBtn.addEventListener("click", () => {
+    window.location.href = "https://buy.stripe.com/dRm3cx1k6dGddbt1JJ0Fi07";
+  });
+}
+
 
       if (continueShoppingBtn) {
         continueShoppingBtn.addEventListener("click", closeSuccessModal);
@@ -1525,9 +1546,10 @@ const filterContainerEl = document.getElementById("filter-container");
               <h3>${product.name}</h3>
               <span class="price">$${product.price.toFixed(2)}</span>
             </div>
-            <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('${product.id}')">
-              <i class="fa-solid fa-plus"></i> Add to Cart
-            </button>
+                      <button class="add-to-cart-btn" onclick="event.stopPropagation(); window.location.href='https://buy.stripe.com/dRm3cx1k6dGddbt1JJ0Fi07';">
+            Buy Now
+          </button>
+
           </div>
         </article>
       `
