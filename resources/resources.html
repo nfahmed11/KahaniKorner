@@ -171,27 +171,26 @@
         font-size: 1.8rem;
         color: var(--rosy-taupe);
       }
+.nav {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      font-weight: 300;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
-      .nav {
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        font-weight: 300;
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-
-      .nav a:hover {
-        color: var(--soft-blush);
-        font-weight: 700;
-        transform: scale(1.05);
-        text-shadow:
-          -1px -1px 0 var(--granite),
-           1px -1px 0 var(--granite),
-          -1px  1px 0 var(--granite),
-           1px  1px 0 var(--granite);
-      }
+    .nav a:hover {
+      color: var(--soft-blush);
+      font-weight: 700;
+      transform: scale(1.05);
+      text-shadow:
+        -1px -1px 0 var(--granite),
+         1px -1px 0 var(--granite),
+        -1px  1px 0 var(--granite),
+         1px  1px 0 var(--granite);
+    }
 
       .mobile-toggle {
         display: none;
@@ -675,22 +674,18 @@
     <header class="header">
       <div class="header__inner">
         <!-- From quicklinks, go up one level to landing -->
-        <a href="../landing.html" class="brand">
+        <a href="../index.html" class="brand">
           <i class="fa-solid fa-book-open-reader brand-icon"></i>
           Kahani Korner
         </a>
 
-        <nav class="nav">
-          <a href="kahani-bundle.html">Shop</a>
-          <a href="subscribe.html">Subscribe</a>
-          <a href="resources.html">Resources</a>
-          <a href="../landing.html#faq">Help</a>
-          <a href="../landing.html#contact">Contact</a>
-          <button class="cart-btn-landing" id="cart-btn">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span class="cart-badge-landing hidden" id="cart-badge">0</span>
-          </button>
-        </nav>
+         <nav class="nav">
+        <a href="products.html">Shop</a>
+        <a href="subscribe.html">Subscribe</a>
+        <a href="/resources/resources.html">Resources</a>
+        <a href=index.html>Help</a>
+        <a href="index.html">Contact</a>
+      </nav>
 
         <button class="mobile-toggle" id="mobile-toggle" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
