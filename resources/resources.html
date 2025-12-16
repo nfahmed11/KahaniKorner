@@ -70,7 +70,11 @@
       /* --- RESET & BASE --- */
       *, *::before, *::after { box-sizing: border-box; }
 
-      html, body { width: 100%; }
+      html, body { width: 100%;
+        overflow-x: hidden; }
+
+   
+
 
       body {
         margin: 0;
@@ -134,30 +138,41 @@
       }
 
       /* --- HEADER / NAV (pulled from PRODUCTS page) --- */
-      .header {
-        position: fixed;
-        top: 1.75rem;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        margin: 0.5rem 0.5rem;
-        padding: 0.5rem 2rem;
-        background: rgba(255, 255, 255, 0.55);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(176, 195, 183, 0.7);
-        border-radius: 999px;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-        transition: background 0.25s ease,
-                    border-color 0.25s ease,
-                    box-shadow 0.25s ease;
-      }
 
-      .header__inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-      }
+:root{
+  --topbar-h: 15px;      /* adjust to your topbar’s real height */
+  --header-top-gap: 1.75rem;
+  --header-h: 74px;      /* blueprint header pill height */
+}
+
+.header {
+  position: fixed;
+  top: calc(var(--topbar-h) + var(--header-top-gap));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1200px, calc(100% - 2rem)); /* <-- blueprint style */
+  z-index: 100;
+  padding: 0.5rem 2rem;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(176, 195, 183, 0.7);
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Spacer clears TOPBAR + header gap + header height */
+.header-spacer {
+  height: calc(var(--topbar-h) + var(--header-top-gap) + var(--header-h) + 1rem);
+}
 
       .brand {
         display: flex;
@@ -541,9 +556,9 @@
         max-width: 1100px;
         margin: 0 auto;
       }
-
-      .section,
-      .page-main { padding: 4rem 2rem; }
+      
+.page-main { padding: 4rem 2rem; }
+.section { padding: 0; }
 
       /* --- RESOURCES CARD --- */
       .resources-card {
@@ -674,12 +689,13 @@
 
         
       <nav class="nav">
-        <a href="../products.html">Shop</a>
-        <a href="../subscribe.html">Subscribe</a>
-        <a href="resources.html">Resources</a>
-        <a href=../index.html#faq>Help</a>
-        <a href="../index.html#contact">Contact</a>
-      </nav>
+  <a href="../products.html">Shop</a>
+  <a href="../subscribe.html">Subscribe</a>
+  <a href="/resources/resources.html">Resources</a>
+  <a href="../index.html#faq">Help</a>
+  <a href="../index.html#contact">Contact</a>
+</nav>
+
 
         <button class="cart-btn-landing" id="cart-btn" aria-label="Open cart">
           <i class="fa-solid fa-cart-shopping"></i>
@@ -769,6 +785,14 @@
           <a class="resource-link" href="cartoons.html">
             Cartoons
           </a>
+
+            <a class="resource-link" href="">
+            Podcasts (Coming Soon)
+          </a>
+
+          <a class="resource-link" href="">
+            Worksheets (Coming Soon)
+          </a>
         </div>
       </section>
     </main>
@@ -799,10 +823,12 @@
     </footer>
 
     <script>
+
       // --- STRIPE PAYLOAD (same as landing) ---
       function buildStripePayload(cartItems) {
         const line_items = cartItems.map(item => ({
           price: item.id,
+          
           quantity: item.quantity,
         }));
         return { line_items };

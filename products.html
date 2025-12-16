@@ -144,32 +144,35 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* --- HEADER (same as landing) --- */
-    .header {
-      position: fixed;
-      top: 1.75rem;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      margin: 0.5rem 0.5rem;
-      padding: 0.5rem 2rem;
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(10px);
-      border: 2px solid rgba(176, 195, 183, 0.7);
-      border-radius: 999px;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-      transition: background 0.25s ease,
-                  border-color 0.25s ease,
-                  box-shadow 0.25s ease;
-    }
+    /* --- HEADER (same as landing) --- */:root{
+  --topbar-h: 15px;      /* adjust to your topbar’s real height */
+  --header-top-gap: 1.75rem;
+  --header-h: 74px;      /* blueprint header pill height */
+}
 
-    .header__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-    }
+.header {
+  position: fixed;
+  top: calc(var(--topbar-h) + var(--header-top-gap));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1200px, calc(100% - 2rem)); /* <-- blueprint style */
+  z-index: 100;
+  padding: 0.5rem 2rem;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(176, 195, 183, 0.7);
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
 
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
     .brand {
       display: flex;
       align-items: center;
@@ -1390,21 +1393,21 @@
     // --- PRODUCT DATA (FULL) ---
     const products = [
       {
-        id: "price_1SYLwPP4FFhr5UNAc6JmV0iR",
-        name: "All things Kahani Bundle",
-        price: 62.00,
-        description:
-  "The All Things Kahani Bundle brings together all four story sets — each one packed with a beautiful storybook, an activity book, stickers, sequencing cards, and bilingual flashcards. Every set also includes a scannable QR code that unlocks read-aloud videos, vocabulary-building games, and bonus learning activities. Designed to spark joy, connection, and language growth, this bundle turns Urdu learning into a playful, immersive experience the whole family can enjoy.",
+                id: "price_1SYLwPP4FFhr5UNAc6JmV0iR",
+                name: "All things Kahani Bundle",
+                price: 62.00,
+                description:
+        "The All Things Kahani Bundle brings together all four story sets — each one packed with a beautiful storybook, an activity book, stickers, sequencing cards, and bilingual flashcards. Every set also includes a scannable QR code that unlocks read-aloud videos, vocabulary-building games, and bonus learning activities. Designed to spark joy, connection, and language growth, this bundle turns Urdu learning into a playful, immersive experience the whole family can enjoy.",
 
-  image: "./assets/images/products/books/books.png",
-        category: "books",
-     features: [
-  "Includes all 4 complete Kahani story sets — each with a storybook, activity book, stickers, sequencing cards, and bilingual flashcards.",
-  "Every set comes with a QR code linking to read-alouds, digital games, and vocabulary-enhancing activities.",
-  "All materials feature Urdu, Roman Urdu, and English text to support every type of learner.",
-  "Print materials are durable, kid-friendly, and designed to support both Urdu and English literacy.",
-  "Perfect for homeschooling, weekend learning, classrooms, or gifting — suitable for ages 2 to 10.",
-],
+        image: "./assets/images/products/books/books.png",
+              category: "books",
+          features: [
+        "Includes all 4 complete Kahani story sets — each with a storybook, activity book, stickers, sequencing cards, and bilingual flashcards.",
+        "Every set comes with a QR code linking to read-alouds, digital games, and vocabulary-enhancing activities.",
+        "All materials feature Urdu, Roman Urdu, and English text to support every type of learner.",
+        "Print materials are durable, kid-friendly, and designed to support both Urdu and English literacy.",
+        "Perfect for homeschooling, weekend learning, classrooms, or gifting — suitable for ages 2 to 10.",
+      ],
 
 
         images: [
@@ -1412,7 +1415,36 @@
           "./assets/images/products/books/books.png",
           "./assets/images/products/books/books2.png",
         ],
-      }];
+      },
+
+       {
+                id: "d",
+                name: "Stickers (Coming Soon)",
+                price: 2.50,
+                description:
+        "A little piece of Pakistan, wherever you are. Our Pakistani Nostalgia Diaspora Stickers are inspired by the everyday sights, sounds, and sayings we grew up with — made for Pakistanis raising memories far from home.",
+
+        image: "./assets/images/products/",
+              category: "stickers",
+          features: [
+        "Inspired by Pakistani street life & childhood nostalgia.",
+
+"Made especially for the Pakistani diaspora.", 
+
+"High-quality, vibrant prints.",
+"Durable & long-lasting (great for laptops, journals, water bottles)",
+
+"Perfect for snail mail, gifts, or memory-keeping."
+      ],
+
+
+        images: [
+          "./assets/images/products/"
+        ],
+      }
+    
+    
+    ];
 
     // --- STATE ---
     let cart = JSON.parse(localStorage.getItem("kahani_cart")) || [];
