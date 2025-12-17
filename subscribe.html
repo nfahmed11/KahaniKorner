@@ -219,6 +219,36 @@
       color: var(--granite);
     }
 
+    .secondary-btn {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.9rem;
+  background: white;
+  color: var(--granite);
+  border: 2px solid var(--ash-grey);
+  border-radius: 0.95rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 4px 0 var(--ash-grey);
+}
+
+.secondary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--ash-grey);
+  border-color: var(--deep-teal);
+}
+
+.secondary-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 var(--ash-grey);
+}
+
+    
     .cart-btn-landing {
       background: var(--mint);
       border: 2px solid var(--granite);
@@ -1306,6 +1336,10 @@
             <button id="detail-add-to-cart-btn" class="add-to-cart-btn large-btn">
               Subscribe Now <i class="fa-solid fa-plus"></i>
             </button>
+            <button id="manage-subscription-btn" class="secondary-btn">
+  Manage subscription <i class="fa-solid fa-gear"></i>
+</button>
+
           </div>
         </div>
       </section>
@@ -1450,6 +1484,8 @@
     const detailDescription = document.getElementById("detail-description");
     const detailFeatures = document.getElementById("detail-features");
     const detailAddToCartBtn = document.getElementById("detail-add-to-cart-btn");
+    const manageSubscriptionBtn = document.getElementById("manage-subscription-btn");
+
     const successModal = document.getElementById("success-modal");
     const continueShoppingBtn = document.getElementById("continue-shopping-btn");
 
@@ -1509,6 +1545,13 @@
       if (continueShoppingBtn) {
         continueShoppingBtn.addEventListener("click", closeSuccessModal);
       }
+      
+      if (manageSubscriptionBtn) {
+  manageSubscriptionBtn.addEventListener("click", () => {
+    window.location.href = "https://billing.stripe.com/p/login/eVqaEZ8My1Xv1sL0FF0Fi00";
+  });
+}
+
     }
 
     // --- DROPDOWN ---
